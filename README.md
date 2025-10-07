@@ -1,41 +1,79 @@
 # VotaINF
+
 Sistema de gerenciamento de votações do colegiado do Departamento de Informática Aplicada do INF-UFRGS
 
-# Instalação do projeto
+Stack:
+- Front-end: Angular (Typescript, modo standalone)
+- Back-end: NestJS
+- Banco de dados: ainda não configurado
 
-## Versão do Java
+# Frameworks necessários
 
-Certifique-se que a versão do Java no seu sistema é a 17:
+## Versão do Node.js
+
+A versão do Node.js necessária para o NestJS é 20+.
+Confira com:
 
 ```
-java --version
+node -v
 ```
 
-## Live Server
+## Angular e NestJS
 
-Por enquanto ainda não está sendo usado nenhum framework para front-end.
-Então, para rodar a interface do site num servidor simples de teste, instale a extensão do Live Server no VS Code.
-Após, clique com o botão direito no arquivo [`src/index.html`](./frontend/index.html) e selecione "Open with Live Server".
+Certifique-se que tenha instalado o npm antes de prosseguir.
+Instale o Angular Client:
 
-O front-end ficará disponível em algo como: `http://127.0.0.1:5500/frontend/index.html`
-
-## Rodar o back-end
-
-Entre na pasta [`backend`](./backend/) e execute o Spring Boot.
-
-No Linux:
 ```
-./mvnw spring-boot:run
+npm install -g @angular/cli
 ```
 
-No Windows:
+Instale o NestJS client:
+
 ```
-mvnw spring-boot:run
+npm install -g @nestjs/cli
 ```
 
-O back-end ficará disponível em: `http://localhost:8080`
+# Rodar o projeto
 
-# Testar integração
+## Repositório
 
-Na página do front-end, clique em "Testar API".
-Se tudo estiver certo, aparecerá uma mensagem dizendo "Olá do Back-end com Spring Boot!".
+Clone o repositório:
+
+```
+git clone https://github.com/g-kohl/VotaINF.git
+cd VotaINF
+```
+
+## Dependências
+
+Para instalar as dependências do back-end, rode:
+
+```
+cd backend
+npm install
+```
+
+E para o front-end:
+
+```
+cd ../frontend
+npm install
+```
+
+## Executar
+
+Para rodar o back-end, vá até o diretório correspondente e rode:
+
+```
+npm run start
+```
+
+O servidor rodará em: `http://localhost:3000/`.
+
+Para rodar o front-end, vá até o diretório correspondente e rode:
+
+```
+ng serve
+```
+
+O site rodará em: `http://localhost:4200/`.
