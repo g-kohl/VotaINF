@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-
-interface AgendaItem {
-  id: number;
-  title: string;
-  vote?: boolean;
-}
+import { MeetingService, AgendaItem } from './meeting.service';
 
 @Component({
   selector: 'app-meeting',
@@ -16,16 +11,33 @@ export class Meeting {
   agenda: AgendaItem[] = [];
   loaded = false;
 
-  loadAgenda() {
-    this.agenda = [
-      { id: 1, title: 'aprovar orçamento' },
-      { id: 2, title: 'afastamento de professor' }
-    ]
+  constructor(private meetingService : MeetingService) {}
 
-    this.loaded = true;
+  loadAgenda() {
+    this.meetingService.getAgenda().subscribe({
+      next: (data) => {
+        this.agenda = data.items;
+        this.loaded = true;
+      },
+      error: (err) => {
+        console.log('Erro ao carregar pauta:', err);
+      }
+    });
   }
 
   submitVotes() {
-    console.log('Votos registrados: ', this.agenda);
+    for(const item of this.agenda) {
+      if(item.vote !== undefined) {
+        this.meetingService.vote(item.id, item.vote).subscribe(updated => {
+          //opcional
+          const idx = this.agenda.findIndex(x => x.id === updated.id);
+
+          if(idx >= 0)
+            this.agenda[idx] = updated;
+
+          console.log(`Voto registrado para ${updated.title}:`, updated);
+        })
+      }
+    }
   }
 }

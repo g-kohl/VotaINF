@@ -1,0 +1,32 @@
+.home-container {
+  background-color: #ffffff;
+  width: 300px;
+  margin: 100px auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.home-container h1 {
+  margin-bottom: 30px;
+  color: #333333;
+}
+
+.button-group button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button-group button:hover {
+  background-color: #c0392b;
+}
