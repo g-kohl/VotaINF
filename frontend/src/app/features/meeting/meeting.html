@@ -1,0 +1,23 @@
+<div>
+    <div>
+        <h1>Reunião</h1>
+    </div>
+
+    <div>
+        <button (click)="loadAgenda()">Abrir pauta</button>
+    </div>
+
+    <div *ngIf="loaded">
+        <h2>Pauta</h2>
+        <form>
+            <div *ngFor="let item of agenda">
+                <label>
+                    <input type="checkbox" [(ngModel)]="item.vote" name="item-{{item.id}}">
+                    {{item.title}}
+                </label>
+            </div>
+        </form>
+
+        <button (click)="submitVotes()">Enviar votos</button>
+    </div>
+</div>
