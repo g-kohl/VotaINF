@@ -1,27 +1,56 @@
+// agenda.service.ts
 import { Injectable } from '@nestjs/common';
-import { Agenda, AgendaItem } from './agenda.model';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { Agenda } from './agenda.entity';
+import { AgendaItem } from './agenda-item.entity';
 
 @Injectable()
 export class AgendaService {
-  private agenda = new Agenda(1, [
-    new AgendaItem(1, 'Aprovar orçamento'),
-    new AgendaItem(2, 'Afastamento de professor'),
-  ]);
+  constructor(
+    @InjectRepository(Agenda)
+    private agendaRepository: Repository<Agenda>,
+    @InjectRepository(AgendaItem)
+    private agendaItemRepository: Repository<AgendaItem>,
+  ) {}
 
-  getAgenda(): Agenda {
-    return this.agenda;
+  async getAgenda(): Promise<Agenda | null> {
+    return this.agendaRepository.findOne({ relations: ['items'] });
   }
 
-  vote(itemId: number, vote: boolean) {
-    const item = this.agenda.items.find(i => i.id === itemId);
+  // New method to create an Agenda
+  async createAgenda(): Promise<Agenda> {
+    const newAgenda = new Agenda();
+    return this.agendaRepository.save(newAgenda);
+  }
+
+  async vote(itemId: number, vote: boolean): Promise<AgendaItem | null> {
+    const item = await this.agendaItemRepository.findOneBy({ id: itemId });
 
     if (item) {
-      if (vote)
+      if (vote) {
         item.votesYes++;
-      else
+      } else {
         item.votesNo++;
+      }
+      
+      return this.agendaItemRepository.save(item);
     }
 
-    return item;
+    return null;
+  }
+  
+  async createAgendaItem(title: string): Promise<AgendaItem> {
+    const parentAgenda = await this.agendaRepository.findOneBy({ id: 1 }); 
+
+    if (!parentAgenda) {
+        throw new Error('No parent Agenda found. Please create an Agenda first.');
+    }
+
+    const newItem = new AgendaItem(title);
+    newItem.agenda = parentAgenda;
+
+    return this.agendaItemRepository.save(newItem);
   }
 }
