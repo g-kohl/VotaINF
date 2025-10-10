@@ -28,7 +28,7 @@ export class Meeting {
   submitVotes() {
     for(const item of this.agenda) {
       if(item.vote !== undefined) {
-        this.meetingService.vote(item.id, item.vote).subscribe(updated => {
+        this.meetingService.vote(item.id, item.vote as any).subscribe(updated => {
           //opcional
           const idx = this.agenda.findIndex(x => x.id === updated.id);
 

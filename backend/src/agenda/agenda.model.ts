@@ -3,12 +3,14 @@ export class AgendaItem {
   title: string;
   votesYes: number;
   votesNo: number;
+  votesAbstain: number;
 
   constructor(id: number, title: string) {
     this.id = id;
     this.title = title;
     this.votesYes = 0;
     this.votesNo = 0;
+    this.votesAbstain = 0;
   }
 }
 

@@ -12,14 +12,17 @@ export class AgendaService {
     return this.agenda;
   }
 
-  vote(itemId: number, vote: boolean) {
+  // vote: 'yes' | 'no' | 'abstain'
+  vote(itemId: number, vote: string) {
     const item = this.agenda.items.find(i => i.id === itemId);
 
     if (item) {
-      if (vote)
+      if (vote === 'yes')
         item.votesYes++;
-      else
+      else if (vote === 'no')
         item.votesNo++;
+      else if (vote === 'abstain')
+        item.votesAbstain++;
     }
 
     return item;

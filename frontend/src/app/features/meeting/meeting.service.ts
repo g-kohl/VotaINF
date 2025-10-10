@@ -7,7 +7,7 @@ export interface AgendaItem {
   title: string;
   votesYes?: number;
   votesNo?: number;
-  vote?: boolean;
+  vote?: 'yes' | 'no' | 'abstain';
 }
 
 export interface Agenda {
@@ -27,7 +27,7 @@ export class MeetingService {
     return this.http.get<Agenda>(this.apiUrl);
   }
 
-  vote(itemId: number, vote: boolean): Observable<AgendaItem> {
+  vote(itemId: number, vote: 'yes' | 'no' | 'abstain'): Observable<AgendaItem> {
     return this.http.post<AgendaItem>(`${this.apiUrl}/vote`, { id: itemId, vote });
   }
 }

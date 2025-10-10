@@ -11,9 +11,15 @@
         <h2>Pauta</h2>
         <form>
             <div *ngFor="let item of agenda">
+                <div>{{item.title}}</div>
                 <label>
-                    <input type="checkbox" [(ngModel)]="item.vote" name="item-{{item.id}}">
-                    {{item.title}}
+                    <input type="radio" [(ngModel)]="item.vote" name="item-{{item.id}}" [value]="'yes'"> Sim
+                </label>
+                <label>
+                    <input type="radio" [(ngModel)]="item.vote" name="item-{{item.id}}" [value]="'no'"> Não
+                </label>
+                <label>
+                    <input type="radio" [(ngModel)]="item.vote" name="item-{{item.id}}" [value]="'abstain'"> Abstenção
                 </label>
             </div>
         </form>
