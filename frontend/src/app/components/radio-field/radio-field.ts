@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   imports: [FormsModule, CommonModule]
 })
 export class RadioButtonComponent {
-  // Array de opções, ex: [{ label: 'Sim', value: 'yes' }]
+  // Array de opções, ex: [{ label: 'Aprovação', value: 'approve' }, { label: 'Reprovação', value: 'reprove' }, { label: 'Abstenção', value: 'abstain' }]
   @Input() options: { label: string; value: any }[] = [];
 
   // Nome do grupo de radio buttons (para separar grupos)

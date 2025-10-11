@@ -11,7 +11,7 @@ export class AgendaController {
   }
 
   @Post('vote')
-  vote(@Body() body: { id: number; vote: boolean }) {
-    return this.agendaService.vote(body.id, body.vote) // oq é body?
+  vote(@Body() body: { id: number; vote: 'approve' | 'reprove' | 'abstain' }) {
+    return this.agendaService.vote(body.id, body.vote);
   }
 }

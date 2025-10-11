@@ -11,15 +11,18 @@ export class AgendaService {
   getAgenda(): Agenda {
     return this.agenda;
   }
-
-  vote(itemId: number, vote: boolean) {
-    const item = this.agenda.items.find(i => i.id === itemId);
+  // vote: 'approve' | 'reprove' | 'abstain'
+  vote(itemId: number, vote: 'approve' | 'reprove' | 'abstain') {
+    const item = this.agenda.items.find((i) => i.id === itemId);
 
     if (item) {
-      if (vote)
-        item.votesYes++;
-      else
-        item.votesNo++;
+      if (vote === 'approve') {
+        item.votesApprove++;
+      } else if (vote === 'reprove') {
+        item.votesReprove++;
+      } else if (vote === 'abstain') {
+        item.votesAbstain++;
+      }
     }
 
     return item;
