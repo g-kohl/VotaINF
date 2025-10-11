@@ -1,0 +1,94 @@
+/* Apply the container styling to the component's main div */
+:host > div {
+    background-color: #ffffff;
+    width: 90%; /* Responsive width for mobile */
+    max-width: 450px; /* Max width for desktop */
+    margin: 40px auto; /* Center the container with vertical margin */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Inter', Arial, sans-serif;
+    text-align: center; /* Center h1, h2, and buttons */
+}
+
+/* Style the main title */
+:host h1 {
+    margin-bottom: 20px;
+    color: #333333;
+    font-size: 24px;
+}
+
+/* Style the subtitle for the agenda section */
+:host h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #555555;
+    font-size: 18px;
+    text-align: left; /* Align section titles to the left */
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Style all buttons */
+:host button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    background-color: #e74c3c; /* Red color for primary action */
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+:host button:hover {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+}
+
+:host button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the agenda list (form) */
+:host form {
+    margin-top: 20px;
+    text-align: left; /* Align checkbox items to the left */
+}
+
+:host label {
+    display: flex; /* Use flexbox for aligned checkbox/text */
+    align-items: center;
+    padding: 10px 0;
+    font-size: 15px;
+    color: #444;
+    border-bottom: 1px dotted #f0f0f0;
+    cursor: pointer;
+}
+
+:host label:last-child {
+    border-bottom: none;
+}
+
+:host input[type="checkbox"] {
+    margin-right: 15px;
+    min-width: 20px;
+    min-height: 20px;
+    cursor: pointer;
+    accent-color: #e74c3c; /* Style the checkbox color */
+}
+
+/* Specific style for the "Abrir pauta" button */
+.load-button-group button {
+    background-color: #3498db; /* Different color for the initial action */
+}
+
+.load-button-group button:hover {
+    background-color: #2980b9;
+}

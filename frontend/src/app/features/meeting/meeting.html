@@ -7,10 +7,10 @@
         <button (click)="loadAgenda()">Abrir pauta</button>
     </div>
 
-    <div *ngIf="loaded">
+    <div *ngIf="loaded && agenda">
         <h2>Pauta</h2>
         <form>
-            <div *ngFor="let item of agenda">
+            <div *ngFor="let item of agenda.items">
                 <label>
                     <input type="checkbox" [(ngModel)]="item.vote" name="item-{{item.id}}">
                     {{item.title}}

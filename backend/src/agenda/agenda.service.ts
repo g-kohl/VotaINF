@@ -16,9 +16,11 @@ export class AgendaService {
   ) {}
 
   async getAgenda(): Promise<Agenda | null> {
-    return this.agendaRepository.findOne({ relations: ['items'] });
+      return this.agendaRepository.findOne({
+        where: { id: 1 }, // Added a condition to find by a specific ID
+        relations: ['items'],
+      });
   }
-
   // New method to create an Agenda
   async createAgenda(): Promise<Agenda> {
     const newAgenda = new Agenda();
