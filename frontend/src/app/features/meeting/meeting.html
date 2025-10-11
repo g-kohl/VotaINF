@@ -1,23 +1,29 @@
-<div>
-    <div>
-        <h1>Reunião</h1>
-    </div>
+<div class="home-container">
+    <h1>Reunião de colegiado</h1>
+    <p>Departamento de Informática Aplicada (INA)</p>
+    <p>10/10/2025</p>
 
-    <div>
-        <button (click)="loadAgenda()">Abrir pauta</button>
-    </div>
+    <!-- <app-accordion-item
+        *ngFor="let pauta of pautas; let i = index"
+        [title]="pauta.title"
+        [itemText]="pauta.text"
+        [radioName]="'votoItem'+i">
+    </app-accordion-item> -->
 
-    <div *ngIf="loaded">
-        <h2>Pauta</h2>
-        <form>
-            <div *ngFor="let item of agenda">
-                <label>
-                    <input type="checkbox" [(ngModel)]="item.vote" name="item-{{item.id}}">
-                    {{item.title}}
-                </label>
-            </div>
-        </form>
+    <app-accordion-item
+        *ngFor="let item of agenda; let i = index"
+        [title]="item.title"
+        [itemText]="item.title"
+        [radioName]="'item-' + item.id"
+        [(selectedVote)]="item.vote">
+    </app-accordion-item>
 
-        <button (click)="submitVotes()">Enviar votos</button>
-    </div>
 </div>
+
+<div class="button-group">
+    <div class="vote-button">
+        <button (click)="submitVotes()">Submeter votos</button>
+    </div>
+
+</div>
+

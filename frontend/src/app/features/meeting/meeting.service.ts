@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 export interface AgendaItem {
   id: number;
   title: string;
-  votesYes?: number;
-  votesNo?: number;
-  vote?: boolean;
+  vote: string;
 }
 
 export interface Agenda {
@@ -27,7 +25,7 @@ export class MeetingService {
     return this.http.get<Agenda>(this.apiUrl);
   }
 
-  vote(itemId: number, vote: boolean): Observable<AgendaItem> {
+  vote(itemId: number, vote: string): Observable<AgendaItem> {
     return this.http.post<AgendaItem>(`${this.apiUrl}/vote`, { id: itemId, vote });
   }
 }

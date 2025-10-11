@@ -1,3 +1,5 @@
+@import '../../shared/styles/shared-styles.css';
+
 .home-container {
   background-color: #ffffff;
   width: 300px;

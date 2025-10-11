@@ -10,6 +10,9 @@ import { Auth } from './features/auth/auth';
 import { Dashboard } from './features/dashboard/dashboard';
 import { Meeting } from './features/meeting/meeting';
 import { Search } from './features/search/search';
+import { Header } from './components/header/header';
+import { AccordionItem } from './components/accordion-item/accordion-item';
+import { RadioButtonComponent } from './components/radio-field/radio-field';
 
 @NgModule({
   declarations: [
@@ -18,12 +21,15 @@ import { Search } from './features/search/search';
     Auth,
     Dashboard,
     Meeting,
-    Search
+    Search,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    Header,
+    AccordionItem,
+    RadioButtonComponent
   ],
   providers: [
     provideHttpClient(),

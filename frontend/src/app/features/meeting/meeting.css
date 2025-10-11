@@ -1,0 +1,23 @@
+@import '../../shared/styles/shared-styles.css';
+
+.home-container h1 {
+  margin-bottom: 1px;
+  color: #333333;
+}
+
+.home-container {
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.vote-button {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: Arial, sans-serif;
+  padding: 10px;
+}
