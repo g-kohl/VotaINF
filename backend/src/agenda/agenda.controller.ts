@@ -1,21 +1,15 @@
-import { Body, Controller, Get, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 // Importa AgendaService e AggregatedAgendaItem do serviço
 import { AgendaService, AggregatedAgendaItem } from './agenda.service';
 // IMPORTAÇÃO CORRIGIDA: Importa VoteStatus diretamente da entidade Vote
 import { VoteStatus } from './vote.entity'; 
 
-/**
- * DTO para criação de item de pauta.
- * Usa os novos campos: 'assunto' e 'arquivosAnexos'.
- */
 interface CreateAgendaItemDto {
-  assunto: string;          
-  arquivosAnexos: string;   
+  assunto: string; 
+  descricao: string; 
+  arquivosAnexos: string; 
 }
 
-/**
- * DTO para registro de voto.
- */
 interface VoteDto {
   id: number; // ID do AgendaItem
   voto: VoteStatus;
@@ -25,14 +19,15 @@ interface VoteDto {
 export class AgendaController {
   constructor(private readonly agendaService: AgendaService) { }
 
-  /**
-   * GET /agenda
-   * Retorna a lista de itens de pauta com contagens de votos agregadas.
-   */
   @Get()
   async getAgenda(): Promise<AggregatedAgendaItem[]> {
-    // Chama a função correta do serviço, que retorna AggregatedAgendaItem[]
     return await this.agendaService.getAgendaItemsWithAggregatedVotes();
+  }
+
+
+  @Post()
+  async createAgenda() {
+    return await this.agendaService.createAgenda();
   }
 
   /**
@@ -41,8 +36,8 @@ export class AgendaController {
    */
   @Post('item')
   async createItem(@Body() body: CreateAgendaItemDto) {
-    // Mapeia os novos campos do DTO para a função de serviço
-    return await this.agendaService.createAgendaItem(body.assunto, body.arquivosAnexos);
+    // Adicionando 'descricao' à chamada do serviço, conforme solicitado pelo DTO
+    return await this.agendaService.createAgendaItem(body.assunto, body.descricao, body.arquivosAnexos);
   }
 
   /**
@@ -51,10 +46,6 @@ export class AgendaController {
    */
   @Post('vote')
   async vote(@Body() body: VoteDto): Promise<AggregatedAgendaItem | null> {
-    // Mapeia os campos do DTO para a função de serviço
     return await this.agendaService.registerVote(body.id, body.voto);
   }
-
-  // O endpoint POST /agenda (para criar a agenda) não foi re-adicionado,
-  // pois estamos focados na lógica de votação e itens.
 }

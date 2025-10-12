@@ -36,7 +36,7 @@ export class AgendaService {
     // 1. Busca todos os itens de pauta associados à Agenda ID 1
     const items = await this.agendaItemRepository.find({
         where: { agenda: { id: 1 } as any },
-        select: ['id', 'assunto', 'arquivosAnexos'], // Seleciona apenas campos necessários
+        select: ['id', 'assunto', 'descricao', 'arquivosAnexos'],
     });
 
     if (!items.length) {
@@ -83,7 +83,7 @@ export class AgendaService {
   /**
    * Cria um novo item de pauta e o associa à Agenda ID 1.
    */
-  async createAgendaItem(assunto: string, arquivosAnexos: string): Promise<AgendaItem> {
+  async createAgendaItem(assunto: string, descricao: string, arquivosAnexos: string): Promise<AgendaItem> {
     const parentAgenda = await this.agendaRepository.findOneBy({ id: 1 }); 
 
     if (!parentAgenda) {
@@ -91,8 +91,9 @@ export class AgendaService {
     }
 
     const newItem = new AgendaItem();
-    newItem.assunto = assunto; // Usa o novo campo assunto
-    newItem.arquivosAnexos = arquivosAnexos; // Usa o novo campo de anexo
+    newItem.assunto = assunto;
+    newItem.descricao = descricao;
+    newItem.arquivosAnexos = arquivosAnexos;
     newItem.agenda = parentAgenda;
 
     return this.agendaItemRepository.save(newItem);
