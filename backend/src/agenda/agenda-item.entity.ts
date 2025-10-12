@@ -8,7 +8,10 @@ export class AgendaItem {
   id!: number; 
 
   @Column()
-  assunto!: string; // Trocado 'title' por 'assunto'
+  assunto!: string; 
+
+  @Column()
+  descricao!: string; 
 
   @Column({ nullable: true })
   arquivosAnexos?: string; // String para o caminho/URL do anexo
