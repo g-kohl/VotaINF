@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MeetingService, AgendaItem, VoteOption } from './meeting.service';
 
 @Component({
@@ -7,29 +7,33 @@ import { MeetingService, AgendaItem, VoteOption } from './meeting.service';
   templateUrl: './meeting.html',
   styleUrl: './meeting.css'
 })
-export class Meeting {
-  // agenda é o array de AgendaItem[] retornado pelo serviço
+export class Meeting implements OnInit { // Implementamos a interface OnInit
   agenda: AgendaItem[] | null = null;
   loaded = false;
 
   constructor(private meetingService : MeetingService) {}
 
+  // ************** A SOLUÇÃO CORRETA **************
+  // Este método é executado automaticamente na inicialização do componente
+  ngOnInit(): void {
+    this.loadAgenda();
+  }
+  // **********************************************
+
   loadAgenda() {
     this.meetingService.getAgenda().subscribe({
       next: (data) => {
-        // O serviço agora retorna um array, não um objeto com .items
         this.agenda = data;
         this.loaded = true;
       },
       error: (err) => {
         console.log('Erro ao carregar pauta:', err);
+        this.agenda = []; 
+        this.loaded = true;
       }
     });
   }
 
-  /**
-   * Submete o voto ao backend e atualiza a lista local com os resultados agregados.
-   */
   submitVote(item: AgendaItem, voto: VoteOption) {
     if (item.id !== undefined) {
         this.meetingService.vote(item.id, voto).subscribe({
@@ -37,7 +41,6 @@ export class Meeting {
                 const idx = this.agenda?.findIndex(x => x.id === updatedItem.id);
 
                 if(this.agenda && idx !== undefined && idx >= 0) {
-                  // Mantém o userVote para o estado visual do radio button
                   updatedItem.userVote = voto; 
                   this.agenda[idx] = updatedItem;
                 }
@@ -51,10 +54,7 @@ export class Meeting {
     }
   }
 
-  /**
-   * Função auxiliar para calcular o total de votos (para exibição).
-   */
   getTotalVotes(item: AgendaItem): number {
-    return item.votesSim + item.votesNao + item.votesDiligencia;
+    return (item.votesSim || 0) + (item.votesNao || 0) + (item.votesDiligencia || 0);
   }
 }

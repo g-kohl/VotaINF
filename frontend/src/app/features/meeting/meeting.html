@@ -1,81 +1,49 @@
-<div>
-<div class="header-container">
-<h1>Reunião</h1>
-</div>
+<div class="page-container">
 
-<div class="load-button-group">
-    <button (click)="loadAgenda()">Abrir pauta</button>
-</div>
+    <div class="header-section">
+        <div class="title-info">
+            <h1>Reunião de colegiado</h1>
+            <p>Departamento de Informática Aplicada (INA)</p>
+            <p>10/10/2025</p>
+        </div>
+    </div>
 
-<!-- O bloco *ngIf agora verifica se a pauta foi carregada e existe -->
-<div *ngIf="loaded && agenda && agenda.length > 0">
-    <h2>Pauta para Votação ({{ agenda.length }} Itens)</h2>
-    
-    <!-- Loop através de cada item da pauta -->
-    <div *ngFor="let item of agenda" class="agenda-item-card">
+    <div class="agenda-container" *ngIf="loaded && agenda && agenda.length > 0">
         
-        <h3 class="item-assunto">{{ item.assunto }}</h3>
-        
-        <!-- Link para Anexos (se existir) -->
-        <!-- Note: Se arquivosAnexos não for uma URL válida, o link não funcionará -->
-        <p *ngIf="item.arquivosAnexos" class="anexos-link">
-            <a [href]="item.arquivosAnexos" target="_blank">Ver Anexos</a>
-        </p>
-
-        <!-- Opções de Voto: Usamos radio buttons para seleção única -->
-        <div class="vote-options-group">
-            <!-- Sim -->
-            <label [class.selected]="item.userVote === 'Sim'">
-                <input 
-                    type="radio" 
-                    name="vote-{{item.id}}" 
-                    [value]="'Sim'" 
-                    [(ngModel)]="item.userVote"
-                    (change)="submitVote(item, 'Sim')"
-                >
-                Sim
-            </label>
+        <div *ngFor="let item of agenda" class="agenda-card">
             
-            <!-- Não -->
-            <label [class.selected]="item.userVote === 'Nao'">
-                <input 
-                    type="radio" 
-                    name="vote-{{item.id}}" 
-                    [value]="'Nao'" 
-                    [(ngModel)]="item.userVote"
-                    (change)="submitVote(item, 'Nao')"
-                >
-                Não
-            </label>
+            <div class="card-header">
+                <h2 class="item-title">
+                    <span class="item-number">{{ item.id }}.</span> {{ item.assunto }}
+                </h2>
+            </div>
 
-            <!-- Diligência -->
-            <label [class.selected]="item.userVote === 'Diligencia'">
-                <input 
-                    type="radio" 
-                    name="vote-{{item.id}}" 
-                    [value]="'Diligencia'" 
-                    [(ngModel)]="item.userVote"
-                    (change)="submitVote(item, 'Diligencia')"
-                >
-                Diligência
-            </label>
-        </div>
+            <div class="card-body">
+                <p class="item-description">{{ item.descricao }}</p>
 
-        <!-- Resultados da Votação Agregada -->
-        <div class="vote-results">
-            <span>Total de Votos: {{ getTotalVotes(item) }}</span> | 
-            <span>Sim: <strong>{{ item.votesSim }}</strong></span> | 
-            <span>Não: <strong>{{ item.votesNao }}</strong></span> | 
-            <span>Dil.: <strong>{{ item.votesDiligencia }}</strong></span>
+                <p class="anexos-link" *ngIf="item.arquivosAnexos">
+                    <a [href]="item.arquivosAnexos" target="_blank">Ver Anexos</a>
+                </p>
+
+                <div class="vote-options">
+                    <label [class.selected]="item.userVote === 'Sim'" class="aprovacao">
+                        <input type="radio" name="vote-{{item.id}}" value="Sim" [(ngModel)]="item.userVote" (change)="submitVote(item, 'Sim')"> Aprovação
+                    </label>
+
+                    <label [class.selected]="item.userVote === 'Nao'" class="reprovacao">
+                        <input type="radio" name="vote-{{item.id}}" value="Nao" [(ngModel)]="item.userVote" (change)="submitVote(item, 'Nao')"> Reprovação
+                    </label>
+
+                    <label [class.selected]="item.userVote === 'Diligencia'" class="abstencao">
+                        <input type="radio" name="vote-{{item.id}}" value="Diligencia" [(ngModel)]="item.userVote" (change)="submitVote(item, 'Diligencia')"> Abstenção
+                    </label>
+                </div>
+            </div>
         </div>
-        
     </div>
     
-</div>
-
-<!-- Mensagem de pauta vazia ou não carregada -->
-<div *ngIf="loaded && (!agenda || agenda.length === 0)" class="empty-state">
-    <p>Nenhum item de pauta encontrado para votação.</p>
-</div>
+    <div *ngIf="loaded && (!agenda || agenda.length === 0)" class="empty-state">
+        <p>Nenhum item de pauta encontrado para votação.</p>
+    </div>
 
 </div>

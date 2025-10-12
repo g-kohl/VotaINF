@@ -10,6 +10,7 @@ export interface AgendaItem {
   id: number;
   assunto: string; 
   arquivosAnexos?: string;
+  descricao: string;
   dataAprovacao: string | null;
 
   // Campos de contagem de votos agregados

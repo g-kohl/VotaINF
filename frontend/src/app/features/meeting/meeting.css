@@ -1,94 +1,161 @@
-/* Apply the container styling to the component's main div */
-:host > div {
-    background-color: #ffffff;
-    width: 90%; /* Responsive width for mobile */
-    max-width: 450px; /* Max width for desktop */
-    margin: 40px auto; /* Center the container with vertical margin */
-    padding: 30px;
+/* Cores principais:
+ * Vermelho: #e74c3c (Principal) / #c0392b (Hover)
+ * Cinza Claro: #f4f4f4 (Fundo)
+ * Cinza Escuro: #333 (Texto)
+ * Branco: #fff (Fundo de cards e texto selecionado)
+ */
+
+body {
+    background-color: #f4f4f4;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.page-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* ---------------- HEADER ---------------- */
+.header-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.header-section h1 {
+    font-size: 1.8em;
+    color: #333; /* Texto em preto/cinza escuro */
+    margin: 0 0 5px 0;
+    font-weight: 700;
+}
+
+.header-section p {
+    color: #666;
+    margin: 3px 0;
+    font-size: 0.9em;
+}
+
+/* ---------------- CARD DA PAUTA ---------------- */
+.agenda-card {
+    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Inter', Arial, sans-serif;
-    text-align: center; /* Center h1, h2, and buttons */
-}
-
-/* Style the main title */
-:host h1 {
+    padding: 30px;
     margin-bottom: 20px;
-    color: #333333;
-    font-size: 24px;
+    border: 1px solid #ddd;
+    transition: box-shadow 0.3s ease;
 }
 
-/* Style the subtitle for the agenda section */
-:host h2 {
-    margin-top: 30px;
-    margin-bottom: 15px;
-    color: #555555;
-    font-size: 18px;
-    text-align: left; /* Align section titles to the left */
-    border-bottom: 1px solid #eee;
-    padding-bottom: 5px;
+.agenda-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Style all buttons */
-:host button {
-    width: 100%;
-    padding: 12px;
+.card-header {
     margin-bottom: 15px;
-    margin-top: 10px;
-    background-color: #e74c3c; /* Red color for primary action */
-    border: none;
+}
+
+.item-title {
+    font-size: 1.3em;
+    color: #333;
+    margin: 0;
+}
+
+.item-number {
+    color: #666; /* Mantendo a numeração discreta */
+    font-weight: bold;
+}
+
+.card-body .item-description {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: 3px solid #eee;
+}
+
+/* Estilos para anexos */
+.anexos-link a {
+    color: #555;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9em;
+    padding: 5px 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.anexos-link a:hover {
+    background-color: #eee;
+}
+
+/* ---------------- OPÇÕES DE VOTO ---------------- */
+.vote-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.vote-options label {
+    flex: 1;
+    text-align: center;
+    padding: 12px 10px;
+    border: 2px solid #ddd;
     border-radius: 6px;
-    color: white;
-    font-size: 16px;
+    cursor: pointer;
     font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #333;
+    transition: all 0.3s ease;
+    user-select: none;
 }
 
-:host button:hover {
-    background-color: #c0392b;
-    transform: translateY(-1px);
+.vote-options input[type="radio"] {
+    display: none;
 }
 
-:host button:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+/* Cores de Hover/Interatividade */
+.vote-options label:hover {
+    border-color: #a0a0a0;
+    background-color: #fafafa;
 }
 
-/* Styles for the agenda list (form) */
-:host form {
-    margin-top: 20px;
-    text-align: left; /* Align checkbox items to the left */
+/* Estilos de Seleção */
+.vote-options label.selected {
+    color: white; /* Texto em branco quando selecionado */
+    border-color: #e74c3c;
+    background-color: #e74c3c; /* Vermelho como cor de destaque/preenchimento */
+    box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
 }
 
-:host label {
-    display: flex; /* Use flexbox for aligned checkbox/text */
-    align-items: center;
-    padding: 10px 0;
-    font-size: 15px;
-    color: #444;
-    border-bottom: 1px dotted #f0f0f0;
-    cursor: pointer;
+/* Cores específicas para diferenciar os botões */
+.vote-options label.aprovacao.selected {
+    background-color: #2ecc71; /* Verde sutil para Aprovação */
+    border-color: #2ecc71;
 }
 
-:host label:last-child {
-    border-bottom: none;
+.vote-options label.reprovacao.selected {
+    background-color: #e74c3c; /* Vermelho para Reprovação */
+    border-color: #e74c3c;
 }
 
-:host input[type="checkbox"] {
-    margin-right: 15px;
-    min-width: 20px;
-    min-height: 20px;
-    cursor: pointer;
-    accent-color: #e74c3c; /* Style the checkbox color */
+.vote-options label.abstencao.selected {
+    background-color: #f39c12; /* Laranja/Amarelo para Abstenção */
+    border-color: #f39c12;
 }
 
-/* Specific style for the "Abrir pauta" button */
-.load-button-group button {
-    background-color: #3498db; /* Different color for the initial action */
-}
-
-.load-button-group button:hover {
-    background-color: #2980b9;
+/* Estado vazio */
+.empty-state {
+    text-align: center;
+    color: #888;
+    padding: 50px 0;
 }
