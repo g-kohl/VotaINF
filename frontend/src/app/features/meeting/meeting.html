@@ -13,7 +13,7 @@
     <app-accordion-item
         *ngFor="let item of agenda; let i = index"
         [title]="item.title"
-        [itemText]="item.title"
+        [itemText]="item.description"
         [radioName]="'item-' + item.id"
         [(selectedVote)]="item.vote">
     </app-accordion-item>

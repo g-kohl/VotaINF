@@ -1,16 +1,14 @@
 export class AgendaItem {
   id: number;
   title: string;
-  votesApprove: number;
-  votesReprove: number;
-  votesAbstain: number;
+  description: string;
+  vote: string;
 
-  constructor(id: number, title: string) {
+  constructor(id: number, title: string, description: string) {
     this.id = id;
     this.title = title;
-    this.votesApprove = 0;
-    this.votesReprove = 0;
-    this.votesAbstain = 0;
+    this.description = description;
+    this.vote = '';
   }
 }
 

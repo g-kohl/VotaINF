@@ -4,8 +4,16 @@ import { Agenda, AgendaItem } from './agenda.model';
 @Injectable()
 export class AgendaService {
   private agenda = new Agenda(1, [
-    new AgendaItem(1, 'Aprovar orçamento'),
-    new AgendaItem(2, 'Afastamento de professor'),
+    new AgendaItem(
+      1, 
+      '1.1 Afastamento do Prof. Fulano',
+      'Assunto: Solicitação de afastamento do Prof. Fulano de Tal, docente do Instituto de Informática da UFRGS, para realização de estágio pós-doutoral. Descrição: O colegiado do Instituto de Informática apreciaráa solicitação de afastamento do Prof. Fulano de Tal para realização de seupós-doutoramento junto à [nome da instituição de destino], localizada em[cidade, país], sob supervisão do(a) Prof.(a) [nome do(a) supervisor(a)]. O período proposto para o afastamento é de [data de início] a [data de término], conforme plano de atividades e cronograma apresentados. O professor solicita o afastamento com ônus limitado, conforme a legislação vigente e as normas da UFRGS referentes a afastamentos para capacitação docente.'
+    ),
+    new AgendaItem(
+      2, 
+      'Substituição de docente em turma de graduação',
+      'Assunto: Alteração de docente responsável pela disciplina [código e nome da disciplina] no curso de [nome do curso]. Descrição: O colegiado do Instituto de Informática apreciará a proposta de substituição do(a) Prof.(a) [nome do(a) professor(a) atual] pelo(a) Prof.(a) [nome do(a) novo(a) professor(a)] como responsável pela turma da disciplina [código e nome da disciplina], ofertada no [semestre/ano], turno [manhã/tarde/noite]. A mudança é proposta em razão de [motivo — por exemplo: afastamento do docente, sobrecarga de orientações, redistribuição de encargos, ou outra justificativa]. O novo docente indicado possui experiência na área e disponibilidade para assumir a turma, garantindo a continuidade das atividades acadêmicas. Encaminhamento: Deliberação do colegiado sobre a aprovação da substituição docente conforme proposta apresentada pela coordenação do curso e pela chefia do departamento.'
+    ),
   ]);
 
   getAgenda(): Agenda {
@@ -16,13 +24,7 @@ export class AgendaService {
     const item = this.agenda.items.find((i) => i.id === itemId);
 
     if (item) {
-      if (vote === 'approve') {
-        item.votesApprove++;
-      } else if (vote === 'reprove') {
-        item.votesReprove++;
-      } else if (vote === 'abstain') {
-        item.votesAbstain++;
-      }
+      item.vote = vote
     }
 
     return item;
