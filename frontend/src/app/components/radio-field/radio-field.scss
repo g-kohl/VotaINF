@@ -10,11 +10,22 @@
     cursor: pointer;
     font-size: 14px;
     position: relative;
-    padding-left: 28px; // espaço para o círculo customizado
+    padding-left: 28px;
+
+    // Quando o radio está desabilitado, muda a cor do círculo e do texto
+    input[type="radio"]:disabled + .custom-radio {
+      border-color: #aaa;
+      background-color: #eee;
+      cursor: not-allowed;
+    }
+    input[type="radio"]:disabled ~ span {
+      color: #aaa;
+      cursor: not-allowed;
+    }
 
     input[type="radio"] {
       position: absolute;
-      opacity: 0; // escondemos o radio nativo
+      opacity: 0;
       cursor: pointer;
 
       &:checked + .custom-radio {

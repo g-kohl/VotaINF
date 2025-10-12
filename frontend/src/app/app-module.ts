@@ -13,6 +13,7 @@ import { Search } from './features/search/search';
 import { Header } from './components/header/header';
 import { AccordionItem } from './components/accordion-item/accordion-item';
 import { RadioButtonComponent } from './components/radio-field/radio-field';
+import { NgOptimizedImage } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { RadioButtonComponent } from './components/radio-field/radio-field';
     FormsModule,
     Header,
     AccordionItem,
-    RadioButtonComponent
+    RadioButtonComponent,
+    NgOptimizedImage,
   ],
   providers: [
     provideHttpClient(),

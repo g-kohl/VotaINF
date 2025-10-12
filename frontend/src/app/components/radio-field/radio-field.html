@@ -6,6 +6,7 @@
       [value]="option.value" 
       [checked]="selectedValue === option.value"
       (change)="onSelectionChange(option.value)"
+      [disabled]="isDisabled"
     />
     <span class="custom-radio"></span>
     {{ option.label }}

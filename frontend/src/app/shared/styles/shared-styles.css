@@ -40,3 +40,14 @@
 .button-group button:hover {
   background-color: #c0392b;
 }
+
+.button-group button:disabled {
+  background-color: #cccccc; /* cor do botão desabilitado */
+  color: #888888;            /* cor do texto desabilitado */
+  cursor: not-allowed;
+}
+
+/* Remove o hover quando desabilitado */
+.button-group button:disabled:hover {
+  background-color: #cccccc;
+}

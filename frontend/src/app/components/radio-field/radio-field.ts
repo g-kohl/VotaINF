@@ -18,6 +18,7 @@ export class RadioButtonComponent {
 
   // Valor selecionado
   @Input() selectedValue: string = '';
+  @Input() isDisabled: boolean = false;
 
   // Evento emitido quando o valor muda
   @Output() selectedValueChange = new EventEmitter<string>();

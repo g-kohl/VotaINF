@@ -12,6 +12,7 @@ export class AccordionItem {
   @Input() title: string = '';
   @Input() itemText: string = '';
   @Input() radioName: string = '';
+  @Input() isDisabled: boolean = false;
 
   private _selectedVote: string = '';
   @Input()

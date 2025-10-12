@@ -1,5 +1,11 @@
 @import '../../shared/styles/shared-styles.css';
 
+/* Reset básico */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
 .home-container h1 {
   margin-bottom: 1px;
   color: #333333;
@@ -20,4 +26,23 @@
   gap: 12px;
   font-family: Arial, sans-serif;
   padding: 10px;
+}
+
+/* Estilo do header */
+.header {
+  display: flex;              /* Coloca texto e imagem lado a lado */
+  justify-content: space-between; /* Espaço entre texto e imagem */
+  align-items: center;        /* Alinha verticalmente no centro */
+  padding: 20px 40px;
+}
+
+/* Área de texto à esquerda */
+.header-texto {
+  max-width: 60%;             /* Limita a largura para não colar na imagem */
+}
+
+/* Área da imagem à direita */
+.header-imagem img {
+  width: 150px;               /* Ajuste conforme o tamanho desejado */
+  height: auto;
 }
