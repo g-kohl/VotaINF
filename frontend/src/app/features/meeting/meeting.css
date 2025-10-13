@@ -1,161 +1,48 @@
-/* Cores principais:
- * Vermelho: #e74c3c (Principal) / #c0392b (Hover)
- * Cinza Claro: #f4f4f4 (Fundo)
- * Cinza Escuro: #333 (Texto)
- * Branco: #fff (Fundo de cards e texto selecionado)
- */
+@import '../../shared/styles/shared-styles.css';
 
+/* Reset básico */
 body {
-    background-color: #f4f4f4;
-    font-family: 'Inter', sans-serif;
-    color: #333;
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
-.page-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
+.home-container h1 {
+  margin-bottom: 1px;
+  color: #333333;
 }
 
-/* ---------------- HEADER ---------------- */
-.header-section {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
+.home-container {
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
 }
 
-.header-section h1 {
-    font-size: 1.8em;
-    color: #333; /* Texto em preto/cinza escuro */
-    margin: 0 0 5px 0;
-    font-weight: 700;
+.vote-button {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: Arial, sans-serif;
+  padding: 10px;
 }
 
-.header-section p {
-    color: #666;
-    margin: 3px 0;
-    font-size: 0.9em;
+/* Estilo do header */
+.header {
+  display: flex;              /* Coloca texto e imagem lado a lado */
+  justify-content: space-between; /* Espaço entre texto e imagem */
+  align-items: center;        /* Alinha verticalmente no centro */
+  padding: 20px 40px;
 }
 
-/* ---------------- CARD DA PAUTA ---------------- */
-.agenda-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    transition: box-shadow 0.3s ease;
+/* Área de texto à esquerda */
+.header-texto {
+  max-width: 60%;             /* Limita a largura para não colar na imagem */
 }
 
-.agenda-card:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-.card-header {
-    margin-bottom: 15px;
-}
-
-.item-title {
-    font-size: 1.3em;
-    color: #333;
-    margin: 0;
-}
-
-.item-number {
-    color: #666; /* Mantendo a numeração discreta */
-    font-weight: bold;
-}
-
-.card-body .item-description {
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    padding-left: 10px;
-    border-left: 3px solid #eee;
-}
-
-/* Estilos para anexos */
-.anexos-link a {
-    color: #555;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9em;
-    padding: 5px 10px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    display: inline-block;
-    transition: background-color 0.2s;
-}
-
-.anexos-link a:hover {
-    background-color: #eee;
-}
-
-/* ---------------- OPÇÕES DE VOTO ---------------- */
-.vote-options {
-    display: flex;
-    gap: 10px;
-    margin-top: 25px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-}
-
-.vote-options label {
-    flex: 1;
-    text-align: center;
-    padding: 12px 10px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    color: #333;
-    transition: all 0.3s ease;
-    user-select: none;
-}
-
-.vote-options input[type="radio"] {
-    display: none;
-}
-
-/* Cores de Hover/Interatividade */
-.vote-options label:hover {
-    border-color: #a0a0a0;
-    background-color: #fafafa;
-}
-
-/* Estilos de Seleção */
-.vote-options label.selected {
-    color: white; /* Texto em branco quando selecionado */
-    border-color: #e74c3c;
-    background-color: #e74c3c; /* Vermelho como cor de destaque/preenchimento */
-    box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
-}
-
-/* Cores específicas para diferenciar os botões */
-.vote-options label.aprovacao.selected {
-    background-color: #2ecc71; /* Verde sutil para Aprovação */
-    border-color: #2ecc71;
-}
-
-.vote-options label.reprovacao.selected {
-    background-color: #e74c3c; /* Vermelho para Reprovação */
-    border-color: #e74c3c;
-}
-
-.vote-options label.abstencao.selected {
-    background-color: #f39c12; /* Laranja/Amarelo para Abstenção */
-    border-color: #f39c12;
-}
-
-/* Estado vazio */
-.empty-state {
-    text-align: center;
-    color: #888;
-    padding: 50px 0;
+/* Área da imagem à direita */
+.header-imagem img {
+  width: 150px;               /* Ajuste conforme o tamanho desejado */
+  height: auto;
 }

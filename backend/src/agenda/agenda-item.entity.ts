@@ -1,28 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
-import { Vote } from './vote.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Agenda } from './agenda.entity';
 
-@Entity('agenda_itens')
+@Entity()
 export class AgendaItem {
   @PrimaryGeneratedColumn()
-  id!: number; 
+  id: number;
 
   @Column()
-  assunto!: string; 
+  title: string;
 
   @Column()
-  descricao!: string; 
+  description: string;
 
-  @Column({ nullable: true })
-  arquivosAnexos?: string; // String para o caminho/URL do anexo
+  @Column({ default: '' })
+  vote: string;
 
-  // Mantida a relação com Agenda (sua entidade de Reunião, por enquanto)
   @ManyToOne(() => Agenda, (agenda) => agenda.items)
-  agenda!: Agenda;
-  
-  // Relação 1:N com Votos (para rastreamento)
-  @OneToMany(() => Vote, (vote) => vote.agendaItem, { cascade: true })
-  votes!: Vote[]; 
+  agenda: Agenda;
 
-  constructor() {}
+  constructor(id?: number, title?: string, description?: string) {
+    if (id) this.id = id;
+    if (title) this.title = title;
+    if (description) this.description = description;
+    this.vote = '';
+  }
 }

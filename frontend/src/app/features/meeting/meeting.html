@@ -1,49 +1,41 @@
-<div class="page-container">
-
-    <div class="header-section">
-        <div class="title-info">
+<div class="home-container">
+    <header class="header">
+        <div class="header-texto">
             <h1>Reunião de colegiado</h1>
             <p>Departamento de Informática Aplicada (INA)</p>
             <p>10/10/2025</p>
         </div>
-    </div>
-
-    <div class="agenda-container" *ngIf="loaded && agenda && agenda.length > 0">
-        
-        <div *ngFor="let item of agenda" class="agenda-card">
-            
-            <div class="card-header">
-                <h2 class="item-title">
-                    <span class="item-number">{{ item.id }}.</span> {{ item.assunto }}
-                </h2>
-            </div>
-
-            <div class="card-body">
-                <p class="item-description">{{ item.descricao }}</p>
-
-                <p class="anexos-link" *ngIf="item.arquivosAnexos">
-                    <a [href]="item.arquivosAnexos" target="_blank">Ver Anexos</a>
-                </p>
-
-                <div class="vote-options">
-                    <label [class.selected]="item.userVote === 'Sim'" class="aprovacao">
-                        <input type="radio" name="vote-{{item.id}}" value="Sim" [(ngModel)]="item.userVote" (change)="submitVote(item, 'Sim')"> Aprovação
-                    </label>
-
-                    <label [class.selected]="item.userVote === 'Nao'" class="reprovacao">
-                        <input type="radio" name="vote-{{item.id}}" value="Nao" [(ngModel)]="item.userVote" (change)="submitVote(item, 'Nao')"> Reprovação
-                    </label>
-
-                    <label [class.selected]="item.userVote === 'Diligencia'" class="abstencao">
-                        <input type="radio" name="vote-{{item.id}}" value="Diligencia" [(ngModel)]="item.userVote" (change)="submitVote(item, 'Diligencia')"> Abstenção
-                    </label>
-                </div>
-            </div>
+        <div class="header-imagem">
+            <img ngSrc="/assets/logo_inf_cor.png" width="140" height="83"/>
         </div>
-    </div>
-    
-    <div *ngIf="loaded && (!agenda || agenda.length === 0)" class="empty-state">
-        <p>Nenhum item de pauta encontrado para votação.</p>
-    </div>
+    </header>
 
+    <app-accordion-item
+        *ngFor="let item of agenda; let i = index"
+        [title]="item.title"
+        [itemText]="item.description"
+        [radioName]="'item-' + item.id"
+        [(selectedVote)]="item.vote"
+        [isDisabled]="voteDisabled">
+    </app-accordion-item>
+
+    <div *ngIf="votedItems.length > 0">
+    <h3>Itens votados:</h3>
+    <ul>
+        <li *ngFor="let item of votedItems">{{ item.title }}: {{ item.vote }}</li>
+    </ul>
+    </div>
 </div>
+
+
+<div class="button-group">
+    <div class="vote-button">
+        <button 
+            (click)="submitVotes()"
+            [disabled]="!allVoted || voteDisabled">
+            Submeter votos
+        </button>
+    </div>
+</div>
+
+

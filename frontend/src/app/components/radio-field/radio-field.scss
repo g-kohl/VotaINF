@@ -1,0 +1,66 @@
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+
+  label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    position: relative;
+    padding-left: 28px;
+
+    // Quando o radio está desabilitado, muda a cor do círculo e do texto
+    input[type="radio"]:disabled + .custom-radio {
+      border-color: #aaa;
+      background-color: #eee;
+      cursor: not-allowed;
+    }
+    input[type="radio"]:disabled ~ span {
+      color: #aaa;
+      cursor: not-allowed;
+    }
+
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+
+      &:checked + .custom-radio {
+        background-color: #e74c3c;
+        border-color: #e74c3c;
+
+        &::after {
+          display: block;
+        }
+      }
+    }
+
+    .custom-radio {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 16px;
+      width: 16px;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      background-color: #fff;
+
+      &::after {
+        content: "";
+        position: absolute;
+        display: none;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #fff;
+      }
+    }
+  }
+}

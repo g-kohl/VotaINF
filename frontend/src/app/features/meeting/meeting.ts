@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MeetingService, AgendaItem, VoteOption } from './meeting.service';
+import { Component } from '@angular/core';
+import { MeetingService, AgendaItem } from './meeting.service';
 
 @Component({
   selector: 'app-meeting',
@@ -7,54 +7,53 @@ import { MeetingService, AgendaItem, VoteOption } from './meeting.service';
   templateUrl: './meeting.html',
   styleUrl: './meeting.css'
 })
-export class Meeting implements OnInit { // Implementamos a interface OnInit
-  agenda: AgendaItem[] | null = null;
+export class Meeting {
   loaded = false;
+  agenda: AgendaItem[] = [];
+  votedItems: AgendaItem[] = [];
+  voteDisabled = false;
 
   constructor(private meetingService : MeetingService) {}
 
-  // ************** A SOLUÇÃO CORRETA **************
-  // Este método é executado automaticamente na inicialização do componente
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadAgenda();
   }
-  // **********************************************
 
   loadAgenda() {
     this.meetingService.getAgenda().subscribe({
       next: (data) => {
-        this.agenda = data;
+        this.agenda = data.items.map(item => ({
+          ...item,
+          vote: item.vote ?? '' // inicializa vote se undefined
+        }));
         this.loaded = true;
       },
       error: (err) => {
         console.log('Erro ao carregar pauta:', err);
-        this.agenda = []; 
-        this.loaded = true;
       }
     });
   }
 
-  submitVote(item: AgendaItem, voto: VoteOption) {
-    if (item.id !== undefined) {
-        this.meetingService.vote(item.id, voto).subscribe({
-            next: (updatedItem) => {
-                const idx = this.agenda?.findIndex(x => x.id === updatedItem.id);
-
-                if(this.agenda && idx !== undefined && idx >= 0) {
-                  updatedItem.userVote = voto; 
-                  this.agenda[idx] = updatedItem;
-                }
-
-                console.log(`Voto registrado para ${updatedItem.assunto}:`, updatedItem);
-            },
-            error: (err) => {
-                console.log('Erro ao registrar voto:', err);
-            }
-        });
-    }
+  get allVoted(): boolean {
+    return this.agenda.length > 0 && this.agenda.every(item => !!item.vote);
   }
 
-  getTotalVotes(item: AgendaItem): number {
-    return (item.votesSim || 0) + (item.votesNao || 0) + (item.votesDiligencia || 0);
+  submitVotes() {
+    for(const item of this.agenda) {
+      console.log(`${item.id}:`, item.vote);
+      if(item.vote !== undefined) {
+        this.meetingService.vote(item.id, item.vote).subscribe(updated => {
+          //opcional
+          const idx = this.agenda.findIndex(x => x.id === updated.id);
+
+          if(idx >= 0)
+            this.agenda[idx] = updated;
+
+          console.log(`Voto registrado para ${updated.title}:`, updated);
+          this.votedItems = [...this.agenda.map(item => ({ ...item }))];
+          this.voteDisabled = true;
+        })
+      }
+    }
   }
 }

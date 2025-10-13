@@ -1,0 +1,22 @@
+<div class="accordion-item">
+  <div class="accordion-title">
+    <span class="text-item"
+      >{{ title }}</span
+    >
+  </div>
+  <div class="accordion-content">
+    <span class="text-body">{{ itemText }}</span>
+  </div>
+
+  <app-radio-button
+    [options]="[
+        { label: 'Aprovação', value: 'approve' },
+        { label: 'Reprovação', value: 'reprove' },
+        { label: 'Abstenção', value: 'abstain' }
+    ]"
+    [name]="radioName"
+    [(selectedValue)]="selectedVote"
+    [isDisabled]="isDisabled">
+  </app-radio-button>
+
+</div>

@@ -4,10 +4,13 @@ import { AgendaItem } from './agenda-item.entity';
 @Entity()
 export class Agenda {
   @PrimaryGeneratedColumn()
-  id!: number; // Use non-null assertion as TypeORM populates this
+  id: number;
 
-  @OneToMany(() => AgendaItem, (agendaItem) => agendaItem.agenda, { cascade: true })
-  items!: AgendaItem[]; // Use non-null assertion; TypeORM initializes the relation array
+  @OneToMany(() => AgendaItem, (item) => item.agenda, { cascade: true })
+  items: AgendaItem[];
 
-  // Removed constructor to avoid initializing 'items' with '=[]'
+  constructor(id?: number, items?: AgendaItem[]) {
+    if (id) this.id = id;
+    if (items) this.items = items;
+  }
 }
