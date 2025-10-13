@@ -24,7 +24,7 @@ export class Meeting {
       next: (data) => {
         this.agenda = data.items.map(item => ({
           ...item,
-          vote: item.vote ?? '' // inicializa vote como string vazia se undefined
+          vote: item.vote ?? '' // inicializa vote se undefined
         }));
         this.loaded = true;
       },
@@ -32,6 +32,10 @@ export class Meeting {
         console.log('Erro ao carregar pauta:', err);
       }
     });
+  }
+
+  get allVoted(): boolean {
+    return this.agenda.length > 0 && this.agenda.every(item => !!item.vote);
   }
 
   submitVotes() {

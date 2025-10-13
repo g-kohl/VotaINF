@@ -32,7 +32,7 @@
     <div class="vote-button">
         <button 
             (click)="submitVotes()"
-            [disabled]="voteDisabled">
+            [disabled]="!allVoted || voteDisabled">
             Submeter votos
         </button>
     </div>
