@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Agenda, AgendaItem } from './agenda.model';
+import { Agenda } from './agenda.entity';
+import { AgendaItem } from './agenda-item.entity';
 
 @Injectable()
 export class AgendaService {
