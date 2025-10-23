@@ -1,0 +1,110 @@
+/* Sidebar fixa à esquerda */
+.menu_48-497 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;                /* ajuste a largura como preferir */
+  background: #000000;         /* cor de fundo (escura) */
+  color: #fff;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px #7a7979;
+  z-index: 1000;
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+/* Estilos internos (ajuste conforme classes geradas no HTML) */
+.menu_48-497 .menu-header_47-673,
+.menu_48-497 .menu-header_47-727 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.menu_48-497 .text-vota-inf_47-675 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.menu_48-497 .menu-section_47-677 {
+  margin-top: 12px;
+}
+
+.group-2_47-774 {
+  display: flex;
+  align-items: center; /* alinha verticalmente no centro */
+  gap: 8px; /* espaçamento entre o ícone e o texto */
+}
+
+
+.check-circle_47-769 {
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+
+.text-vota-inf_47-675 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.menu_48-497 .menu-item_47-825,
+.menu_48-497 .menu-item_47-869,
+.menu_48-497 .menu-item_47-833,
+.menu_48-497 .menu-item_47-842,
+.menu_48-497 .menu-item_47-851,
+.menu_48-497 .menu-item_47-860,
+.menu_48-497 .menu-item_47-679 {
+  padding: 10px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.menu_48-497 .menu-item_47-825:hover,
+.menu_48-497 .menu-item_47-869:hover,
+.menu_48-497 .menu-item_47-833:hover,
+.menu_48-497 .menu-item_47-842:hover,
+.menu_48-497 .menu-item_47-851:hover,
+.menu_48-497 .menu-item_47-860:hover,
+.menu_48-497 .menu-item_47-679:hover {
+  background: #666666;
+}
+
+/* Marca/rodapé SVG */
+.menu_48-497 .marca-branca-fundo-preto-1_47-547 {
+  margin-top: 20px;
+  display: block;
+}
+
+/* Responsivo: em telas pequenas o menu fica relativo e o conteúdo ocupa 100% */
+@media (max-width: 768px) {
+  .menu_48-497 {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    padding: 12px;
+  }
+}
+.group-2_47-774 {
+  display: flex;
+  align-items: center; /* centraliza verticalmente */
+  gap: 8px; /* espaço entre o ícone e o texto */
+}
+
+.check-circle_47-769 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}
+
+.text-vota-inf_47-675 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1; /* ajuda a alinhar texto com ícones */
+}

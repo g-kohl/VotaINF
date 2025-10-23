@@ -1,41 +1,45 @@
 <div class="home-container">
-    <header class="header">
-        <div class="header-texto">
-            <h1>Reunião de colegiado</h1>
-            <p>Departamento de Informática Aplicada (INA)</p>
-            <p>10/10/2025</p>
+    <app-menu></app-menu>
+    
+    <div class="app-content">
+        <header class="header">
+            <div class="header-texto">
+                <h1>Reunião de colegiado</h1>
+                <p>Departamento de Informática Aplicada (INA)</p>
+                <p>10/10/2025</p>
+            </div>
+            <div class="header-imagem">
+                <img ngSrc="/assets/logo_inf_cor.png" width="140" height="83"/>
+            </div>
+        </header>
+
+        <app-accordion-item
+            *ngFor="let item of agenda; let i = index"
+            [title]="item.title"
+            [itemText]="item.description"
+            [radioName]="'item-' + item.id"
+            [(selectedVote)]="item.vote"
+            [isDisabled]="voteDisabled">
+        </app-accordion-item>
+
+        <div *ngIf="votedItems.length > 0">
+        <h3>Itens votados:</h3>
+        <ul>
+            <li *ngFor="let item of votedItems">{{ item.title }}: {{ item.vote }}</li>
+        </ul>
         </div>
-        <div class="header-imagem">
-            <img ngSrc="/assets/logo_inf_cor.png" width="140" height="83"/>
+
+        <div class="button-group">
+            <div class="vote-button">
+                <button 
+                    (click)="submitVotes()"
+                    [disabled]="!allVoted || voteDisabled">
+                    Submeter votos
+                </button>
+            </div>
         </div>
-    </header>
-
-    <app-accordion-item
-        *ngFor="let item of agenda; let i = index"
-        [title]="item.title"
-        [itemText]="item.description"
-        [radioName]="'item-' + item.id"
-        [(selectedVote)]="item.vote"
-        [isDisabled]="voteDisabled">
-    </app-accordion-item>
-
-    <div *ngIf="votedItems.length > 0">
-    <h3>Itens votados:</h3>
-    <ul>
-        <li *ngFor="let item of votedItems">{{ item.title }}: {{ item.vote }}</li>
-    </ul>
     </div>
-</div>
 
-
-<div class="button-group">
-    <div class="vote-button">
-        <button 
-            (click)="submitVotes()"
-            [disabled]="!allVoted || voteDisabled">
-            Submeter votos
-        </button>
-    </div>
 </div>
 
 

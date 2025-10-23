@@ -21,14 +21,14 @@
 
 .container h1 {
   margin-bottom: 30px;
-  color: #333333;
+  color: #000000;
 }
 
 .button-group button {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
-  background-color: #e74c3c;
+  background-color: #FF0000;
   border: none;
   border-radius: 4px;
   color: white;
@@ -50,4 +50,17 @@
 /* Remove o hover quando desabilitado */
 .button-group button:disabled:hover {
   background-color: #cccccc;
+}
+
+/* ou coloque em shared-styles.css se preferir aplicar globalmente */
+.app-content {
+  margin-left: 260px; /* deve ser igual à largura da sidebar */
+  transition: margin-left .2s ease;
+}
+
+/* em telas pequenas remove o margin-left */
+@media (max-width: 768px) {
+  .app-content {
+    margin-left: 0;
+  }
 }

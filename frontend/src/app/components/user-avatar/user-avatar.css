@@ -1,0 +1,21 @@
+.avatar_47-812 {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: #2c2c2c;
+  width: 40px;
+  height: 40px;
+}
+.text-initials_I47-812-9762-1106 {
+  top: 8px;
+  left: 14px;
+  position: absolute;
+  display: flex;
+  color: #f5f5f5;
+  font-weight: 400;
+  text-align: center;
+  text-wrap: nowrap;
+  width: 12px;
+  height: 24px;
+}
