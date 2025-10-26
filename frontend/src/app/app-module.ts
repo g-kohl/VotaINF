@@ -16,6 +16,9 @@ import { RadioButtonComponent } from './components/radio-field/radio-field';
 import { NgOptimizedImage } from '@angular/common';
 import { MenuHeader } from './components/menu-header/menu-header';
 import { MenuComponent } from './components/menu-component/menu-component';
+import { Card } from './components/card/card';
+import { TextInputSimple } from './components/text-input-simple/text-input-simple';
+import { TextInputMultiline } from './components/text-input-multiline/text-input-multiline';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,6 @@ import { MenuComponent } from './components/menu-component/menu-component';
     Dashboard,
     Meeting,
     Search,
-
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,9 @@ import { MenuComponent } from './components/menu-component/menu-component';
     NgOptimizedImage,
     MenuHeader,
     MenuComponent,
+    Card,
+    TextInputSimple,
+    TextInputMultiline,
   ],
   providers: [
     provideHttpClient(),

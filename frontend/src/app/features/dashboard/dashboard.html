@@ -1,5 +1,32 @@
-<div>
-    <div>
-        <h1>Dashboard</h1>
+<div class="home-container">
+
+    <app-menu></app-menu>
+    
+    <div class="app-content">
+        <app-card 
+            [title]="'Criar itens de pauta'"
+            [subtitle]="'Os itens estarão disponíveis para serem pautados ao criar uma nova reunião.'">
+
+            <app-text-input-simple
+                [title]="'Título:'"
+                [placeholder]="'Digite o título para o item de pauta.'">
+            </app-text-input-simple>
+
+            <app-text-input-multiline
+                [title]="'Descrição:'"
+                [placeholder]="'Descreva o item de pauta.'">
+            </app-text-input-multiline>
+
+            <div class="button-group">
+                <button class="button-attach">📎  Adicionar anexos...</button>
+            </div>
+
+            <div class="button-group">
+                <button class="button-create">Criar item</button>
+            </div>
+        </app-card>
     </div>
+
 </div>
+
+
