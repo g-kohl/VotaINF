@@ -9,7 +9,7 @@ import { Search } from './features/search/search';
 
 const routes: Routes = [
   { path: '', component: Auth },
-  { path: 'dashboard', component: Dashboard },
+  { path: 'nova-pauta', component: Dashboard },
   { path: 'home', component: Home },
   { path: 'meeting', component: Meeting },
   { path: 'search', component: Search }
