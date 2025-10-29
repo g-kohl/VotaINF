@@ -19,9 +19,9 @@
   width: -webkit-fill-available;
   padding: 30px;
   margin-top: 24px;
-  margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 24px;
+  width: 90%;
 }
 .accordion-title {
   display: flex;

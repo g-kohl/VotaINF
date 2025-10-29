@@ -1,0 +1,26 @@
+/* Sidebar fixa à esquerda */
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;                /* ajuste a largura como preferir */
+  background: #000000;         /* cor de fundo (escura) */
+  color: #fff;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px #7a7979;
+  z-index: 1000;
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.menu-section {
+  margin-top: 12px;
+}
+
+.logo-inf {
+  display: block;
+  position:absolute;
+  right: 40px;
+  bottom: 32px
+}

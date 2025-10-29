@@ -14,6 +14,11 @@ import { Header } from './components/header/header';
 import { AccordionItem } from './components/accordion-item/accordion-item';
 import { RadioButtonComponent } from './components/radio-field/radio-field';
 import { NgOptimizedImage } from '@angular/common';
+import { MenuHeader } from './components/menu-header/menu-header';
+import { MenuComponent } from './components/menu-component/menu-component';
+import { Card } from './components/card/card';
+import { TextInputSimple } from './components/text-input-simple/text-input-simple';
+import { TextInputMultiline } from './components/text-input-multiline/text-input-multiline';
 
 @NgModule({
   declarations: [
@@ -32,6 +37,11 @@ import { NgOptimizedImage } from '@angular/common';
     AccordionItem,
     RadioButtonComponent,
     NgOptimizedImage,
+    MenuHeader,
+    MenuComponent,
+    Card,
+    TextInputSimple,
+    TextInputMultiline,
   ],
   providers: [
     provideHttpClient(),

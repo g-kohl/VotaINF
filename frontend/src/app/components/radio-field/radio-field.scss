@@ -29,8 +29,8 @@
       cursor: pointer;
 
       &:checked + .custom-radio {
-        background-color: #e74c3c;
-        border-color: #e74c3c;
+        background-color: #FF0000;
+        border-color: #FF0000;
 
         &::after {
           display: block;

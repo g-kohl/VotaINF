@@ -1,0 +1,53 @@
+@import '../../shared/styles/shared-styles.css';
+
+.home-container h1 {
+  margin-bottom: 1px;
+  color: #000000;
+}
+
+.home-container {
+  background: transparent;
+  font-family: Arial, sans-serif;
+}
+
+.button-create {
+  width:fit-content;
+  padding: 12px;
+  flex-wrap: nowrap;
+  background-color: #2C2C2C;
+  color: white;
+  border:1px;
+  font-family: 'Inter', sans-serif;
+}
+
+.button-attach {
+  display: inline-flex;
+  width:fit-content;
+  align-items: center;
+  border: 1px solid #767676;
+  gap: 8px;
+  background-color: #E3E3E3;
+  color: rgb(0, 0, 0);
+  padding: 5px 13px;
+  flex-wrap: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Estilo do header */
+.header {
+  display: flex;              /* Coloca texto e imagem lado a lado */
+  justify-content: space-between; /* Espaço entre texto e imagem */
+  align-items: center;        /* Alinha verticalmente no centro */
+  padding: 20px 40px;
+}
+
+/* Área de texto à esquerda */
+.header-texto {
+  max-width: 60%;             /* Limita a largura para não colar na imagem */
+}
+
+/* Área da imagem à direita */
+.header-imagem img {
+  width: 150px;               /* Ajuste conforme o tamanho desejado */
+  height: auto;
+}

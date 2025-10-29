@@ -1,31 +1,20 @@
 @import '../../shared/styles/shared-styles.css';
 
-/* Reset básico */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
 .home-container h1 {
   margin-bottom: 1px;
-  color: #333333;
+  color: #000000;
 }
 
 .home-container {
-  background-color: #ffffff;
+  background: transparent;
   font-family: Arial, sans-serif;
 }
 
-.vote-button {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+.button {
+  width:fit-content;
+  padding: 12px;
   flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 12px;
-  font-family: Arial, sans-serif;
-  padding: 10px;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Estilo do header */

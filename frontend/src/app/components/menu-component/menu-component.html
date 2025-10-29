@@ -1,0 +1,24 @@
+<div class="menu">
+  <app-menu-header></app-menu-header>
+
+  <app-menu-separator></app-menu-separator>
+
+  <app-menu-welcome></app-menu-welcome>
+
+  <div class="menu-section">
+    <app-menu-item [title]="'Página inicial'" [route]="'/home'" (clicked)="onMenuItemClick($event)"></app-menu-item>
+    <app-menu-item [title]="'Cadastros'" [route]="'/home'" (clicked)="onMenuItemClick($event)"></app-menu-item>
+    <app-menu-item [title]="'Reuniões'" [route]="'/meeting'" (clicked)="onMenuItemClick($event)"></app-menu-item>
+    <app-menu-item [title]="'Pautas'" [route]="'/nova-pauta'" (clicked)="onMenuItemClick($event)"></app-menu-item>
+    <app-menu-item [title]="'Pesquisa'" [route]="'/search'" (clicked)="onMenuItemClick($event)"></app-menu-item>
+    <app-menu-item [title]="'Sair'" [route]="'/'" (clicked)="onMenuItemClick($event)"></app-menu-item>
+  </div>
+
+  <app-menu-separator></app-menu-separator>
+
+  <div class="logo-inf">
+    <img src="../../../assets/logo_inf_branco.jpg" 
+    alt="INF"
+    style="width:168px;height:95px;"
+    >
+</div>

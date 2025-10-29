@@ -1,0 +1,31 @@
+.label{
+    align-self: stretch;
+    color: #1E1E1E;
+
+    /* Body Base */
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400px;
+    line-height: 140%; /* 22.4px */
+    display: block;
+    margin-bottom: 8px;
+}
+
+.full-width-form {
+    width: 100%;
+    max-width: 90%;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    box-sizing: border-box;
+}
+
+.full-width-form input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}

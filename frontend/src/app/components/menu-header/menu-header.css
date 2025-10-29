@@ -1,0 +1,29 @@
+.menu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.group {
+  display: flex;
+  align-items: center; /* centraliza verticalmente */
+  gap: 8px; /* espaço entre o ícone e o texto */
+}
+
+.text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1; /* ajuda a alinhar texto com ícones */
+}
+
+.check-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}

@@ -1,0 +1,11 @@
+.menu-separator {
+  padding: 8px 16px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0px;
+  box-sizing: border-box;
+  width: -webkit-fill-available;
+}
