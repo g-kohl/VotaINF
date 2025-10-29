@@ -5,7 +5,7 @@ Sistema de gerenciamento de votações do colegiado do Departamento de Informát
 Stack:
 - Front-end: Angular (Typescript, modo standalone)
 - Back-end: NestJS
-- Banco de dados: ainda não configurado
+- Banco de dados: SQLite + TypeORM
 
 # Frameworks necessários
 
