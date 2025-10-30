@@ -237,7 +237,3 @@ main ────► criar branch ────► commits ────► rebase
                                                    │
                                                 merge ───► main
 ```
-
----
-
-Quer que eu gere **um PDF ou guia visual ilustrado (com diagramas e comandos)** desse tutorial, para compartilhar com sua equipe? Posso formatar ele em formato de **manual interno** ou **guia de onboarding**.
