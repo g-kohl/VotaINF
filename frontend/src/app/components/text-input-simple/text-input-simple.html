@@ -1,4 +1,4 @@
 <form class="full-width-form">
   <label class="label" for="titulo">{{title}}</label>
-  <input type="text" id="titulo" name="titulo" [placeholder]='placeholder'>
+  <input type="text" id="titulo" name="titulo" [placeholder]='placeholder' [value]="value" (input)="onValueChange($event)">
 </form>
