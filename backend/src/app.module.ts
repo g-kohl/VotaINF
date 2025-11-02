@@ -3,7 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AgendaModule } from './agenda/agenda.module';
-// import { AgendaItem } from './agenda/agenda.model';
+import { AgendaItemModule } from './agenda-item/agenda-item.module';
+import { UserModule } from './user/user.module';
+import { VoteModule } from './vote/vote.module';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { AgendaModule } from './agenda/agenda.module';
       synchronize: true,
       autoLoadEntities: true,
     })
-    , AgendaModule],
+    , AgendaModule, AgendaItemModule, UserModule, VoteModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -9,12 +9,14 @@
 
             <app-text-input-simple
                 [title]="'Título:'"
-                [placeholder]="'Digite o título para o item de pauta.'">
+                [placeholder]="'Digite o título para o item de pauta.'"
+                [(value)]="newItem.title">
             </app-text-input-simple>
 
             <app-text-input-multiline
                 [title]="'Descrição:'"
-                [placeholder]="'Descreva o item de pauta.'">
+                [placeholder]="'Descreva o item de pauta.'"
+                [(value)]="newItem.description">
             </app-text-input-multiline>
 
             <div class="button-group">
@@ -22,11 +24,9 @@
             </div>
 
             <div class="button-group">
-                <button class="button-create">Criar item</button>
+                <button class="button-create" (click)="createAgendaItem()">Criar item</button>
             </div>
         </app-card>
     </div>
 
 </div>
-
-
