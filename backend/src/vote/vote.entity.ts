@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Unique } from "typeorm";
 import { User } from "src/user/user.entity";
 import { AgendaItem } from "src/agenda-item/agenda-item.entity";
 
@@ -14,5 +14,6 @@ export class Vote {
   user: User;
 
   @ManyToOne(() => AgendaItem, agendaItem => agendaItem.votes)
+  @Unique(["User", "agendaItem"])
   agendaItem: AgendaItem;
 }
