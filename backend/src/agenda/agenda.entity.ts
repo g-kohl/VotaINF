@@ -1,16 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { AgendaItem } from './agenda-item.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { AgendaItem } from 'src/agenda-item/agenda-item.entity';
 
 @Entity()
 export class Agenda {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => AgendaItem, (item) => item.agenda, { cascade: true })
-  items: AgendaItem[];
+  @Column({ type: 'datetime', nullable: false })
+  begin: Date;
 
-  constructor(id?: number, items?: AgendaItem[]) {
-    if (id) this.id = id;
-    if (items) this.items = items;
-  }
+  @Column({ type: 'datetime', nullable: true })
+  end: Date;
+
+  @Column({ type: 'text' })
+  place: string;
+
+  @OneToMany(() => AgendaItem, agendaItem => agendaItem.agenda)
+  agendaItems: AgendaItem[];
 }

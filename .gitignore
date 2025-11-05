@@ -56,3 +56,8 @@ coverage/
 # =========================
 # (Nest gera dist/ mas já está ignorado acima)
 *.log
+
+# =========================
+# Data Base
+# =========================
+database.db
