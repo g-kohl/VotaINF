@@ -19,6 +19,8 @@ import { MenuComponent } from './components/menu-component/menu-component';
 import { Card } from './components/card/card';
 import { TextInputSimple } from './components/text-input-simple/text-input-simple';
 import { TextInputMultiline } from './components/text-input-multiline/text-input-multiline';
+import { Menu } from './features/menu/menu';
+import { NewMeeting } from './features/new-meeting/new-meeting';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { TextInputMultiline } from './components/text-input-multiline/text-input
     Dashboard,
     Meeting,
     Search,
+    Menu,
+    NewMeeting,
   ],
   imports: [
     BrowserModule,
