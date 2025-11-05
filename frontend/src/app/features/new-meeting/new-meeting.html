@@ -1,37 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formulário com Data e Itens</title>
-</head>
-<body>
-  <div class="form-container">
-    <h1>Agendar reunião de colegiado</h1>
+<div class="home-container">
 
-    <form>
-      <!-- Campos de Data e Horário -->
-      <div class="datetime-group">
-        <div class="field">
-          <label for="start-date">Data de Início</label>
-          <input type="date" id="start-date" name="start-date" required />
-        </div>
-        <div class="field">
-          <label for="start-time">Hora de Início</label>
-          <input type="time" id="start-time" name="start-time" required />
-        </div>
-      </div>
+    <app-menu></app-menu>
+    
+    <div class="app-content">
+        <app-card 
+            [title]="'Nova reunião'">
 
-      <div class="datetime-group">
-        <div class="field">
-          <label for="end-date">Data de Fim</label>
-          <input type="date" id="end-date" name="end-date" required />
-        </div>
-        <div class="field">
-          <label for="end-time">Hora de Fim</label>
-          <input type="time" id="end-time" name="end-time" required />
-        </div>
-      </div>
+            <app-button-switch></app-button-switch>
+            
+            <div class="row">
+              <app-form-date></app-form-date>
+              <app-form-time></app-form-time>
+            </div>
 
       <!-- Lista de Itens -->
       <div class="items-section">
@@ -46,28 +26,23 @@
           </li>
         </ul>
       </div>
+            <div class="row">
+              <app-form-date></app-form-date>
+              <app-form-time></app-form-time>
+            </div>
+            
+            <label class="title">Itens de pauta disponíveis:</label>
+            <div class="list">
+              <app-form-checkbox></app-form-checkbox>
+              <app-form-checkbox></app-form-checkbox>
+              <app-form-checkbox></app-form-checkbox>
+              <app-form-checkbox></app-form-checkbox>
+            </div>
 
-      <!-- Botão Toggle -->
-      <div class="toggle-section">
-        <label class="toggle">
-          <input type="checkbox" id="toggle-btn">
-          <span class="slider"></span>
-        </label>
-        <span id="toggle-label">Reunião remota e assíncrona</span>
-      </div>
+            <div class="button-group">
+                <button class="button-create">Criar reunião</button>
+            </div>
+        </app-card>
+    </div>
 
-      <button type="submit" class="submit-btn">Salvar</button>
-    </form>
-  </div>
-
-  <script>
-    // Atualiza o texto do toggle
-    const toggle = document.getElementById('toggle-btn');
-    const label = document.getElementById('toggle-label');
-
-    toggle.addEventListener('change', () => {
-      label.textContent = toggle.checked ? 'Ativado' : 'Desativado';
-    });
-  </script>
-</body>
-</html>
+</div>

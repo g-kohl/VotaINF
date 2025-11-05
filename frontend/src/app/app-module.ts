@@ -21,6 +21,10 @@ import { TextInputSimple } from './components/text-input-simple/text-input-simpl
 import { TextInputMultiline } from './components/text-input-multiline/text-input-multiline';
 import { Menu } from './features/menu/menu';
 import { NewMeeting } from './features/new-meeting/new-meeting';
+import { FormDate } from './components/form-date/form-date';
+import { FormTime } from './components/form-time/form-time';
+import { FormCheckbox } from './components/form-checkbox/form-checkbox';
+import { ButtonSwitch } from './components/button-switch/button-switch';
 
 @NgModule({
   declarations: [
@@ -46,6 +50,10 @@ import { NewMeeting } from './features/new-meeting/new-meeting';
     Card,
     TextInputSimple,
     TextInputMultiline,
+    FormDate,
+    FormTime,
+    FormCheckbox,
+    ButtonSwitch,
   ],
   providers: [
     provideHttpClient(),
