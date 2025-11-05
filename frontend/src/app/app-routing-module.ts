@@ -6,13 +6,17 @@ import { Dashboard } from './features/dashboard/dashboard';
 import { Home } from './features/home/home';
 import { Meeting } from './features/meeting/meeting';
 import { Search } from './features/search/search';
+import { Menu } from './features/menu/menu';
+import { NewMeeting } from './features/new-meeting/new-meeting';
 
 const routes: Routes = [
   { path: '', component: Auth },
   { path: 'nova-pauta', component: Dashboard },
   { path: 'home', component: Home },
   { path: 'meeting', component: Meeting },
-  { path: 'search', component: Search }
+  { path: 'search', component: Search },
+  { path: 'menu', component: Menu},
+  { path: 'new-meeting', component: NewMeeting}
 ];
 
 @NgModule({
