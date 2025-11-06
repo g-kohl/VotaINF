@@ -1,8 +1,8 @@
 <div class="row">
-    <label class="label">Reunião remota</label>
+    <label class="label">{{title}}</label>
     <label class="switch">
-    <input type="checkbox">
-    <span class="slider round"></span>
+        <input type="checkbox" (click)="toggle()">
+        <span class="slider round"></span>
     </label>
 </div>
-<label class="sublabel">Reunião aberta por um período pré-determinado</label>
+<label class="sublabel">{{subtitle}}</label>

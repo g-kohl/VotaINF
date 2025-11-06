@@ -28,4 +28,8 @@ export class NewMeeting implements OnInit {
       this.selectedItems = this.selectedItems.filter(itemId => itemId !== id);
     }
   }
+
+  onToggle(state: boolean) {
+    console.log('Estado do toggle:', state);
+  }
 }

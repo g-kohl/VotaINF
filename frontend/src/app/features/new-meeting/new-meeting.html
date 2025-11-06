@@ -6,37 +6,31 @@
         <app-card 
             [title]="'Nova reunião'">
 
-            <app-button-switch></app-button-switch>
+            <app-button-switch 
+              title="Reunião remota" 
+              subtitle="Aberta por um período programado"
+              (toggleChange)="onToggle($event)">
+            </app-button-switch>
             
             <div class="row">
-              <app-form-date></app-form-date>
-              <app-form-time></app-form-time>
+              <app-form-date title="Data de início"></app-form-date>
+              <app-form-time title="Horário de início"></app-form-time>
             </div>
 
-      <!-- Lista de Itens -->
-      <div class="items-section">
-        <h2>Itens de pauta</h2>
-      
-        <ul class="item-list">
-          <li *ngFor="let item of agendaItems">
-            <label>
-              <input type="checkbox" [value]="item.id" (change)="toggleItem(item.id, $event.target.checked)" />
-              {{ item.title }}
-            </label>
-          </li>
-        </ul>
-      </div>
             <div class="row">
-              <app-form-date></app-form-date>
-              <app-form-time></app-form-time>
+              <app-form-date title="Data de fim"></app-form-date>
+              <app-form-time title="Horário de fim"></app-form-time>
             </div>
             
-            <label class="title">Itens de pauta disponíveis:</label>
             <div class="list">
-              <app-form-checkbox></app-form-checkbox>
-              <app-form-checkbox></app-form-checkbox>
-              <app-form-checkbox></app-form-checkbox>
-              <app-form-checkbox></app-form-checkbox>
+              <label class="title">Itens de pauta disponíveis:</label>
+              <div *ngFor="let item of agendaItems">
+                <app-form-checkbox 
+                  [title]="item.title" 
+                  [subtitle]="item.dateCreation"
+                  [itemId]="item.id">
+                </app-form-checkbox>
+              </div>
             </div>
 
             <div class="button-group">

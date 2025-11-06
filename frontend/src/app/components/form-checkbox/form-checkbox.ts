@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input,  } from '@angular/core';
 
 @Component({
   selector: 'app-form-checkbox',
@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './form-checkbox.css'
 })
 export class FormCheckbox {
+  @Input() itemId: number = 0;
+  @Input() title: string = '';
+  @Input() subtitle: Date = new Date;
+
 
 }

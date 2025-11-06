@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-form-time',
@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './form-time.css'
 })
 export class FormTime {
-
+  @Input() title: string = '';
 }
