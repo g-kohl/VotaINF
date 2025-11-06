@@ -36,11 +36,14 @@
       <!-- Lista de Itens -->
       <div class="items-section">
         <h2>Itens de pauta</h2>
+      
         <ul class="item-list">
-          <li><label><input type="checkbox" /> Item 1</label></li>
-          <li><label><input type="checkbox" /> Item 2</label></li>
-          <li><label><input type="checkbox" /> Item 3</label></li>
-          <li><label><input type="checkbox" /> Item 4</label></li>
+          <li *ngFor="let item of agendaItems">
+            <label>
+              <input type="checkbox" [value]="item.id" (change)="toggleItem(item.id, $event.target.checked)" />
+              {{ item.title }}
+            </label>
+          </li>
         </ul>
       </div>
 
