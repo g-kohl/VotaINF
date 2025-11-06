@@ -9,7 +9,7 @@ import { Component, Input,  } from '@angular/core';
 export class FormCheckbox {
   @Input() itemId: number = 0;
   @Input() title: string = '';
-  @Input() subtitle: Date = new Date;
+  @Input() subtitle: string = '';
 
 
 }

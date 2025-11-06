@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AgendaItemService, AgendaItem } from '../../services/agenda-item.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-new-meeting',
@@ -31,5 +32,12 @@ export class NewMeeting implements OnInit {
 
   onToggle(state: boolean) {
     console.log('Estado do toggle:', state);
+  }
+
+  formatDateCreation(item: AgendaItem, format = 'dd/MM/yyyy'): string {
+    if (!item?.dateCreation) return '';
+    const date = new Date(item.dateCreation);
+    const pipe = new DatePipe('pt-BR');
+    return pipe.transform(date, format) ?? '';
   }
 }

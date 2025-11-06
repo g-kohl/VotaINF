@@ -27,7 +27,7 @@
               <div *ngFor="let item of agendaItems">
                 <app-form-checkbox 
                   [title]="item.title" 
-                  [subtitle]="item.dateCreation"
+                  [subtitle]="'Criado em ' + formatDateCreation(item)"
                   [itemId]="item.id">
                 </app-form-checkbox>
               </div>
