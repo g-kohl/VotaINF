@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class FormDate {
   @Input() title: string = '';
+  @Input() id: string = '';
 
 }

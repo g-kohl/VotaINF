@@ -41,4 +41,5 @@ export class NewMeeting implements OnInit {
     const pipe = new DatePipe('pt-BR');
     return pipe.transform(date, format) ?? '';
   }
+
 }
