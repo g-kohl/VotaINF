@@ -60,6 +60,12 @@
   flex-wrap: wrap;
 }
 
+.column{
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
 .list{
   display: flex;
   flex-direction: column;

@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 export class NewMeeting implements OnInit {
   agendaItems: AgendaItem[] = [];
   selectedItems: number[] = [];
+  isRemoteMeeting: boolean = false;
 
   constructor(private agendaItemService: AgendaItemService) { }
 
@@ -31,7 +32,7 @@ export class NewMeeting implements OnInit {
   }
 
   onToggle(state: boolean) {
-    console.log('Estado do toggle:', state);
+    this.isRemoteMeeting = state;
   }
 
   formatDateCreation(item: AgendaItem, format = 'dd/MM/yyyy'): string {
