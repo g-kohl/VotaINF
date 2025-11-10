@@ -1,1 +1,27 @@
-<p>menu works!</p>
+<div class="home-container">
+
+    <app-menu></app-menu>
+    
+    <div class="app-content">
+        <app-card 
+            [title]="'Reuniões de colegiado'">
+            <app-testimonial-card
+                [title]="'Reunião ordinária'"
+                [start_datetime]="'01/01/2025'"
+                [end_datetime]="'01/01/2025'"
+                [place]="'Sala 666'"
+                [status]="'Iniciada'"
+                [isRemote]="true">
+            </app-testimonial-card>
+            <app-testimonial-card
+                [title]="'Reunião ordinária'"
+                [start_datetime]="'01/01/2025'"
+                [end_datetime]="'01/01/2025'"
+                [place]="'Sala 666'"
+                [status]="'Iniciada'"
+                [isRemote]="false">
+            </app-testimonial-card>
+        </app-card>
+    </div>
+
+</div>
