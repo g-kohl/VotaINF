@@ -1,0 +1,57 @@
+.checkbox-wrapper {
+  display: flex;
+  align-items: flex-start; /* alinha checkbox com o topo das labels */
+  gap: 12px; /* distância horizontal entre checkbox e labels */
+}
+
+.labels {
+  display: flex;
+  flex-direction: column; /* sublabel fica embaixo da label principal */
+}
+
+.main-label {
+  color: #1E1E1E;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 140%;
+}
+
+.sublabel {
+  color: #757575;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none; /* Safari/Chrome */
+  -moz-appearance: none;    /* Firefox */
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #757575;
+  border-radius: 4px;       /* bordas arredondadas */
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #2C2C2C;
+  border-color: #2C2C2C;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  width: 4px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+

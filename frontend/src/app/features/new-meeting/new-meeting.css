@@ -1,149 +1,82 @@
-body {
-  font-family: "Inter", sans-serif;
-  background-color: #f3f6f8;
-  display: flex;
-  justify-content: center;
+@import '../../shared/styles/shared-styles.css';
+
+.home-container h1 {
+  margin-bottom: 1px;
+  color: #000000;
+}
+
+.home-container {
+  background: transparent;
+  font-family: Arial, sans-serif;
+}
+
+.button-create {
+  width:fit-content;
+  padding: 12px;
+  flex-wrap: nowrap;
+  background-color: #2C2C2C;
+  color: white;
+  border:1px;
+  font-family: 'Inter', sans-serif;
+}
+
+.button-attach {
+  display: inline-flex;
+  width:fit-content;
   align-items: center;
-  min-height: 100vh;
-  margin: 0;
+  border: 1px solid #767676;
+  gap: 8px;
+  background-color: #E3E3E3;
+  color: rgb(0, 0, 0);
+  padding: 5px 13px;
+  flex-wrap: nowrap;
+  font-family: 'Inter', sans-serif;
 }
 
-.form-container {
-  background: white;
-  padding: 28px 36px;
-  border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 480px;
+/* Estilo do header */
+.header {
+  display: flex;              /* Coloca texto e imagem lado a lado */
+  justify-content: space-between; /* Espaço entre texto e imagem */
+  align-items: center;        /* Alinha verticalmente no centro */
+  padding: 20px 40px;
 }
 
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 24px;
+/* Área de texto à esquerda */
+.header-texto {
+  max-width: 60%;             /* Limita a largura para não colar na imagem */
 }
 
-.datetime-group {
+/* Área da imagem à direita */
+.header-imagem img {
+  width: 150px;               /* Ajuste conforme o tamanho desejado */
+  height: auto;
+}
+
+.row {
   display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
+  flex-direction: row;
+  gap: 100px; 
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
-.field {
-  flex: 1;
+.column{
   display: flex;
   flex-direction: column;
+  gap: 48px;
 }
 
-label {
-  font-weight: 500;
-  color: #444;
-  margin-bottom: 6px;
-}
-
-input[type="date"],
-input[type="time"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-.items-section {
-  margin-top: 16px;
-  margin-bottom: 20px;
-}
-
-.items-section h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #555;
-}
-
-.item-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.item-list li {
-  margin-bottom: 8px;
-}
-
-.item-list label {
+.list{
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  color: #333;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.toggle-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-/* Botão Toggle (estilo switch) */
-.toggle {
-  position: relative;
-  display: inline-block;
-  width: 52px;
-  height: 28px;
-}
-
-.toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  background-color: #ccc;
-  border-radius: 28px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition: 0.3s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.3s;
-}
-
-.toggle input:checked + .slider {
-  background-color: #4caf50;
-}
-
-.toggle input:checked + .slider:before {
-  transform: translateX(24px);
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.submit-btn:hover {
-  background-color: #0056b3;
+.title{
+  color: #1E1E1E;
+  font-family: 'Inter', sans-serif;
+  font-size: 16;
+  font-style: bold;
+  font-weight: 700;
+  line-height: 140%; /* 16px */
 }

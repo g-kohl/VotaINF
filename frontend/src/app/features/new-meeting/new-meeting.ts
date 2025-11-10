@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AgendaItemService, AgendaItem } from '../../services/agenda-item.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-new-meeting',
@@ -10,6 +11,7 @@ import { AgendaItemService, AgendaItem } from '../../services/agenda-item.servic
 export class NewMeeting implements OnInit {
   agendaItems: AgendaItem[] = [];
   selectedItems: number[] = [];
+  isRemoteMeeting: boolean = false;
 
   constructor(private agendaItemService: AgendaItemService) { }
 
@@ -28,4 +30,16 @@ export class NewMeeting implements OnInit {
       this.selectedItems = this.selectedItems.filter(itemId => itemId !== id);
     }
   }
+
+  onToggle(state: boolean) {
+    this.isRemoteMeeting = state;
+  }
+
+  formatDateCreation(item: AgendaItem, format = 'dd/MM/yyyy'): string {
+    if (!item?.dateCreation) return '';
+    const date = new Date(item.dateCreation);
+    const pipe = new DatePipe('pt-BR');
+    return pipe.transform(date, format) ?? '';
+  }
+
 }

@@ -1,4 +1,4 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { NgModule, provideBrowserGlobalErrorListeners, LOCALE_ID } from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,8 @@ import { Search } from './features/search/search';
 import { Header } from './components/header/header';
 import { AccordionItem } from './components/accordion-item/accordion-item';
 import { RadioButtonComponent } from './components/radio-field/radio-field';
-import { NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { MenuHeader } from './components/menu-header/menu-header';
 import { MenuComponent } from './components/menu-component/menu-component';
 import { Card } from './components/card/card';
@@ -21,6 +22,12 @@ import { TextInputSimple } from './components/text-input-simple/text-input-simpl
 import { TextInputMultiline } from './components/text-input-multiline/text-input-multiline';
 import { Menu } from './features/menu/menu';
 import { NewMeeting } from './features/new-meeting/new-meeting';
+import { FormDate } from './components/form-date/form-date';
+import { FormTime } from './components/form-time/form-time';
+import { FormCheckbox } from './components/form-checkbox/form-checkbox';
+import { ButtonSwitch } from './components/button-switch/button-switch';
+
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -46,11 +53,16 @@ import { NewMeeting } from './features/new-meeting/new-meeting';
     Card,
     TextInputSimple,
     TextInputMultiline,
+    FormDate,
+    FormTime,
+    FormCheckbox,
+    ButtonSwitch,
   ],
   providers: [
     provideHttpClient(),
     provideBrowserGlobalErrorListeners(),
-    provideClientHydration(withEventReplay())
+    provideClientHydration(withEventReplay()),
+    {provide: LOCALE_ID, useValue: 'pt-BR'}
   ],
   bootstrap: [App]
 })

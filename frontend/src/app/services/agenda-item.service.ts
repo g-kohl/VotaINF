@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 export interface AgendaItem {
   id: number;
   title: string;
+  dateCreation: Date;
   description?: string;
 }
 
