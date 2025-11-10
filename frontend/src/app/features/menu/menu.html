@@ -5,13 +5,16 @@
     <div class="app-content">
         <app-card 
             [title]="'Reuniões de colegiado'">
+            <!-- Exemplos de mocks com variações de estilo -->
             <app-testimonial-card
                 [title]="'Reunião ordinária'"
                 [start_datetime]="'01/01/2025'"
                 [end_datetime]="'01/01/2025'"
                 [place]="'Sala 666'"
                 [status]="'Iniciada'"
-                [isRemote]="true">
+                [isRemote]="true"
+                [isOngoing]="false"
+                [isFinished]="true">
             </app-testimonial-card>
             <app-testimonial-card
                 [title]="'Reunião ordinária'"
@@ -19,7 +22,9 @@
                 [end_datetime]="'01/01/2025'"
                 [place]="'Sala 666'"
                 [status]="'Iniciada'"
-                [isRemote]="false">
+                [isRemote]="false"
+                [isOngoing]="true"
+                [isFinished]="false">
             </app-testimonial-card>
         </app-card>
     </div>
