@@ -1,6 +1,6 @@
 :host {
   display: block;      /* garante que ocupe toda largura disponível */
-  width: 100%;
+  width: 90%;
   box-sizing: border-box;
   padding: 16px;       /* padding interno do card */
 }
@@ -17,7 +17,6 @@
     flex-shrink: 0;
     border-radius: 9px;
     background: #FFFFFF;
-    gap: 48px;
 }
 
 .text{

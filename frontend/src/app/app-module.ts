@@ -28,6 +28,7 @@ import { FormCheckbox } from './components/form-checkbox/form-checkbox';
 import { ButtonSwitch } from './components/button-switch/button-switch';
 
 registerLocaleData(localePt);
+import { TestimonialCard } from './components/testimonial-card/testimonial-card';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ registerLocaleData(localePt);
     FormTime,
     FormCheckbox,
     ButtonSwitch,
+    TestimonialCard,
   ],
   providers: [
     provideHttpClient(),

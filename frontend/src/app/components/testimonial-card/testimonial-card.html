@@ -1,0 +1,38 @@
+<div class="card-list">
+    <div class="card">
+        @if (isRemote) {
+            <div class="card-text">
+                @if (isOngoing) {
+                    <label class="title" [routerLink]="['/meeting']" style="cursor: pointer;">{{title}}</label>
+                } @else {
+                    <label class="title">{{title}}</label>
+                }
+                <label class="description"><b>Data e horário: </b>{{start_datetime}}</label>
+                <label class="description"><b>Local: </b>{{place}}</label>
+                <label class="status">{{status}}</label>
+            </div>
+            <div class="card-button">
+                <button>Relatório</button>
+            </div>
+        } @else {
+            <div class="card-text">
+                @if (isOngoing) {
+                    <label class="title" [routerLink]="['/meeting']" style="cursor: pointer;">{{title}}</label>
+                } @else {
+                    <label class="title">{{title}}</label>
+                }
+                <label class="description"><b>Período: </b>{{start_datetime}} - {{end_datetime}}</label>
+                @if (isOngoing) {
+                    <label class="status-open status">{{status}}</label>
+                } @else {
+                    <label class="status">{{status}}</label>
+                }
+            </div>
+            @if (isFinished) {
+            <div class="card-button">
+                <button>Relatório</button>
+            </div>   
+            }
+        }
+    </div>
+</div>
