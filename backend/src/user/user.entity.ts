@@ -12,6 +12,9 @@ export class User {
   @Column({ type: 'text', nullable: false })
   email: string;
 
+  @Column({ type: 'text', nullable: false }) 
+  password: string; 
+
   @Column({ type: 'text', nullable: false })
   role: string;
 
