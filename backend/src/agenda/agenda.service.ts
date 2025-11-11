@@ -1,32 +1,56 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, In, Between } from 'typeorm';
 import { Agenda } from './agenda.entity';
+import { AgendaItem } from 'src/agenda-item/agenda-item.entity';
+import { CreateAgendaDto } from './dto/create-agenda.dto';
 
 @Injectable()
 export class AgendaService {
-  // private agenda = new Agenda(1, [
-  //   new AgendaItem(
-  //     1, 
-  //     '1.1 Afastamento do Prof. Fulano',
-  //     'O colegiado do Instituto de Informática apreciará a solicitação de afastamento do Prof. Fulano de Tal para realização de seupós-doutoramento junto à [nome da instituição de destino], localizada em[cidade, país], sob supervisão do(a) Prof.(a) [nome do(a) supervisor(a)]. O período proposto para o afastamento é de [data de início] a [data de término], conforme plano de atividades e cronograma apresentados. O professor solicita o afastamento com ônus limitado, conforme a legislação vigente e as normas da UFRGS referentes a afastamentos para capacitação docente.'
-  //   ),
-  //   new AgendaItem(
-  //     2, 
-  //     '1.2 Substituição de docente em turma de graduação',
-  //     'O colegiado do Instituto de Informática apreciará a proposta de substituição do(a) Prof.(a) [nome do(a) professor(a) atual] pelo(a) Prof.(a) [nome do(a) novo(a) professor(a)] como responsável pela turma da disciplina [código e nome da disciplina], ofertada no [semestre/ano], turno [manhã/tarde/noite]. A mudança é proposta em razão de [motivo — por exemplo: afastamento do docente, sobrecarga de orientações, redistribuição de encargos, ou outra justificativa]. O novo docente indicado possui experiência na área e disponibilidade para assumir a turma, garantindo a continuidade das atividades acadêmicas. Encaminhamento: Deliberação do colegiado sobre a aprovação da substituição docente conforme proposta apresentada pela coordenação do curso e pela chefia do departamento.'
-  //   ),
-  // ]);
+  constructor(
+    @InjectRepository(Agenda)
+    private readonly agendaRepository: Repository<Agenda>,
+    @InjectRepository(AgendaItem)
+    private readonly agendaItemRepository: Repository<AgendaItem>
+  ) { }
 
-  // getAgenda(): Agenda {
-  //   return this.agenda;
-  // }
-  // // vote: 'approve' | 'reprove' | 'abstain'
-  // vote(itemId: number, vote: 'approve' | 'reprove' | 'abstain') {
-  //   const item = this.agenda.items.find((i) => i.id === itemId);
+  async create(createAgendaDto: CreateAgendaDto): Promise<Agenda> {
+    const { begin, end, place, agendaItemIds } = createAgendaDto;
 
-  //   if (item) {
-  //     item.vote = vote
-  //   }
+    const beginDate = new Date(begin);
+    const endDate = end ? new Date(end) : undefined;
 
-  //   return item;
-  // }
+    let agendaItems: AgendaItem[] = [];
+
+    if (agendaItemIds && agendaItemIds.length > 0) {
+      agendaItems = await this.agendaItemRepository.find({
+        where: { id: In(agendaItemIds) },
+      });
+    }
+
+    const agenda = this.agendaRepository.create({
+      begin: beginDate,
+      end: endDate,
+      place,
+      agendaItems,
+    });
+
+    return this.agendaRepository.save(agenda);
+  }
+
+  async findToday(): Promise<Agenda | null> {
+    const today = new Date();
+    const startOfDay = new Date(today);
+    const endOfDay = new Date(today);
+    
+    startOfDay.setHours(0, 0, 0, 0);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    return await this.agendaRepository.findOne({
+      where: {
+        begin: Between(startOfDay, endOfDay),
+      },
+      relations: ['agendaItems'],
+    });
+  }
 }

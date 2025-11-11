@@ -8,6 +8,7 @@ export interface AgendaItem {
   dateCreation: Date;
   description: string;
   status: string;
+  selected: boolean;
 }
 
 @Injectable({

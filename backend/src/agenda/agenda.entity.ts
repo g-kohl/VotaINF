@@ -12,7 +12,7 @@ export class Agenda {
   @Column({ type: 'datetime', nullable: true })
   end: Date;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   place: string;
 
   @OneToMany(() => AgendaItem, agendaItem => agendaItem.agenda)

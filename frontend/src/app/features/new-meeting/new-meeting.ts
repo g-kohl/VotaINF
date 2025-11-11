@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AgendaItemService, AgendaItem } from '../../services/agenda-item.service';
+import { AgendaService } from '../../services/agenda.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -24,21 +25,25 @@ import { DatePipe } from '@angular/common';
  * <app-new-meeting></app-new-meeting>
  */
 export class NewMeeting implements OnInit {
-  agendaItems: AgendaItem[] = [];
+  agendaItemIds: AgendaItem[] = [];
   selectedItems: number[] = [];
   isRemoteMeeting: boolean = false;
 
-  constructor(private agendaItemService: AgendaItemService) { }
+  beginDate: string = '';
+  beginTime: string = '';
+  endDate: string = '';
+  endTime: string = '';
+  place: string = '';
 
-  /**
-   * Método do ciclo de vida do Angular chamado na inicialização do componente.
-   * Busca todos os itens de pauta através do serviço `agendaItemService` e filtra apenas aqueles com status 'nao-pautado'.
-   * Em caso de erro na requisição, exibe o erro no console.
-   */
+  constructor(
+    private agendaItemService: AgendaItemService,
+    private agendaService: AgendaService
+  ) { }
+
   ngOnInit(): void {
     this.agendaItemService.getAll().subscribe({
       next: (items) => {
-        this.agendaItems = items.filter(item => item.status === 'nao-pautado');
+        this.agendaItemIds = items.filter(item => item.status === 'nao-pautado');
       },
       error: (err) => console.error('Erro ao buscar itens de pauta: ', err)
     });
@@ -64,4 +69,39 @@ export class NewMeeting implements OnInit {
     return pipe.transform(date, format) ?? '';
   }
 
+  createMeeting(): void {
+    if (this.selectedItems.length === 0) {
+      console.warn("Nenhum item de pauta selecionado.");
+      return;
+    }
+
+    if (!this.beginDate || !this.beginTime) {
+      console.warn("Data e horário de início são obrigatórios.");
+      return;
+    }
+
+    const begin = new Date(`${this.beginDate}T${this.beginTime}`);
+
+    let end: Date | undefined = undefined;
+
+    if (this.endDate && this.endTime) {
+      end = new Date(`${this.endDate}T${this.endTime}`);
+    }
+
+    const place = this.place?.trim() || undefined;
+
+    const body = {
+      begin: begin.toISOString(),
+      end: end ? end.toISOString() : undefined,
+      place,
+      agendaItemIds: this.selectedItems,
+    };
+
+    this.agendaService.createAgenda(body).subscribe({
+      next: (agenda) => {
+        console.log('Reunião criada com sucesso', agenda);
+      },
+      error: (err) => console.error('Erro ao criar reunião: ', err)
+    });
+  }
 }

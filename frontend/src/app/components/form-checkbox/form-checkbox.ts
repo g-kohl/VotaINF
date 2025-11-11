@@ -1,4 +1,4 @@
-import { Component, Input,  } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-form-checkbox',
@@ -11,5 +11,12 @@ export class FormCheckbox {
   @Input() title: string = '';
   @Input() subtitle: string = '';
 
+  @Input() checked: boolean = false;
+  @Output() checkedChange = new EventEmitter<boolean>();
 
+  onCheckedChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.checked = target.checked;
+    this.checkedChange.emit(this.checked);
+  }
 }
