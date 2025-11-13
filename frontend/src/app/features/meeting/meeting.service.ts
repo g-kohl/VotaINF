@@ -17,7 +17,7 @@ export interface Agenda {
 @Injectable({
   providedIn: 'root'
 })
-export class MeetingService {
+export class MeetingService { // mudar tudo
   private apiUrl = 'http://localhost:3000/agenda';
 
   constructor(private http: HttpClient) { }
