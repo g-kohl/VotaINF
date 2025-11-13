@@ -1,4 +1,4 @@
 <div class="container">
     <label class="label" for="titulo">{{title}}</label>
-    <input class="form" type="time" id="time">
-<div class="container">
+    <input class="form" type="time" id="time" [value]="value" (change)="onChange($event)">
+</div>

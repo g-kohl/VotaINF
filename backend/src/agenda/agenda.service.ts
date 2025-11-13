@@ -1,32 +1,44 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, In } from 'typeorm';
 import { Agenda } from './agenda.entity';
+import { AgendaItem } from 'src/agenda-item/agenda-item.entity';
+import { CreateAgendaDto } from './dto/create-agenda.dto';
 
 @Injectable()
 export class AgendaService {
-  // private agenda = new Agenda(1, [
-  //   new AgendaItem(
-  //     1, 
-  //     '1.1 Afastamento do Prof. Fulano',
-  //     'O colegiado do Instituto de Informática apreciará a solicitação de afastamento do Prof. Fulano de Tal para realização de seupós-doutoramento junto à [nome da instituição de destino], localizada em[cidade, país], sob supervisão do(a) Prof.(a) [nome do(a) supervisor(a)]. O período proposto para o afastamento é de [data de início] a [data de término], conforme plano de atividades e cronograma apresentados. O professor solicita o afastamento com ônus limitado, conforme a legislação vigente e as normas da UFRGS referentes a afastamentos para capacitação docente.'
-  //   ),
-  //   new AgendaItem(
-  //     2, 
-  //     '1.2 Substituição de docente em turma de graduação',
-  //     'O colegiado do Instituto de Informática apreciará a proposta de substituição do(a) Prof.(a) [nome do(a) professor(a) atual] pelo(a) Prof.(a) [nome do(a) novo(a) professor(a)] como responsável pela turma da disciplina [código e nome da disciplina], ofertada no [semestre/ano], turno [manhã/tarde/noite]. A mudança é proposta em razão de [motivo — por exemplo: afastamento do docente, sobrecarga de orientações, redistribuição de encargos, ou outra justificativa]. O novo docente indicado possui experiência na área e disponibilidade para assumir a turma, garantindo a continuidade das atividades acadêmicas. Encaminhamento: Deliberação do colegiado sobre a aprovação da substituição docente conforme proposta apresentada pela coordenação do curso e pela chefia do departamento.'
-  //   ),
-  // ]);
+  constructor(
+    @InjectRepository(Agenda)
+    private readonly agendaRepository: Repository<Agenda>,
 
-  // getAgenda(): Agenda {
-  //   return this.agenda;
-  // }
-  // // vote: 'approve' | 'reprove' | 'abstain'
-  // vote(itemId: number, vote: 'approve' | 'reprove' | 'abstain') {
-  //   const item = this.agenda.items.find((i) => i.id === itemId);
+    @InjectRepository(AgendaItem)
+    private readonly agendaItemRepository: Repository<AgendaItem>,
+  ) {}
 
-  //   if (item) {
-  //     item.vote = vote
-  //   }
+  /**
+   * Create a new Agenda and attach provided agenda items (if any)
+   */
+  async create(dto: CreateAgendaDto): Promise<Agenda | null> {
+    const partial: Partial<Agenda> = {
+      begin: dto.begin ? new Date(dto.begin) : new Date(),
+      end: dto.end ? new Date(dto.end) : undefined,
+      place: dto.place ?? ''
+    };
 
-  //   return item;
-  // }
+  // Save the partial object directly; TypeORM will create an entity and persist it.
+  const saved = await this.agendaRepository.save(partial as any);
+
+    if (dto.itemIds && dto.itemIds.length > 0) {
+      const items = await this.agendaItemRepository.findBy({ id: In(dto.itemIds) });
+
+      for (const item of items) {
+        item.agenda = saved;
+      }
+
+      await this.agendaItemRepository.save(items);
+    }
+
+    // return the agenda including attached items
+  return this.agendaRepository.findOne({ where: { id: (saved as Agenda).id }, relations: ['agendaItems'] });
+  }
 }

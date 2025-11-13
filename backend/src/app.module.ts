@@ -15,6 +15,9 @@ import { VoteModule } from './vote/vote.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,
+      // Enable query/schema logging so you can see CREATE TABLE and other SQL in the console
+      logging: ['query', 'schema', 'error'],
+      logger: 'advanced-console',
     })
     , AgendaModule, AgendaItemModule, UserModule, VoteModule],
   controllers: [AppController],

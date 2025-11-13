@@ -1,17 +1,14 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AgendaService } from './agenda.service';
+import { CreateAgendaDto } from './dto/create-agenda.dto';
 
 @Controller('agenda')
 export class AgendaController {
-  // constructor(private readonly agendaService: AgendaService) { }
+  constructor(private readonly agendaService: AgendaService) { }
 
-  // @Get()
-  // getAgenda() {
-  //   return this.agendaService.getAgenda();
-  // }
+  @Post()
+  async create(@Body() dto: CreateAgendaDto) {
+    return this.agendaService.create(dto);
+  }
 
-  // @Post('vote')
-  // vote(@Body() body: { id: number; vote: 'approve' | 'reprove' | 'abstain' }) {
-  //   return this.agendaService.vote(body.id, body.vote);
-  // }
 }
