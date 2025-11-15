@@ -46,6 +46,12 @@ cd VotaINF
 
 ## Dependências
 
+Para instalar as dependências de projeto, rode:
+
+```
+npm install
+```
+
 Para instalar as dependências do back-end, rode:
 
 ```
@@ -62,17 +68,28 @@ npm install
 
 ## Executar
 
-Para rodar o back-end, vá até o diretório correspondente e rode:
+Para rodar o front e o back-end no mesmo terminal, rode na raiz do projeto:
+```
+npm start
+```
+
+### Apenas back-end
+
+Para rodar o back-end isoladamente, vá até o diretório correspondente e rode:
 
 ```
+cd backend
 npm run start
 ```
 
 O servidor rodará em: `http://localhost:3000/`.
 
-Para rodar o front-end, vá até o diretório correspondente e rode:
+### Apenas front-end
+
+Para rodar o front-end isoladamente, vá até o diretório correspondente e rode:
 
 ```
+cd frontend
 ng serve
 ```
 
