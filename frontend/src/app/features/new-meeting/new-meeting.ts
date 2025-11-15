@@ -8,6 +8,21 @@ import { DatePipe } from '@angular/common';
   templateUrl: './new-meeting.html',
   styleUrl: './new-meeting.css'
 })
+/**
+ * Componente responsável pela criação de uma nova reunião.
+ * 
+ * Gerencia a seleção de itens de pauta disponíveis, o tipo de reunião (remota ou presencial)
+ * e a formatação de datas para exibição. Utiliza o serviço `AgendaItemService` para buscar
+ * os itens de pauta e mantém o estado dos itens selecionados.
+ * 
+ * @remarks
+ * Este componente faz parte do fluxo de criação de reuniões e deve ser utilizado
+ * quando for necessário selecionar itens de pauta ainda não pautados.
+ * 
+ * @example
+ * // Exemplo de uso no template:
+ * <app-new-meeting></app-new-meeting>
+ */
 export class NewMeeting implements OnInit {
   agendaItems: AgendaItem[] = [];
   selectedItems: number[] = [];
@@ -15,9 +30,16 @@ export class NewMeeting implements OnInit {
 
   constructor(private agendaItemService: AgendaItemService) { }
 
+  /**
+   * Método do ciclo de vida do Angular chamado na inicialização do componente.
+   * Busca todos os itens de pauta através do serviço `agendaItemService` e filtra apenas aqueles com status 'nao-pautado'.
+   * Em caso de erro na requisição, exibe o erro no console.
+   */
   ngOnInit(): void {
     this.agendaItemService.getAll().subscribe({
-      next: (items) => (this.agendaItems = items),
+      next: (items) => {
+        this.agendaItems = items.filter(item => item.status === 'nao-pautado');
+      },
       error: (err) => console.error('Erro ao buscar itens de pauta: ', err)
     });
   }

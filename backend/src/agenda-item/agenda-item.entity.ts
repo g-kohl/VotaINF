@@ -13,7 +13,7 @@ export class AgendaItem {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column({ type: 'text', default: "não-pautado" })
+  @Column({ type: 'text', default: "nao-pautado" })
   status: string;
 
   @CreateDateColumn({ name: 'dateCreation' })
