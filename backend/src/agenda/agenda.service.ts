@@ -24,7 +24,19 @@ export class AgendaService {
 
     if (agendaItemIds && agendaItemIds.length > 0) {
       agendaItems = await this.agendaItemRepository.find({
-        where: { id: In(agendaItemIds) },
+      where: { id: In(agendaItemIds) },
+      });
+
+      // Atualiza o status de todos os agendaItems no banco usando TypeORM
+      await this.agendaItemRepository.update(
+        { id: In(agendaItemIds) },
+        { status: 'em-pauta' }
+      );
+
+      // Atualiza também os objetos em memória
+      agendaItems = agendaItems.map(item => {
+        item.status = 'em-pauta';
+        return item;
       });
     }
 
