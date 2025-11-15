@@ -5,6 +5,22 @@
     <div class="app-content">
         <app-card 
             [title]="'Reuniões de colegiado'">
+            
+            <div class="search">
+                <app-text-input-simple
+                    [title]="'Código da reunião'">
+                </app-text-input-simple>
+                <app-form-date
+                    [title]="'Data de início'">
+                </app-form-date>
+                <app-form-date
+                    [title]="'Data de fim'">
+                </app-form-date>
+                <div class="card-button">
+                    <button>Pesquisar</button>
+                </div>
+            </div>
+
             <!-- Exemplos de mocks com variações de estilo -->
             <app-testimonial-card
                 [title]="'Reunião ordinária'"
