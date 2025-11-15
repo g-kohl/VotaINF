@@ -1,5 +1,5 @@
 <div class="checkbox-wrapper">
-  <input type="checkbox" [id]="itemId">
+  <input type="checkbox" [id]="itemId" [checked]="checked" (change)="onCheckedChange($event)">
   <div class="labels">
     <label [for]="itemId" class="main-label">{{ title }}</label>
     <label [for]="itemId" class="sublabel">{{ subtitle }}</label>

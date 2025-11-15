@@ -1,17 +1,25 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, NotFoundException } from '@nestjs/common';
 import { AgendaService } from './agenda.service';
+import { Agenda } from './agenda.entity';
+import { CreateAgendaDto } from './dto/create-agenda.dto';
 
 @Controller('agenda')
 export class AgendaController {
-  // constructor(private readonly agendaService: AgendaService) { }
+  constructor(private readonly agendaService: AgendaService) {}
 
-  // @Get()
-  // getAgenda() {
-  //   return this.agendaService.getAgenda();
-  // }
+  @Post()
+  async create(@Body() dto: CreateAgendaDto): Promise<Agenda> {
+    return this.agendaService.create(dto);
+  }
 
-  // @Post('vote')
-  // vote(@Body() body: { id: number; vote: 'approve' | 'reprove' | 'abstain' }) {
-  //   return this.agendaService.vote(body.id, body.vote);
-  // }
+  @Get('today')
+  async findToday(): Promise<Agenda | null> {
+    const agenda = await this.agendaService.findToday();
+
+    if (!agenda) {
+      throw new NotFoundException('Nenhuma reunião encontrada para o dia atual.');
+    }
+    
+    return agenda;
+  }
 }

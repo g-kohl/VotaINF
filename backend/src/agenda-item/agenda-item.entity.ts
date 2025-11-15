@@ -22,6 +22,6 @@ export class AgendaItem {
   @OneToMany(() => Vote, vote => vote.agendaItem)
   votes: Vote[];
 
-  @ManyToOne(() => Agenda, agenda => agenda.agendaItems)
+  @ManyToOne(() => Agenda, agenda => agenda.agendaItems, {nullable: true, onDelete: 'SET NULL'})
   agenda: Agenda;
 }
