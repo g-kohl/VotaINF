@@ -6,7 +6,8 @@ export interface AgendaItem {
   id: number;
   title: string;
   dateCreation: Date;
-  description?: string;
+  description: string;
+  status: string;
 }
 
 @Injectable({
