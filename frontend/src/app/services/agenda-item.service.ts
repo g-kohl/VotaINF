@@ -9,6 +9,7 @@ export interface AgendaItem {
   description: string;
   status: string;
   selected: boolean;
+  agendaId: number;
 }
 
 @Injectable({

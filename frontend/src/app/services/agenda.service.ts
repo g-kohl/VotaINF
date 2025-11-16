@@ -40,4 +40,9 @@ export class AgendaService {
       }))
     );
   }
+
+  getAll(): Observable<Agenda[]> {
+    return this.http.get<Agenda[]>(this.baseUrl);
+  }
+
 }
