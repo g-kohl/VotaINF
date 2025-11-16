@@ -18,6 +18,8 @@ export class AgendaItemService {
   }
 
   async findAll(): Promise<AgendaItem[]> {
-    return this.agendaItemRepository.find();
+    return this.agendaItemRepository.find({
+      relations: ['agenda'],
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, ManyToOne } from "typeorm";
 import { Vote } from "src/vote/vote.entity";
 import { Agenda } from "src/agenda/agenda.entity";
+import { Expose } from 'class-transformer';
 
 @Entity()
 export class AgendaItem {
@@ -24,4 +25,9 @@ export class AgendaItem {
 
   @ManyToOne(() => Agenda, agenda => agenda.agendaItems, {nullable: true, onDelete: 'SET NULL'})
   agenda: Agenda;
+
+  @Expose()
+  get agendaId(): number | null {
+    return this.agenda?.id ?? null;
+  }
 }
