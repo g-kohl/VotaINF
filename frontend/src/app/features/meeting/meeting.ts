@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { MeetingService } from './meeting.service';
 import { AgendaItemService, AgendaItem } from '../../services/agenda-item.service';
+import { AgendaService, Agenda } from '../../services/agenda.service';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-meeting',
@@ -11,11 +13,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class Meeting {
   loaded = false;
+  agenda?: Agenda;
   agendaItems: AgendaItem[] = [];
   votedItems: AgendaItem[] = [];
   voteDisabled = false;
 
   constructor(
+    private agendaService: AgendaService,
     private agendaItemService: AgendaItemService,
     private route: ActivatedRoute
   ) {}
@@ -25,6 +29,17 @@ export class Meeting {
   }
 
   loadAgenda() {
+    this.agendaService.getAll().subscribe(agendas => {
+      const agendaId = this.route.snapshot.queryParamMap.get('agendaId');
+      if (agendaId) {
+        this.agenda = agendas.find(agenda => String(agenda.id) === agendaId);
+        
+      } else {
+        this.agenda = undefined;
+      }
+      console.log('Agenda carregada:', this.agenda);
+      this.loaded = true;
+    });
 
     this.route.queryParamMap.subscribe(params => {
       const agendaId = params.get('agendaId');
@@ -37,6 +52,12 @@ export class Meeting {
         }
       });
     });
+  }
+
+  formatDate(date: Date | undefined, format = 'dd/MM/yyyy'): string {
+    if (!date) return '';
+    const pipe = new DatePipe('pt-BR');
+    return pipe.transform(date, format) ?? '';
   }
 
   // get allVoted(): boolean {

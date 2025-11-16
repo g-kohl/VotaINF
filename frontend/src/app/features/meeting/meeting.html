@@ -5,7 +5,7 @@
     <div class="app-content">
         <app-card 
             [title]="'Reunião de colegiado'"
-            [subtitle]="'10/10/2025'">
+            [subtitle]="formatDate(agenda?.begin)">
             <app-accordion-item
                 *ngFor="let item of agendaItems; let i = index"
                 [title]="item.title"

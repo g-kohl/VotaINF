@@ -12,14 +12,20 @@ export class AgendaController {
     return this.agendaService.create(dto);
   }
 
-  @Get('today')
-  async findToday(): Promise<Agenda | null> {
-    const agenda = await this.agendaService.findToday();
+  // @Get('today')
+  // async findToday(): Promise<Agenda | null> {
+  //   const agenda = await this.agendaService.findToday();
 
-    if (!agenda) {
-      throw new NotFoundException('Nenhuma reunião encontrada para o dia atual.');
-    }
+  //   if (!agenda) {
+  //     throw new NotFoundException('Nenhuma reunião encontrada para o dia atual.');
+  //   }
     
-    return agenda;
+  //   return agenda;
+  // }
+
+  @Get()
+  async findAll(): Promise<any[]> {
+    const items = await this.agendaService.findAll();
+    return items;
   }
 }
