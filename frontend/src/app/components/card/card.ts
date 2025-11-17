@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './card.css'
 })
 export class Card {
-  @Input() title: string = '';
-  @Input() subtitle: string = '';
+  @Input() title: string | undefined = '';
+  @Input() subtitle: string | undefined = '';
 }

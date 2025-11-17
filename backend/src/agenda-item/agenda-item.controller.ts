@@ -13,7 +13,11 @@ export class AgendaItemController {
   }
 
   @Get()
-  async findAll(): Promise<AgendaItem[]> {
-    return this.agendaItemService.findAll();
+  async findAll(): Promise<any[]> {
+    const items = await this.agendaItemService.findAll();
+    return items.map(item => ({
+      ...item,
+      agendaId: item.agenda ? item.agenda.id : null
+    }));
   }
 }
