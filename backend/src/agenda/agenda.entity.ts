@@ -12,6 +12,12 @@ export class Agenda {
   @Column({ type: 'datetime', nullable: true })
   end: Date;
 
+  @Column({type: 'text', nullable: false})
+  format: string;
+
+  @Column({type: 'text', nullable: false, default: 'futuro'})
+  status: string;
+
   @Column({ type: 'text', nullable: true })
   place: string;
 

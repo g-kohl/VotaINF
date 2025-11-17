@@ -88,11 +88,14 @@ export class NewMeeting implements OnInit {
       end = new Date(`${this.endDate}T${this.endTime}`);
     }
 
+    const format = this.isRemoteMeeting ? "remoto" : "presencial";
+
     const place = this.place?.trim() || undefined;
 
     const body = {
       begin: begin.toISOString(),
       end: end ? end.toISOString() : undefined,
+      format,
       place,
       agendaItemIds: this.selectedItems,
     };
