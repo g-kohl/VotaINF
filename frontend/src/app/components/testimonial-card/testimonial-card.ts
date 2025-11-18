@@ -13,7 +13,7 @@ export class TestimonialCard {
   @Input() title: string = '';
   @Input() start_datetime: string = '';
   @Input() end_datetime: string = '';
-  @Input() place: string = '';
+  @Input() place: string | undefined = '';
   @Input() status: string = '';
   @Input() isRemote: boolean = false;
   @Input() isOngoing: boolean = false;

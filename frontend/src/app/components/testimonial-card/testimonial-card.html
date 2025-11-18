@@ -1,9 +1,9 @@
 <div class="card-list">
     <div class="card">
-        @if (isRemote) {
+        @if (!isRemote) {
             <div class="card-text">
                 @if (isOngoing) {
-                    <label class="title" [routerLink]="['/meeting']" style="cursor: pointer;">{{title}}</label>
+                    <label class="title" [routerLink]="['/meeting']" [queryParams]="{ agendaId: agendaId }" style="cursor: pointer;">{{title}}</label>
                 } @else {
                     <label class="title">{{title}}</label>
                 }
@@ -17,7 +17,7 @@
         } @else {
             <div class="card-text">
                 @if (isOngoing) {
-                    <label class="title" [routerLink]="['/meeting']" style="cursor: pointer;">{{title}}</label>
+                    <label class="title" [routerLink]="['/meeting']" [queryParams]="{ agendaId: agendaId }" style="cursor: pointer;">{{title}}</label>
                 } @else {
                     <label class="title">{{title}}</label>
                 }

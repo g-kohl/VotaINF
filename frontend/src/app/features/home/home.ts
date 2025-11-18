@@ -11,10 +11,6 @@ export class Home {
   constructor(private router: Router) { }
 
   navigateToMeeting() {
-    this.router.navigate(['/meeting']);
-  }
-
-  navigateToSearch() {
-    this.router.navigate(['/search']);
+    this.router.navigate(['/menu']);
   }
 }
