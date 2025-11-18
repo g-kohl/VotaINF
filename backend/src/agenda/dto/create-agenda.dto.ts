@@ -1,4 +1,4 @@
-import { IsISO8601, IsOptional, IsString, IsArray, ArrayNotEmpty, IsInt } from 'class-validator';
+import { IsISO8601, IsOptional, IsString, IsArray, ArrayNotEmpty, IsInt, IsNotEmpty } from 'class-validator';
 
 export class CreateAgendaDto {
   @IsISO8601()
@@ -7,6 +7,10 @@ export class CreateAgendaDto {
   @IsOptional()
   @IsISO8601()
   end?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  format: string;
 
   @IsOptional()
   @IsString()

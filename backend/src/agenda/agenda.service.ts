@@ -15,7 +15,7 @@ export class AgendaService {
   ) { }
 
   async create(createAgendaDto: CreateAgendaDto): Promise<Agenda> {
-    const { begin, end, place, agendaItemIds } = createAgendaDto;
+    const { begin, end, format, place, agendaItemIds } = createAgendaDto;
 
     const beginDate = new Date(begin);
     const endDate = end ? new Date(end) : undefined;
@@ -43,6 +43,7 @@ export class AgendaService {
     const agenda = this.agendaRepository.create({
       begin: beginDate,
       end: endDate,
+      format,
       place,
       agendaItems,
     });

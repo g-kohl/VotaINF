@@ -8,6 +8,7 @@ export interface Agenda {
   id: number;
   begin: Date;
   end?: Date;
+  format: string;
   place?: string;
   agendaItemIds: AgendaItem[];
 }
@@ -15,6 +16,7 @@ export interface Agenda {
 export interface CreateAgendaDto {
   begin: string;
   end?: string;
+  format: string;
   place?: string;
   agendaItemIds: number[];
 }
