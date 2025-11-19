@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In, Between } from 'typeorm';
+import { Repository, In, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
 import { Agenda } from './agenda.entity';
 import { AgendaItem } from 'src/agenda-item/agenda-item.entity';
 import { CreateAgendaDto } from './dto/create-agenda.dto';
@@ -74,16 +74,16 @@ export class AgendaService {
       where.id = id;
     }
 
-    if (begin) {
+    if (begin && end) {
       const startDate = new Date(begin + 'T00:00:00');
-      const endDate = new Date(begin + 'T23:59:59.999');
-      where.begin = Between(startDate, endDate);
-    }
-
-    if (end) {
-      const startDate = new Date(end + 'T00:00:00');
       const endDate = new Date(end + 'T23:59:59.999');
-      where.end = Between(startDate, endDate);
+      where.begin = Between(startDate, endDate);
+    } else if (begin) {
+      const startDate = new Date(begin + 'T00:00:00');
+      where.begin = MoreThanOrEqual(startDate);
+    } else if (end) {
+      const endDate = new Date(end + 'T23:59:59.999');
+      where.begin = LessThanOrEqual(endDate);
     }
 
     return this.agendaRepository.find({ where });
