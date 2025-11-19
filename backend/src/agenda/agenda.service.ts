@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In, Between, LessThan, MoreThan } from 'typeorm';
+import { Repository, In, Between, LessThan, MoreThan, LessThanOrEqual } from 'typeorm';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Agenda } from './agenda.entity';
 import { AgendaItem } from 'src/agenda-item/agenda-item.entity';
@@ -85,15 +85,14 @@ export class AgendaService {
 
     await this.agendaRepository.update(
       {
-        begin: LessThan(now),
-        end: MoreThan(now),
+        begin: LessThanOrEqual(now),
       },
       { status: 'em-andamento' },
     );
 
     await this.agendaRepository.update(
       {
-        end: LessThan(now),
+        end: LessThanOrEqual(now),
       },
       { status: 'finalizada' },
     );
