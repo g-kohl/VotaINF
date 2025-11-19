@@ -14,10 +14,6 @@ export class Auth {
   constructor(private router: Router) { }
 
   login() {
-    if (this.username === 'admin') {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.router.navigate(['/home']);
-    }
+    this.router.navigate(['/menu']);
   }
 }

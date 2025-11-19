@@ -1,38 +1,32 @@
 <div class="card-list">
     <div class="card">
-        @if (isRemote) {
-            <div class="card-text">
-                @if (isOngoing) {
-                    <label class="title" [routerLink]="['/meeting']" style="cursor: pointer;">{{title}}</label>
-                } @else {
-                    <label class="title">{{title}}</label>
-                }
-                <label class="description"><b>Data e horário: </b>{{start_datetime}}</label>
-                <label class="description"><b>Local: </b>{{place}}</label>
-                <label class="status">{{status}}</label>
-            </div>
-            <div class="card-button">
-                <button>Relatório</button>
-            </div>
+        <div class="card-text">
+        <!-- Se reunião estiver em andamento, disponibilizar acesso via clique -->
+        @if (isOngoing) {
+            <label class="title" [routerLink]="['/meeting']" [queryParams]="{ agendaId: agendaId }" style="cursor: pointer;">{{title}}</label>
         } @else {
-            <div class="card-text">
-                @if (isOngoing) {
-                    <label class="title" [routerLink]="['/meeting']" style="cursor: pointer;">{{title}}</label>
-                } @else {
-                    <label class="title">{{title}}</label>
-                }
-                <label class="description"><b>Período: </b>{{start_datetime}} - {{end_datetime}}</label>
-                @if (isOngoing) {
-                    <label class="status-open status">{{status}}</label>
-                } @else {
-                    <label class="status">{{status}}</label>
-                }
-            </div>
-            @if (isFinished) {
+            <label class="title">{{title}}</label>
+        }
+        <!-- Informações da reunião exibidas de forma diferente se for presencial ou remota -->
+        @if (!isRemote) {
+            <label class="description"><b>Data e horário: </b>{{start_datetime}}</label>
+            <label class="description"><b>Local: </b>{{place}}</label>
+        } @else {
+            <label class="description"><b>Período: </b>{{start_datetime}} - {{end_datetime}}</label>
+        }
+        <!-- Se reunião estiver em andamento, alterar estilo do status -->
+        @if (isOngoing) {
+            <label class="status-open status">{{status}}</label>
+        } @else {
+            <label class="status">{{status}}</label>
+        }
+        </div>
+
+        <!-- Se a reunião estiver finalizada, disponibilizar botão para o relatório -->
+        @if (isFinished) {
             <div class="card-button">
                 <button>Relatório</button>
-            </div>   
-            }
+            </div>
         }
     </div>
 </div>

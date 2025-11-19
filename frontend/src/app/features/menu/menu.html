@@ -21,26 +21,17 @@
                 </div>
             </div>
 
-            <!-- Exemplos de mocks com variações de estilo -->
             <app-testimonial-card
-                [title]="'Reunião ordinária'"
-                [start_datetime]="'01/01/2025'"
-                [end_datetime]="'01/01/2025'"
-                [place]="'Sala 666'"
-                [status]="'Iniciada'"
-                [isRemote]="true"
-                [isOngoing]="false"
-                [isFinished]="true">
-            </app-testimonial-card>
-            <app-testimonial-card
-                [title]="'Reunião ordinária'"
-                [start_datetime]="'01/01/2025'"
-                [end_datetime]="'01/01/2025'"
-                [place]="'Sala 666'"
-                [status]="'Iniciada'"
-                [isRemote]="false"
-                [isOngoing]="true"
-                [isFinished]="false">
+                *ngFor="let agenda of agendas; let i = index"
+                [title]="'2025/' + agenda.id + ' - Reunião de colegiado'"
+                [start_datetime]="formatDate(agenda.begin)"
+                [end_datetime]="formatDate(agenda.end)"
+                [place]="formatPlace(agenda.place)"
+                [status]="formatStatus(agenda.status)"
+                [isRemote]="setRemoteAgenda(agenda)"
+                [isOngoing]="setOngoing(agenda)"
+                [isFinished]="setFinished(agenda)"
+                [agendaId]="agenda.id">
             </app-testimonial-card>
         </app-card>
     </div>

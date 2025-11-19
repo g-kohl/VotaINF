@@ -58,7 +58,6 @@ export class Meeting {
       } else {
         this.agenda = undefined;
       }
-      console.log('Agenda carregada:', this.agenda);
       this.loaded = true;
     });
 
