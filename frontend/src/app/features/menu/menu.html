@@ -26,11 +26,11 @@
                 [title]="'2025/' + agenda.id + ' - Reunião de colegiado'"
                 [start_datetime]="formatDate(agenda.begin)"
                 [end_datetime]="formatDate(agenda.end)"
-                [place]="agenda.place"
-                [status]="'agenda.status'"
-                [isRemote]="agenda.end != null"
-                [isOngoing]="true"
-                [isFinished]="true"
+                [place]="formatPlace(agenda.place)"
+                [status]="formatStatus(agenda.status)"
+                [isRemote]="setRemoteAgenda(agenda)"
+                [isOngoing]="setOngoing(agenda)"
+                [isFinished]="setFinished(agenda)"
                 [agendaId]="agenda.id">
             </app-testimonial-card>
         </app-card>

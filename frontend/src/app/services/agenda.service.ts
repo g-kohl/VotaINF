@@ -9,6 +9,7 @@ export interface Agenda {
   begin: Date;
   end?: Date;
   format: string;
+  status: string;
   place?: string;
   agendaItemIds: AgendaItem[];
 }
