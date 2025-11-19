@@ -34,16 +34,6 @@ export class AgendaService {
     return this.http.post<Agenda>(this.baseUrl, agenda);
   }
 
-  getToday(): Observable<Agenda> {
-    return this.http.get<Agenda>(this.baseUrl).pipe(
-      map(agenda => ({
-        ...agenda,
-        begin: new Date(agenda.begin),
-        end: agenda.end ? new Date(agenda.end) : undefined,
-      }))
-    );
-  }
-
   getAll(): Observable<Agenda[]> {
     return this.http.get<Agenda[]>(this.baseUrl);
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AgendaService, Agenda } from '../../services/agenda.service';
 import { DatePipe } from '@angular/common';
 
@@ -19,7 +19,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './menu.html',
   styleUrl: './menu.css'
 })
-export class Menu {
+export class Menu implements OnInit {
   loaded = false;
   agendas: Agenda[] = [];
 
@@ -66,21 +66,21 @@ export class Menu {
    * @param format - O formato desejado para a data (padrão: 'dd/MM/yyyy, HH:mm').
    * @returns A data formatada como string ou uma string vazia se a data não for fornecida.
    */
+  private datePipe = new DatePipe('pt-BR');
   formatDate(date?: Date | undefined, format = 'dd/MM/yyyy, HH:mm'): string {
     if (!date) return '';
-    const pipe = new DatePipe('pt-BR');
-    return pipe.transform(date, format) ?? '';
+    return this.datePipe.transform(date, format) ?? '';
   }
   
-  /**
-   * Formata o status de uma votação para uma string legível em português.
+    /**
+   * Formata o status de uma agenda para uma string legível em português.
    *
-   * @param status - O status interno da votação ('futuro', 'em-andamento', 'finalizada' ou outro).
+   * @param status - O status interno da agenda ('futuro', 'em-andamento', 'finalizada' ou outro).
    * @returns Uma string representando o status em português:
    * - 'Não iniciada' para 'futuro'
    * - 'Em andamento' para 'em-andamento'
    * - 'Encerrada' para 'finalizada'
-   * - O próprio valor de status caso não seja reconhecido
+   * - Erro caso não seja reconhecido
    */
   formatStatus(status: string): string {
     switch (status) {
@@ -93,41 +93,50 @@ export class Menu {
       default:
         throw new Error('Status inválido!');
     }
+
   }
 
-  formatPlace(place: string | undefined): string | undefined {
-    switch (place) {
-      case null:
-      case '':
-        return 'Local não informado';
-      default:
-        return place;
+  /**
+   * Formata o nome de um local, retornando uma mensagem padrão caso o valor seja indefinido ou vazio.
+   *
+   * @param place - O nome do local a ser formatado, ou undefined.
+   * @returns O nome do local informado ou "Local não informado" se o valor for indefinido ou vazio.
+   */
+  formatPlace(place: string | undefined): string {
+    if (!place || place === '') {
+      place = 'Local não informado';
     }
+    return place;
   }
 
+  /**
+   * Verifica se a agenda está com status "em andamento".
+   *
+   * @param agenda - O objeto Agenda a ser verificado.
+   * @returns `true` se o status da agenda for "em-andamento", caso contrário `false`.
+   */
   setOngoing(agenda: Agenda): boolean {
-    let isOngoing = false;
-    if (agenda.status === 'em-andamento') {
-      isOngoing = true;
-    }
-    return isOngoing;
+    return agenda.status === 'em-andamento';
   }
 
+  /**
+   * Verifica se a agenda foi finalizada.
+   *
+   * @param agenda - Objeto do tipo Agenda a ser verificado.
+   * @returns `true` se o status da agenda for 'finalizada', caso contrário `false`.
+   */
   setFinished(agenda: Agenda): boolean {
-    let isFinished = false;
-    if (agenda.status === 'finalizada') {
-      isFinished = true;
-    }
-    return isFinished;
+    return agenda.status === 'finalizada';
   }
 
-
+  /**
+   * Define se a agenda fornecida é do tipo remoto.
+   *
+   * @param agenda - O objeto Agenda a ser verificado.
+   * @returns `true` se o formato da agenda for 'remoto', caso contrário `false`.
+   */
   setRemoteAgenda(agenda: Agenda): boolean {
-    let isRemote = false;
-    if (agenda.format === 'remoto') {
-      isRemote = true;
-    }
-    return isRemote;
+    return agenda.format === 'remoto';
   }
 
 }
