@@ -30,7 +30,16 @@ export class Menu implements OnInit {
    */
   constructor(
     private agendaService: AgendaService,
-  ) {}
+  ) { }
+
+  /**
+   * Método do ciclo de vida do Angular chamado automaticamente após a criação do componente.
+   * Utilizado para inicializar dados ou executar lógica necessária ao iniciar o componente.
+   * Neste caso, chama o método `loadAgendas` para carregar as agendas ao iniciar.
+   */
+  searchId: string = '';
+  searchBegin: string = '';
+  searchEnd: string = '';
 
   /**
    * Método do ciclo de vida do Angular chamado automaticamente após a criação do componente.
@@ -38,7 +47,7 @@ export class Menu implements OnInit {
    * Neste caso, chama o método `loadAgendas` para carregar as agendas ao iniciar.
    */
   ngOnInit() {
-    this.loadAgendas();
+    this.search();
   }
 
   /**
@@ -49,7 +58,16 @@ export class Menu implements OnInit {
    * Este método faz uma requisição assíncrona para buscar as agendas e atualiza a lista local de agendas.
    */
   loadAgendas() {
-    this.agendaService.getAll().subscribe(agendas => {
+    this.search();
+  }
+
+  search() {
+    const params: any = {};
+    if (this.searchId) params.id = this.searchId;
+    if (this.searchBegin) params.begin = this.searchBegin;
+    if (this.searchEnd) params.end = this.searchEnd;
+
+    this.agendaService.getAll(params).subscribe(agendas => {
       this.agendas = agendas.sort((a, b) => {
         const dateA = new Date(a.begin).getTime();
         const dateB = new Date(b.begin).getTime();
@@ -71,17 +89,17 @@ export class Menu implements OnInit {
     if (!date) return '';
     return this.datePipe.transform(date, format) ?? '';
   }
-  
-    /**
-   * Formata o status de uma agenda para uma string legível em português.
-   *
-   * @param status - O status interno da agenda ('futuro', 'em-andamento', 'finalizada' ou outro).
-   * @returns Uma string representando o status em português:
-   * - 'Não iniciada' para 'futuro'
-   * - 'Em andamento' para 'em-andamento'
-   * - 'Encerrada' para 'finalizada'
-   * - Erro caso não seja reconhecido
-   */
+
+  /**
+ * Formata o status de uma agenda para uma string legível em português.
+ *
+ * @param status - O status interno da agenda ('futuro', 'em-andamento', 'finalizada' ou outro).
+ * @returns Uma string representando o status em português:
+ * - 'Não iniciada' para 'futuro'
+ * - 'Em andamento' para 'em-andamento'
+ * - 'Encerrada' para 'finalizada'
+ * - Erro caso não seja reconhecido
+ */
   formatStatus(status: string): string {
     switch (status) {
       case 'futuro':

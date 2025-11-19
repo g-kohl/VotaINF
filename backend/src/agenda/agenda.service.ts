@@ -24,7 +24,7 @@ export class AgendaService {
 
     if (agendaItemIds && agendaItemIds.length > 0) {
       agendaItems = await this.agendaItemRepository.find({
-      where: { id: In(agendaItemIds) },
+        where: { id: In(agendaItemIds) },
       });
 
       // Atualiza o status de todos os agendaItems no banco usando TypeORM
@@ -55,7 +55,7 @@ export class AgendaService {
     const today = new Date();
     const startOfDay = new Date(today);
     const endOfDay = new Date(today);
-    
+
     startOfDay.setHours(0, 0, 0, 0);
     endOfDay.setHours(23, 59, 59, 999);
 
@@ -67,7 +67,25 @@ export class AgendaService {
     });
   }
 
-  async findAll(): Promise<Agenda[]> {
-    return this.agendaRepository.find();
+  async findAll(id?: number, begin?: string, end?: string): Promise<Agenda[]> {
+    const where: any = {};
+
+    if (id) {
+      where.id = id;
+    }
+
+    if (begin) {
+      const startDate = new Date(begin + 'T00:00:00');
+      const endDate = new Date(begin + 'T23:59:59.999');
+      where.begin = Between(startDate, endDate);
+    }
+
+    if (end) {
+      const startDate = new Date(end + 'T00:00:00');
+      const endDate = new Date(end + 'T23:59:59.999');
+      where.end = Between(startDate, endDate);
+    }
+
+    return this.agendaRepository.find({ where });
   }
 }
