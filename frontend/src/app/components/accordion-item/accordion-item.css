@@ -66,3 +66,7 @@
   width: -webkit-fill-available;
   
 }
+
+.text-body p {
+  line-height: 140%;
+}

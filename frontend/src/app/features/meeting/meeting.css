@@ -35,3 +35,15 @@
   width: 150px;               /* Ajuste conforme o tamanho desejado */
   height: auto;
 }
+
+.text-body {
+  color: #1e1e1e;
+  text-align: left;
+  text-wrap: wrap;
+  width: -webkit-fill-available;
+  
+}
+
+.text-body p {
+  line-height: 140%;
+}

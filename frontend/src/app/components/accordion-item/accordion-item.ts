@@ -13,6 +13,8 @@ export class AccordionItem {
   @Input() itemText: string = '';
   @Input() radioName: string = '';
   @Input() isDisabled: boolean = false;
+  @Input() agendaStatus: string | undefined = '';
+  @Input() voteResults: { approve: number; reprove: number; abstain: string[] } = { approve: 0, reprove: 0, abstain: [] };
 
   private _selectedVote: string = '';
   @Input()
