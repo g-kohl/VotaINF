@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In, Between, LessThan, MoreThan, LessThanOrEqual } from 'typeorm';
+import { Repository, In, Between, LessThan, MoreThan, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Agenda } from './agenda.entity';
 import { AgendaItem } from 'src/agenda-item/agenda-item.entity';
@@ -25,7 +25,7 @@ export class AgendaService {
 
     if (agendaItemIds && agendaItemIds.length > 0) {
       agendaItems = await this.agendaItemRepository.find({
-      where: { id: In(agendaItemIds) },
+        where: { id: In(agendaItemIds) },
       });
 
       // Atualiza o status de todos os agendaItems no banco usando TypeORM
@@ -56,7 +56,7 @@ export class AgendaService {
     const today = new Date();
     const startOfDay = new Date(today);
     const endOfDay = new Date(today);
-    
+
     startOfDay.setHours(0, 0, 0, 0);
     endOfDay.setHours(23, 59, 59, 999);
 
@@ -68,8 +68,26 @@ export class AgendaService {
     });
   }
 
-  async findAll(): Promise<Agenda[]> {
-    return this.agendaRepository.find();
+  async findAll(id?: number, begin?: string, end?: string): Promise<Agenda[]> {
+    const where: any = {};
+
+    if (id) {
+      where.id = id;
+    }
+
+    if (begin && end) {
+      const startDate = new Date(begin + 'T00:00:00');
+      const endDate = new Date(end + 'T23:59:59.999');
+      where.begin = Between(startDate, endDate);
+    } else if (begin) {
+      const startDate = new Date(begin + 'T00:00:00');
+      where.begin = MoreThanOrEqual(startDate);
+    } else if (end) {
+      const endDate = new Date(end + 'T23:59:59.999');
+      where.begin = LessThanOrEqual(endDate);
+    }
+
+    return this.agendaRepository.find({ where });
   }
 
   @Cron(CronExpression.EVERY_MINUTE)

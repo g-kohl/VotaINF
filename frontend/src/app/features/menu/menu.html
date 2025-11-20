@@ -1,37 +1,27 @@
 <div class="home-container">
 
     <app-menu></app-menu>
-    
+
     <div class="app-content">
-        <app-card 
-            [title]="'Reuniões de colegiado'">
-            
+        <app-card [title]="'Reuniões de colegiado'">
+
             <div class="search">
-                <app-text-input-simple
-                    [title]="'Código da reunião'">
+                <app-text-input-simple [title]="'Código da reunião'" [(value)]="searchId">
                 </app-text-input-simple>
-                <app-form-date
-                    [title]="'Data de início'">
+                <app-form-date [title]="'Data de início'" [(value)]="searchBegin">
                 </app-form-date>
-                <app-form-date
-                    [title]="'Data de fim'">
+                <app-form-date [title]="'Data de fim'" [(value)]="searchEnd">
                 </app-form-date>
                 <div class="card-button">
-                    <button>Pesquisar</button>
+                    <button (click)="search()">Pesquisar</button>
                 </div>
             </div>
 
-            <app-testimonial-card
-                *ngFor="let agenda of agendas; let i = index"
-                [title]="'2025/' + agenda.id + ' - Reunião de colegiado'"
-                [start_datetime]="formatDate(agenda.begin)"
-                [end_datetime]="formatDate(agenda.end)"
-                [place]="formatPlace(agenda.place)"
-                [status]="formatStatus(agenda.status)"
-                [isRemote]="setRemoteAgenda(agenda)"
-                [isOngoing]="setOngoing(agenda)"
-                [isFinished]="setFinished(agenda)"
-                [agendaId]="agenda.id">
+            <app-testimonial-card *ngFor="let agenda of agendas; let i = index"
+                [title]="'2025/' + agenda.id + ' - Reunião de colegiado'" [start_datetime]="formatDate(agenda.begin)"
+                [end_datetime]="formatDate(agenda.end)" [place]="formatPlace(agenda.place)"
+                [status]="formatStatus(agenda.status)" [isRemote]="setRemoteAgenda(agenda)"
+                [isOngoing]="setOngoing(agenda)" [isFinished]="setFinished(agenda)" [agendaId]="agenda.id">
             </app-testimonial-card>
         </app-card>
     </div>
