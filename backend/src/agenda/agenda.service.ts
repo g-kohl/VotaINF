@@ -114,5 +114,17 @@ export class AgendaService {
       },
       { status: 'finalizada' },
     );
+
+    const currentAgendas = await this.agendaRepository.find({
+      where: { status: 'em-andamento' },
+      relations: ['agendaItems'],
+    });
+
+    for (const agenda of currentAgendas) {
+      await this.agendaItemRepository.update(
+        { agenda: { id: agenda.id } },
+        { status: 'em-votacao' },
+      );
+    }
   }
 }
