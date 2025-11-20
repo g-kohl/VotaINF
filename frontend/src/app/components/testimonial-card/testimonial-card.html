@@ -29,8 +29,8 @@
             </div>
         }
 
-        <!-- Se a reunião estiver em andamento, disponibilizar botão para o departamento encerrá-la -->
-        @if (isOngoing) {
+        <!-- Se a reunião presencial estiver em andamento, disponibilizar botão para o departamento encerrá-la -->
+        @if (isOngoing && !isRemote) {
             <div class="card-button">
                 <button (click)="finishAgenda()">Finalizar reunião</button>
             </div>
