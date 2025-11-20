@@ -10,6 +10,12 @@
   font-family: Arial, sans-serif;
 }
 
+.gaps {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
 .button-create {
   width:fit-content;
   padding: 12px;
@@ -63,7 +69,7 @@
 .column{
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 10px;
 }
 
 .list{

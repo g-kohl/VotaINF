@@ -67,6 +67,7 @@ input:checked + .slider:before {
   gap: 12px; 
   align-items: center;
   flex-shrink: 0;
+  padding-top: 30px;
   
 }
 
