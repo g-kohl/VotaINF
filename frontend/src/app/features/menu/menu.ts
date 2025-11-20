@@ -157,4 +157,20 @@ export class Menu implements OnInit {
     return agenda.format === 'remoto';
   }
 
+  /**
+   * Finaliza uma Agenda manualmente.
+   *
+   * @param agendaId - O identificador da agenda a ser finalizada manualmente.
+   */
+  onFinishAgenda(agendaId: number) {
+    console.log('finalizar agenda:', agendaId);
+    this.agendaService.finishAgenda(agendaId).subscribe({
+      next: () => {
+        this.loadAgendas();
+      },
+      error: (err) => {
+        console.error('Erro ao finalizar agenda:', err);
+      }
+    });
+  }
 }

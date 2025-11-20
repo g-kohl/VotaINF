@@ -12,17 +12,6 @@ export class AgendaController {
     return this.agendaService.create(dto);
   }
 
-  // @Get('today')
-  // async findToday(): Promise<Agenda | null> {
-  //   const agenda = await this.agendaService.findToday();
-
-  //   if (!agenda) {
-  //     throw new NotFoundException('Nenhuma reunião encontrada para o dia atual.');
-  //   }
-
-  //   return agenda;
-  // }
-
   @Get()
   async findAll(
     @Query('id') id?: number,
@@ -30,5 +19,10 @@ export class AgendaController {
     @Query('end') end?: string,
   ): Promise<any[]> {
     return this.agendaService.findAll(id, begin, end);
+  }
+
+  @Post("finish-agenda")
+  async finishAgenda(@Body('id') id: number): Promise<void> {
+    await this.agendaService.finishAgenda(id);
   }
 }
