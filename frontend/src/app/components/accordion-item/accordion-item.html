@@ -7,16 +7,28 @@
   <div class="accordion-content">
     <span class="text-body">{{ itemText }}</span>
   </div>
-
-  <app-radio-button
-    [options]="[
-        { label: 'Aprovação', value: 'approve' },
-        { label: 'Reprovação', value: 'reprove' },
-        { label: 'Abstenção', value: 'abstain' }
-    ]"
-    [name]="radioName"
-    [(selectedValue)]="selectedVote"
-    [isDisabled]="isDisabled">
-  </app-radio-button>
+  
+  @if (agendaStatus === 'finalizada'){
+    <div class="text-body"><p>
+      <b>Aprovação: </b>{{voteResults.approve}} voto{{voteResults.approve == 1 ? '' : 's'}}
+      <br><b>Reprovação: </b>{{voteResults.reprove}} voto{{voteResults.reprove == 1 ? '' : 's'}}
+      <br><b>Abstenções: </b>{{voteResults.abstain.join(', ') || 'Nenhum'}}
+    </p></div>
+  } @else if (agendaStatus === 'em-andamento'){
+    <app-radio-button
+      [options]="[
+          { label: 'Aprovação', value: 'approve' },
+          { label: 'Reprovação', value: 'reprove' },
+          { label: 'Abstenção', value: 'abstain' }
+      ]"
+      [name]="radioName"
+      [(selectedValue)]="selectedVote"
+      [isDisabled]="isDisabled">
+    </app-radio-button>
+  } @else {
+    <div class="text-body"><p>
+      Votação indisponível.
+    </p></div>
+  }
 
 </div>

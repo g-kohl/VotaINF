@@ -10,17 +10,18 @@
                 *ngFor="let item of agendaItems; let i = index"
                 [title]="item.title"
                 [itemText]="item.description"
-                [radioName]="'item-' + item.id">
+                [radioName]="'item-' + item.id"
+                [agendaStatus]="agenda?.status"
+                [voteResults]="{ approve: 2, reprove: 1, abstain: ['Prof. Ciclano', 'Prof. Beltrano'] }">
             </app-accordion-item>
-
-            <div class="button-group">
-                <button class="button">
-                    Submeter votos
-                </button>
-            </div>
+            @if (agenda?.status === 'em-andamento'){
+                <div class="button-group">
+                    <button class="button">
+                        Submeter votos
+                    </button>
+                </div>
+            }
         </app-card>
     </div>
 
 </div>
-
-
