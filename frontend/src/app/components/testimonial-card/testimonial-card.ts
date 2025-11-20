@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -19,4 +19,16 @@ export class TestimonialCard {
   @Input() isOngoing: boolean = false;
   @Input() isFinished: boolean = false;
   @Input() agendaId: number = 0;
+
+  @Output() finishAgendaEvent = new EventEmitter<number>();
+
+  /**
+   * Emite um evento para finalizar a agenda atual.
+   * 
+   * Este método dispara o evento `finishAgendaEvent`, passando o identificador da agenda (`agendaId`)
+   * como parâmetro. É utilizado para notificar o componente pai que a agenda foi finalizada manualmente.
+   */
+  finishAgenda() {
+    this.finishAgendaEvent.emit(this.agendaId);
+  }   
 }

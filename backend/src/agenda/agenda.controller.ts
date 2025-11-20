@@ -31,4 +31,9 @@ export class AgendaController {
   ): Promise<any[]> {
     return this.agendaService.findAll(id, begin, end);
   }
+
+  @Post("finish-agenda")
+  async finishAgenda(@Body('id') id: number): Promise<void> {
+    await this.agendaService.finishAgenda(id);
+  }
 }

@@ -44,4 +44,8 @@ export class AgendaService {
     return this.http.get<Agenda[]>(this.baseUrl, { params });
   }
 
+  finishAgenda(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/finish-agenda`, { id });
+  }
+
 }

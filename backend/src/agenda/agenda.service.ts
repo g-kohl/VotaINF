@@ -115,4 +115,19 @@ export class AgendaService {
       { status: 'finalizada' },
     );
   }
+
+  /**
+   * Finaliza uma agenda com o ID fornecido, caso ela esteja com status "em-andamento".
+   *
+   * @param id - O identificador da agenda a ser finalizada.
+   */
+  async finishAgenda(id: number): Promise<void> {
+    const agenda = await this.agendaRepository.findOne({ where: { id } });
+    if (!agenda) throw new Error('Agenda not found');
+
+    if (agenda.status === 'em-andamento') {
+      agenda.status = 'finalizada';
+      await this.agendaRepository.save(agenda);
+    }
+  }
 }

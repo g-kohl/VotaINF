@@ -28,5 +28,12 @@
                 <button [routerLink]="['/meeting']" [queryParams]="{ agendaId: agendaId }">Relatório</button>
             </div>
         }
+
+        <!-- Se a reunião estiver em andamento, disponibilizar botão para o departamento encerrá-la -->
+        @if (isOngoing) {
+            <div class="card-button">
+                <button (click)="finishAgenda()">Finalizar reunião</button>
+            </div>
+        }
     </div>
 </div>
