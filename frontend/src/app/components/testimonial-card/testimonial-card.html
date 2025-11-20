@@ -25,7 +25,7 @@
         <!-- Se a reunião estiver finalizada, disponibilizar botão para o relatório -->
         @if (isFinished) {
             <div class="card-button">
-                <button>Relatório</button>
+                <button [routerLink]="['/meeting']" [queryParams]="{ agendaId: agendaId }">Relatório</button>
             </div>
         }
     </div>
