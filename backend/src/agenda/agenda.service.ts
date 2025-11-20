@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
+import { Repository, In, Between, LessThan, MoreThan, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { Agenda } from './agenda.entity';
 import { AgendaItem } from 'src/agenda-item/agenda-item.entity';
 import { CreateAgendaDto } from './dto/create-agenda.dto';
@@ -87,5 +88,31 @@ export class AgendaService {
     }
 
     return this.agendaRepository.find({ where });
+  }
+
+  @Cron(CronExpression.EVERY_MINUTE)
+  async updateAgendaStatuses() {
+    const now = new Date();
+
+    await this.agendaRepository.update(
+      {
+        begin: MoreThan(now),
+      },
+      { status: 'futuro' },
+    );
+
+    await this.agendaRepository.update(
+      {
+        begin: LessThanOrEqual(now),
+      },
+      { status: 'em-andamento' },
+    );
+
+    await this.agendaRepository.update(
+      {
+        end: LessThanOrEqual(now),
+      },
+      { status: 'finalizada' },
+    );
   }
 }
