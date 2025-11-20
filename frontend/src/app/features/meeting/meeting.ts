@@ -38,6 +38,7 @@ export class Meeting {
   agendaItems: AgendaItem[] = [];
   votedItems: AgendaItem[] = [];
   voteDisabled = false;
+  usersVoted: string[] = [];
 
   constructor(
     private agendaService: AgendaService,

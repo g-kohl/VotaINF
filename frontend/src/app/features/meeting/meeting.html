@@ -6,6 +6,11 @@
         <app-card 
             [title]="'Reunião de colegiado'"
             [subtitle]="formatPeriod(agenda)">
+            @if (agenda?.status === 'finalizada'){
+                <div class="text-body">
+                    <p>Votantes: {{ usersVoted.join(', ') || ' ' }}</p>
+                </div>
+            }
             <app-accordion-item
                 *ngFor="let item of agendaItems; let i = index"
                 [title]="item.title"

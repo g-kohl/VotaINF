@@ -25,10 +25,9 @@
       [(selectedValue)]="selectedVote"
       [isDisabled]="isDisabled">
     </app-radio-button>
-  } @else {
+  } @else if (agendaStatus === 'futuro' ) {
     <div class="text-body"><p>
       Votação indisponível.
     </p></div>
   }
-
 </div>
