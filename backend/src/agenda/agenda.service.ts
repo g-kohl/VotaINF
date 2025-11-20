@@ -104,6 +104,7 @@ export class AgendaService {
     await this.agendaRepository.update(
       {
         begin: LessThanOrEqual(now),
+        status: In(['futuro', 'em-andamento']),
       },
       { status: 'em-andamento' },
     );
@@ -114,6 +115,18 @@ export class AgendaService {
       },
       { status: 'finalizada' },
     );
+
+    const currentAgendas = await this.agendaRepository.find({
+      where: { status: 'em-andamento' },
+      relations: ['agendaItems'],
+    });
+
+    for (const agenda of currentAgendas) {
+      await this.agendaItemRepository.update(
+        { agenda: { id: agenda.id } },
+        { status: 'em-votacao' },
+      );
+    }
   }
 
   /**
