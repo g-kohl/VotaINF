@@ -61,4 +61,4 @@ coverage/
 # Data Base
 # =========================
 backend/database.db
-*.sql
+# *.sql

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-auth',
@@ -11,9 +12,20 @@ export class Auth {
   username = '';
   password = '';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private userService: UserService
+  ) { }
 
   login() {
-    this.router.navigate(['/menu']);
+    this.userService.login(this.username, this.password).subscribe({
+      next: (user: any) => {
+        this.userService.saveSession(user);
+        this.router.navigate(['/menu']);
+      },
+      error: () => {
+        alert("Usuário ou senha inválidos");
+      }
+    });
   }
 }
