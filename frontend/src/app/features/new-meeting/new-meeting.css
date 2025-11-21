@@ -86,3 +86,14 @@
   font-weight: 700;
   line-height: 140%; /* 16px */
 }
+
+.error-message {
+  width:fit-content;
+  padding: 12px;
+  flex-wrap: nowrap;
+  background-color: #FF0000;
+  color: white;
+  border:1px;
+  font-family: 'Inter', sans-serif;
+  border-radius: 8px;
+}
