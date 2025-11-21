@@ -34,6 +34,7 @@ export class NewMeeting implements OnInit {
   endDate: string = '';
   endTime: string = '';
   place: string = '';
+  errorMessage: string | null = null;
 
   constructor(
     private agendaItemService: AgendaItemService,
@@ -70,13 +71,17 @@ export class NewMeeting implements OnInit {
   }
 
   createMeeting(): void {
+    this.errorMessage = null;
+
     if (this.selectedItems.length === 0) {
       console.warn("Nenhum item de pauta selecionado.");
+      this.errorMessage = "Nenhum item de pauta selecionado.";
       return;
     }
 
     if (!this.beginDate || !this.beginTime) {
       console.warn("Data e horário de início são obrigatórios.");
+      this.errorMessage = "Data e horário de início são obrigatórios.";
       return;
     }
 
@@ -86,6 +91,12 @@ export class NewMeeting implements OnInit {
 
     if (this.endDate && this.endTime) {
       end = new Date(`${this.endDate}T${this.endTime}`);
+    }
+
+    if (end && begin > end) {
+      this.errorMessage = "A data de início não pode ser posterior à data de fim.";
+      console.warn("Data de início não pode ser posterior à data de fim.");
+      return;
     }
 
     const format = this.isRemoteMeeting ? "remoto" : "presencial";

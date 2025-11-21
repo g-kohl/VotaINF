@@ -1,61 +1,56 @@
-  <div class="home-container">
+<div class="home-container">
 
-    <app-menu></app-menu>
+  <app-menu></app-menu>
 
-    <div class="app-content">
-      
-      <app-card [title]="'Nova reunião'">
-        <div class="gaps">
-          <app-button-switch title="Reunião remota" subtitle="Aberta por um período programado"
-            (toggleChange)="onToggle($event)">
-          </app-button-switch>
+  <div class="app-content">
 
-          <div *ngIf="isRemoteMeeting; else presencial">
-            <div class="column">
-              <div class="row">
-                <app-form-date title="Data de início" id="beginDate" [(value)]="beginDate"></app-form-date>
-                <app-form-time title="Horário de início" id="beginTime" [(value)]="beginTime"></app-form-time>
-              </div>
+    <app-card [title]="'Nova reunião'">
+      <div class="gaps">
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+        <app-button-switch title="Reunião remota" subtitle="Aberta por um período programado"
+          (toggleChange)="onToggle($event)">
+        </app-button-switch>
 
-              <div class="row">
-                <app-form-date title="Data de fim" id="endDate" [(value)]="endDate"></app-form-date>
-                <app-form-time title="Horário de fim" id="endTime" [(value)]="endTime"></app-form-time>
-              </div>
+        <div *ngIf="isRemoteMeeting; else presencial">
+          <div class="column">
+            <div class="row">
+              <app-form-date title="Data de início" id="beginDate" [(value)]="beginDate"></app-form-date>
+              <app-form-time title="Horário de início" id="beginTime" [(value)]="beginTime"></app-form-time>
+            </div>
+            <div class="row">
+              <app-form-date title="Data de fim" id="endDate" [(value)]="endDate"></app-form-date>
+              <app-form-time title="Horário de fim" id="endTime" [(value)]="endTime"></app-form-time>
             </div>
           </div>
-          <ng-template #presencial>
-            <div class="column">
-              <div class="row">
-                <app-form-date title="Data" id="beginDate" [(value)]="beginDate"></app-form-date>
-                <app-form-time title="Horário" id="beginTime" [(value)]="beginTime"></app-form-time>
-              </div>
-              <app-text-input-simple
-                style="width: 660px"
-                [title]="'Local'"
-                [placeholder]="'Sala e prédio da reunião'"
-                [(value)]="place">
-              </app-text-input-simple>
+        </div>
+        <ng-template #presencial>
+          <div class="column">
+            <div class="row">
+              <app-form-date title="Data" id="beginDate" [(value)]="beginDate"></app-form-date>
+              <app-form-time title="Horário" id="beginTime" [(value)]="beginTime"></app-form-time>
             </div>
-          </ng-template>
+            <app-text-input-simple style="width: 660px" [title]="'Local'" [placeholder]="'Sala e prédio da reunião'"
+              [(value)]="place">
+            </app-text-input-simple>
+          </div>
+        </ng-template>
 
-          <div class="list">
-            <label class="title">Itens de pauta disponíveis:</label>
-            <div *ngFor="let item of agendaItemIds">
-              <app-form-checkbox
-              [title]="item.title"
-              [subtitle]="'Criado em ' + formatDateCreation(item)"
-              [itemId]="item.id"
-              [(checked)]="item.selected"
-              (checkedChange)="toggleItem(item.id, $event)">
-              </app-form-checkbox>
-            </div>
+        <div class="list">
+          <label class="title">Itens de pauta disponíveis:</label>
+          <div *ngFor="let item of agendaItemIds">
+            <app-form-checkbox [title]="item.title" [subtitle]="'Criado em ' + formatDateCreation(item)"
+              [itemId]="item.id" [(checked)]="item.selected" (checkedChange)="toggleItem(item.id, $event)">
+            </app-form-checkbox>
           </div>
+        </div>
 
-          <div class="button-group">
-            <button class="button-create" (click)="createMeeting()">Criar reunião</button>
-          </div>
-          </div>
-      </app-card>
-      
-    </div>
+        <div class="button-group">
+          <button class="button-create" (click)="createMeeting()">Criar reunião</button>
+        </div>
+      </div>
+    </app-card>
+
   </div>
+</div>
