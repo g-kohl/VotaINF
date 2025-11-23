@@ -1,6 +1,6 @@
 <div class="welcome">
   <app-avatar
-    [initials]="'L'"
+    [initials]="initials"
     [type]="'Initial'"
     [size]="'Large'"
     [shape]="'Circle'"
@@ -8,6 +8,6 @@
   ></app-avatar>
   <div class="text">
     <span class="text-welcome">Seja bem-vindo(a)</span>
-    <span class="text-user">Leandro</span>
+    <span class="text-user">{{user?.username}}</span>
   </div>
 </div>
