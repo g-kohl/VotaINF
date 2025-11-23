@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { MeetingService } from './meeting.service';
 import { AgendaItemService, AgendaItem } from '../../services/agenda-item.service';
 import { AgendaService, Agenda } from '../../services/agenda.service';
+import { UserService } from '../../services/user.service';
+import { VoteService } from '../../services/vote.service';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -39,14 +40,21 @@ export class Meeting {
   votedItems: AgendaItem[] = [];
   voteDisabled = false;
   usersVoted: string[] = [];
+  votes: Record<number, string> = {};
+  userId!: number;
 
   constructor(
     private agendaService: AgendaService,
     private agendaItemService: AgendaItemService,
+    private userService: UserService,
+    private voteService: VoteService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    const user = this.userService.getUser();
+    this.userId = user.id;
+
     this.loadAgenda();
   }
 
@@ -99,26 +107,39 @@ export class Meeting {
     return beginDatetime;
   }
 
-  // get allVoted(): boolean {
-  //   return this.agenda.length > 0 && this.agenda.every(item => !!item.vote);
-  // }
+  onVote(itemId: number, decision: string) {
+    this.votes[itemId] = decision;
+  }
 
-  // submitVotes() {
-  //   for(const item of this.agenda) {
-  //     console.log(`${item.id}:`, item.vote);
-  //     if(item.vote !== undefined) {
-  //       this.meetingService.vote(item.id, item.vote).subscribe(updated => {
-  //         //opcional
-  //         const idx = this.agenda.findIndex(x => x.id === updated.id);
+  submitVotes(){
+    const entries = Object.entries(this.votes);
 
-  //         if(idx >= 0)
-  //           this.agenda[idx] = updated;
+    if(entries.length == 0){
+      alert("Nenhum voto selecionado");
+      return;
+    }
 
-  //         console.log(`Voto registrado para ${updated.title}:`, updated);
-  //         this.votedItems = [...this.agenda.map(item => ({ ...item }))];
-  //         this.voteDisabled = true;
-  //       })
-  //     }
-  //   }
-  // }
+    let pending = entries.length;
+    let errors = 0;
+
+    entries.forEach(([itemId, decision]) => {
+      this.voteService.submitVote(this.userId, Number(itemId), decision).subscribe({
+        next: () => {
+          pending--;
+
+          if(pending === 0 && errors === 0) {
+            alert("Votos registrados com sucesso");
+          }
+        },
+        error: () => {
+          errors++;
+          pending--;
+
+          if(pending === 0) {
+            alert("Alguns votos não puderam ser registrados");
+          }
+        }
+      });
+    });
+  }
 }
