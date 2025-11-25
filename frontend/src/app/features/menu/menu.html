@@ -28,7 +28,8 @@
                 [isOngoing]="setOngoing(agenda)"
                 [isFinished]="setFinished(agenda)"
                 [agendaId]="agenda.id"
-                (finishAgendaEvent)="onFinishAgenda($event)">
+                (finishAgendaEvent)="onFinishAgenda($event)"
+                [isChief]="userRole === 'chefia'">
             </app-testimonial-card>
         </app-card>
     </div>

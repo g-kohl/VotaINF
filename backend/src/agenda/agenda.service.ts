@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In, Between, LessThan, MoreThan, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
+import { Repository, In, Between, MoreThan, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Agenda } from './agenda.entity';
 import { AgendaItem } from 'src/agenda-item/agenda-item.entity';
 import { CreateAgendaDto } from './dto/create-agenda.dto';
+import { AgendaItemService } from 'src/agenda-item/agenda-item.service';
 
 @Injectable()
 export class AgendaService {
@@ -12,7 +13,9 @@ export class AgendaService {
     @InjectRepository(Agenda)
     private readonly agendaRepository: Repository<Agenda>,
     @InjectRepository(AgendaItem)
-    private readonly agendaItemRepository: Repository<AgendaItem>
+    private readonly agendaItemRepository: Repository<AgendaItem>,
+
+    private readonly agendaItemService: AgendaItemService
   ) { }
 
   async create(createAgendaDto: CreateAgendaDto): Promise<Agenda> {
@@ -127,6 +130,20 @@ export class AgendaService {
         { status: 'em-votacao' },
       );
     }
+
+    const finalized = await this.agendaRepository.find({
+      where: {status: 'finalizada'},
+      relations: ['agendaItems'],
+    });
+
+    for (const agenda of finalized) {
+      agenda.status = 'finalizada';
+      await this.agendaRepository.save(agenda);
+
+      for (const item of agenda.agendaItems) {
+        await this.agendaItemService.computeResults(item.id);
+      }
+    }
   }
 
   /**
@@ -141,6 +158,8 @@ export class AgendaService {
     if (agenda.status === 'em-andamento') {
       agenda.status = 'finalizada';
       await this.agendaRepository.save(agenda);
+      
+      this.updateAgendaStatuses();
     }
   }
 }
