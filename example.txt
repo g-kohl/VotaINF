@@ -1,0 +1,13 @@
+Itens de pauta:
+
+Afastamento de Prof. Fulano
+Prof. Fulano vai participar da conferência XYZ na próxima semana
+
+Orçamento barra-fixa no DACOMP
+Representantes do DACOMP solicitaram um orçamento para a instalação de uma barra-fixa no pátio do INF
+
+Novo currículo
+Confirmar nomes das disciplinas do novo currículo
+
+Implantação do VotaINF
+Analisar o deploy do sistema VotaINF para gerenciar as votações do colegiado

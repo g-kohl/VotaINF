@@ -19,6 +19,7 @@ export class TestimonialCard {
   @Input() isOngoing: boolean = false;
   @Input() isFinished: boolean = false;
   @Input() agendaId: number = 0;
+  @Input() isChief: boolean = false;
 
   @Output() finishAgendaEvent = new EventEmitter<number>();
 

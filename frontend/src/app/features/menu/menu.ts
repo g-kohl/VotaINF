@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AgendaService, Agenda } from '../../services/agenda.service';
 import { DatePipe } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 /**
  * Componente responsável por exibir o menu de reuniões/agendas.
@@ -22,6 +23,7 @@ import { DatePipe } from '@angular/common';
 export class Menu implements OnInit {
   loaded = false;
   agendas: Agenda[] = [];
+  userRole!: string;
 
   /**
    * Cria uma nova instância da classe Menu.
@@ -30,6 +32,7 @@ export class Menu implements OnInit {
    */
   constructor(
     private agendaService: AgendaService,
+    private userService: UserService,
   ) { }
 
   /**
@@ -47,6 +50,10 @@ export class Menu implements OnInit {
    * Neste caso, chama o método `loadAgendas` para carregar as agendas ao iniciar.
    */
   ngOnInit() {
+    const user = this.userService.getUser();
+    this.userRole = user.role;
+    console.log(this.userRole);
+
     this.search();
   }
 
