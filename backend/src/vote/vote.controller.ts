@@ -12,9 +12,12 @@ export class VoteController {
   }
 
   @Get('agenda-item/:id')
-  findByAgendaItem(@Param('id') id: number) {
-    return this.voteService.findByAgendaItem(Number(id));
+  getVoteReport(@Param('id') id: number) {
+    return this.voteService.getVoteReport(Number(id));
   }
+  // findByAgendaItem(@Param('id') id: number) {
+  //   return this.voteService.findByAgendaItem(Number(id));
+  // }
 
   @Get(':userId/:agendaItemId')
   findUserVote(

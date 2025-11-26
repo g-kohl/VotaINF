@@ -54,34 +54,80 @@ export class Meeting {
   ngOnInit() {
     const user = this.userService.getUser();
     this.userId = user.id;
-
-    this.loadAgenda();
+    const agendaId = this.getAgendaId();
+    this.loadAgenda(agendaId);
   }
 
-  loadAgenda() {
-    this.agendaService.getAll().subscribe(agendas => {
-      const agendaId = this.route.snapshot.queryParamMap.get('agendaId');
-      if (agendaId) {
-        this.agenda = agendas.find(agenda => String(agenda.id) === agendaId);
-        
-      } else {
+  /**
+   * Retorna o valor do parâmetro 'agendaId' presente na URL como um número.
+   * 
+   * @returns O identificador da agenda como número. Caso o parâmetro não exista ou não seja um número válido, retorna NaN.
+   */
+  getAgendaId(): number {
+    const agendaId = this.route.snapshot.queryParamMap.get('agendaId');
+    return Number(agendaId);
+  }
+
+  /**
+   * Carrega uma agenda específica pelo seu ID.
+   *
+   * Busca em `agendaService` a Agenda correspondente ao ID fornecido.
+   * Ao carregar, chama `loadAgendaItems` para carregar os itens da agenda.
+   *
+   * @param agendaId O identificador da agenda a ser carregada.
+   */
+  loadAgenda(agendaId: number) {
+    this.agendaService.getAll().subscribe({
+      next: agendas => {
+        this.agenda = agendas.find(agenda => agenda.id === agendaId);
+        this.loaded = true;
+      },
+      error: err => {
         this.agenda = undefined;
+        this.loaded = false;
+        alert('Erro ao carregar a agenda.');
+        console.error('Erro ao carregar a agenda:', err);
       }
-      this.loaded = true;
     });
 
-    this.route.queryParamMap.subscribe(params => {
-      const agendaId = params.get('agendaId');
-      this.agendaItemService.getAll().subscribe(items => {
-        if (agendaId) {
-            this.agendaItems = items.filter(item => String(item.agendaId) === agendaId);
-        } else {
-          this.agendaItems = [];
-          console.log("Nenhuma reunião carregada.")
-        }
-      });
+    this.loadAgendaItems(agendaId);
+  }
+
+  /**
+   * Carrega os itens da agenda associados ao ID fornecido.
+   *
+   * Utiliza o serviço `agendaService` para buscar os itens da agenda a partir do ID informado.
+   * Ao obter sucesso, armazena os itens em `agendaItems` e define `loaded` como `true`.
+   * Em caso de erro, define `loaded` como `false`, exibe um alerta informando que a reunião não existe
+   * e registra o erro no console.
+   *
+   * @param agendaId O identificador da agenda cujos itens devem ser carregados.
+   */
+  private loadAgendaItems(agendaId: number) {
+    this.agendaService.getAgendaItems(Number(agendaId)).subscribe({
+      next: items => {
+        this.agendaItems = items;
+        this.loaded = true;
+      },
+      error: err => {
+        this.loaded = false;
+        alert('Esta reunião não existe.');
+        console.error('Erro ao carregar itens da agenda:', err);
+      }
     });
   }
+
+  getVoteReport(agendaItemId: number): void {
+    this.voteService.getVotes(agendaItemId).subscribe({
+      next: votes => {
+        console.log("Relatório de votos:", votes);
+      },
+      error: err => {
+        console.error("Erro ao carregar relatório de votos:", err);
+      }
+    });
+  }
+
 
   formatDate(date?: Date | undefined, format = 'dd/MM/yyyy'): string {
     if (!date) return '';
@@ -142,4 +188,6 @@ export class Meeting {
       });
     });
   }
+
+
 }
