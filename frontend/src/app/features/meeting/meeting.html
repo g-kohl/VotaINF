@@ -8,7 +8,7 @@
             [subtitle]="formatPeriod(agenda)">
             @if (agenda?.status === 'finalizada'){
                 <div class="text-body">
-                    <p>Votantes: {{ usersVoted.join(', ') || ' ' }}</p>
+                    <p>Votantes: {{ voters.join(', ') }}</p>
                 </div>
             }
             <app-accordion-item
@@ -17,7 +17,8 @@
                 [itemText]="item.description"
                 [radioName]="'item-' + item.id"
                 [agendaStatus]="agenda?.status"
-                (selectedVoteChange)="onVote(item.id, $event)">
+                (selectedVoteChange)="onVote(item.id, $event)"
+                [voteResults]="voteResults[item.id]">
             </app-accordion-item>
             @if (agenda?.status === 'em-andamento'){
                 <div class="button-group">

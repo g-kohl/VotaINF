@@ -11,6 +11,11 @@ export class VoteController {
     return this.voteService.createVote(dto);
   }
 
+  @Get('agenda/:id')
+  async getVoters(@Param('id') id: number) {
+    return this.voteService.getVoters(Number(id));
+  }
+
   @Get('agenda-item/:id')
   getVoteReport(@Param('id') id: number) {
     return this.voteService.getVoteReport(Number(id));

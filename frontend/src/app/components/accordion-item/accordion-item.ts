@@ -14,7 +14,7 @@ export class AccordionItem {
   @Input() radioName: string = '';
   @Input() isDisabled: boolean = false;
   @Input() agendaStatus: string | undefined = '';
-  @Input() voteResults: { approve: number; reprove: number; abstain: string[] } = { approve: 0, reprove: 0, abstain: [] };
+  @Input() voteResults: { approved: number; reproved: number; voters: string[]; abstentions: string[] } = { approved: 0, reproved: 0, voters: [], abstentions: [] };
 
   private _selectedVote: string = '';
   @Input()

@@ -33,6 +33,19 @@ export class VoteService {
     return this.voteRepository.findOne({ where: { userId, agendaItemId } })
   }
 
+  async getVoters(agendaId: number): Promise<string[]> {
+    const votes = await this.voteRepository
+      .createQueryBuilder('vote')
+      .leftJoin('vote.agendaItem', 'agendaItem')
+      .leftJoin('vote.user', 'user')
+      .where('agendaItem.agendaId = :agendaId', { agendaId })
+      .select(['user.username'])
+      .distinct(true)
+      .getRawMany();
+
+    return votes.map(v => v.user_username);
+  }
+
   async getVoteReport(agendaItemId: number): Promise<any> {
     const result = { approved: 0, reproved: 0, voters: [] as string[], abstentions: [] as string[] };
     
@@ -41,16 +54,16 @@ export class VoteService {
       .leftJoin('vote.agendaItem', 'agendaItem')
       .where('agendaItem.id = :agendaItemId', { agendaItemId })
       .select([
-      'vote.decision',
-      'agendaItem.agendaId',
+      'agendaItem.status as agenda_item_status',
+      'vote.decision as vote_decision',
       'COUNT(*) as count'
       ])
+      .groupBy('vote.decision')
       .getRawMany();
 
     votes.forEach(v => {
       if (v.vote_decision === 'approve') result.approved = Number(v.count);
       if (v.vote_decision === 'reprove') result.reproved = Number(v.count);
-      console.log(v);
     });
 
     const users = await this.voteRepository
@@ -73,7 +86,7 @@ export class VoteService {
       .getRawMany();
 
     result.abstentions = abstentions.map(a => a.user_username);
-
+    
     return result;
   }
 }

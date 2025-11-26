@@ -10,9 +10,10 @@
   
   @if (agendaStatus === 'finalizada'){
     <div class="text-body"><p>
-      <b>Aprovação: </b>{{voteResults.approve}} voto{{voteResults.approve == 1 ? '' : 's'}}
-      <br><b>Reprovação: </b>{{voteResults.reprove}} voto{{voteResults.reprove == 1 ? '' : 's'}}
-      <br><b>Abstenções: </b>{{voteResults.abstain.join(', ') || 'Nenhum'}}
+      <!-- Pode ser aperfeiçoado com um método formatter -->
+      <b>Aprovação: </b>{{voteResults?.approved}} voto{{ voteResults?.approved === 1 ? '' : 's' }}
+      <br><b>Reprovação: </b>{{voteResults?.reproved}} voto{{ voteResults?.reproved === 1 ? '' : 's' }}
+      <br><b>Abstenções: </b>{{ ((voteResults?.abstentions ?? []).length === 0) ? '-' : (voteResults?.abstentions ?? []).join(', ') }}
     </p></div>
   } @else if (agendaStatus === 'em-andamento'){
     <app-radio-button

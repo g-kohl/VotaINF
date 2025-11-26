@@ -42,6 +42,8 @@ export class Meeting {
   usersVoted: string[] = [];
   votes: Record<number, string> = {};
   userId!: number;
+  voteResults: Record<number, { approved: number; reproved: number; voters: string[]; abstentions: string[] }> = {};
+  voters: string[] = [];
 
   constructor(
     private agendaService: AgendaService,
@@ -56,6 +58,7 @@ export class Meeting {
     this.userId = user.id;
     const agendaId = this.getAgendaId();
     this.loadAgenda(agendaId);
+    this.getVoters(agendaId);
   }
 
   /**
@@ -108,6 +111,9 @@ export class Meeting {
       next: items => {
         this.agendaItems = items;
         this.loaded = true;
+        this.agendaItems.forEach(item => {
+          this.getVoteReport(item.id);
+        });
       },
       error: err => {
         this.loaded = false;
@@ -115,17 +121,46 @@ export class Meeting {
         console.error('Erro ao carregar itens da agenda:', err);
       }
     });
+
+
   }
 
-  getVoteReport(agendaItemId: number): void {
+  getVoters(agendaId?: number): string[] {
+    console.log("oi")
+    if (this.voters.length > 0) {
+      return this.voters;
+    }
+
+    this.voteService.getVoters(agendaId).subscribe({
+      next: voters => {
+        this.voters = voters;
+      },
+      error: err => {
+        console.error("Erro ao carregar lista de votantes:", err);
+      }
+    });
+
+    return [];
+  }
+
+  getVoteReport(agendaItemId: number): { approved: number; reproved: number; voters: string[]; abstentions: string[] } {
+    // Se já temos o resultado em cache, retorna imediatamente
+    if (this.voteResults[agendaItemId]) {
+      return this.voteResults[agendaItemId];
+    }
+
+    // Busca assíncrona, mas retorna undefined por enquanto
     this.voteService.getVotes(agendaItemId).subscribe({
       next: votes => {
-        console.log("Relatório de votos:", votes);
+        const result = { approved: votes.approved, reproved: votes.reproved, voters: votes.voters, abstentions: votes.abstentions };
+        this.voteResults[agendaItemId] = result;
       },
       error: err => {
         console.error("Erro ao carregar relatório de votos:", err);
       }
     });
+
+    return { approved: 0, reproved: 0, voters: [], abstentions: [] };
   }
 
 

@@ -21,4 +21,8 @@ export class VoteService {
   getVotes(agendaItemId: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/agenda-item/${agendaItemId}`);
   }
+
+  getVoters(agendaId?: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/agenda/${agendaId}`);
+  }
 }
