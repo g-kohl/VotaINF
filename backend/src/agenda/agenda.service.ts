@@ -52,7 +52,11 @@ export class AgendaService {
       agendaItems,
     });
 
-    return this.agendaRepository.save(agenda);
+    const createdAgenda = await this.agendaRepository.save(agenda);
+    
+    await this.updateAgendaStatuses();
+
+    return createdAgenda;
   }
 
   async findToday(): Promise<Agenda | null> {
