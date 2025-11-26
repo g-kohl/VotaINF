@@ -12,6 +12,11 @@ export class AgendaController {
     return this.agendaService.create(dto);
   }
 
+  @Post("finish-agenda")
+  async finishAgenda(@Body('id') id: number): Promise<void> {
+    await this.agendaService.finishAgenda(id);
+  }
+
   @Get()
   async findAll(
     @Query('id') id?: number,
@@ -21,8 +26,14 @@ export class AgendaController {
     return this.agendaService.findAll(id, begin, end);
   }
 
-  @Post("finish-agenda")
-  async finishAgenda(@Body('id') id: number): Promise<void> {
-    await this.agendaService.finishAgenda(id);
+  @Get("agenda-items")
+  /**
+   * Retorna os itens da agenda associados ao ID fornecido.
+   *
+   * @param agendaId - O ID da agenda para filtrar os itens.
+   * @returns Uma promessa que resolve para um array de itens da agenda.
+   */
+  async findAgendaItems(@Query('agendaId') agendaId: number): Promise<any[]> {
+    return this.agendaService.findAgendaItems(agendaId);
   }
 }

@@ -13,25 +13,36 @@ import { DatePipe } from '@angular/common';
   styleUrl: './meeting.css'
 })
 /**
- * Representa o componente de uma reunião, responsável por carregar e gerenciar a agenda e seus itens,
- * além de controlar o processo de votação dos itens da pauta.
+ * Componente responsável por gerenciar uma reunião, incluindo o carregamento da agenda, itens da pauta,
+ * controle de votação e exibição de resultados.
  *
  * @remarks
- * Esta classe utiliza serviços para buscar agendas e itens de agenda, além de manipular o estado de votação.
- * Os métodos principais incluem o carregamento da agenda, formatação de datas e períodos, e (comentado) o envio dos votos.
+ * Utiliza serviços para buscar agendas, itens de pauta, usuários e votos. Controla o estado de carregamento,
+ * votos realizados, resultados e lista de votantes. Fornece métodos utilitários para formatação de datas e períodos.
  *
- * @example
- * // Instanciação e uso típico:
- * const meeting = new Meeting(agendaService, agendaItemService, route);
- * meeting.ngOnInit();
- *
- * @property loaded Indica se a agenda foi carregada.
- * @property agenda A agenda atualmente selecionada.
- * @property agendaItems Lista de itens da agenda carregados.
- * @property votedItems Lista de itens da agenda que já foram votados.
+ * @property loaded Indica se a agenda foi carregada com sucesso.
+ * @property agenda Agenda atualmente selecionada.
+ * @property agendaItems Lista de itens da pauta carregados.
+ * @property votedItems Lista de itens da pauta já votados.
  * @property voteDisabled Indica se a votação está desabilitada.
+ * @property usersVoted Lista de usuários que já votaram.
+ * @property votes Registro dos votos do usuário atual, indexado pelo ID do item da pauta.
+ * @property userId Identificador do usuário atual.
+ * @property voteResults Resultados dos votos por item da pauta.
+ * @property voters Lista de votantes da reunião.
  *
- * @constructor Recebe os serviços de agenda, itens de agenda e rota ativada.
+ * @constructor Injeta os serviços de agenda, itens de agenda, usuário, votos e rota ativada.
+ *
+ * @method ngOnInit Inicializa o componente, carregando usuário, agenda e lista de votantes.
+ * @method getAgendaId Obtém o ID da agenda a partir da URL.
+ * @method loadAgenda Carrega a agenda selecionada e seus itens.
+ * @method loadAgendaItems Carrega os itens da pauta da agenda.
+ * @method getVoters Busca e retorna a lista de votantes da pauta.
+ * @method getVoteReport Busca e retorna o relatório de votos de um item da pauta.
+ * @method formatDate Formata uma data para string conforme padrão especificado.
+ * @method formatPeriod Formata o período da agenda em uma string legível.
+ * @method onVote Registra a decisão de voto do usuário para um item da pauta.
+ * @method submitVotes Envia os votos registrados para o backend.
  */
 export class Meeting {
   loaded = false;
@@ -42,6 +53,8 @@ export class Meeting {
   usersVoted: string[] = [];
   votes: Record<number, string> = {};
   userId!: number;
+  voteResults: Record<number, { approved: number; reproved: number; abstentions: string[]; decision: string }> = {};
+  voters: string[] = [];
 
   constructor(
     private agendaService: AgendaService,
@@ -54,41 +67,144 @@ export class Meeting {
   ngOnInit() {
     const user = this.userService.getUser();
     this.userId = user.id;
-
-    this.loadAgenda();
+    const agendaId = this.getAgendaId();
+    this.loadAgenda(agendaId);
+    this.getVoters(agendaId);
   }
 
-  loadAgenda() {
-    this.agendaService.getAll().subscribe(agendas => {
-      const agendaId = this.route.snapshot.queryParamMap.get('agendaId');
-      if (agendaId) {
-        this.agenda = agendas.find(agenda => String(agenda.id) === agendaId);
-        
-      } else {
+  /**
+   * Retorna o valor do parâmetro 'agendaId' presente na URL como um número.
+   * 
+   * @returns O identificador da agenda como número. Caso o parâmetro não exista ou não seja um número válido, retorna NaN.
+   */
+  getAgendaId(): number {
+    const agendaId = this.route.snapshot.queryParamMap.get('agendaId');
+    return Number(agendaId);
+  }
+
+  /**
+   * Carrega uma agenda específica pelo seu ID.
+   *
+   * Busca em `agendaService` a Agenda correspondente ao ID fornecido.
+   * Ao carregar, chama `loadAgendaItems` para carregar os itens da agenda.
+   *
+   * @param agendaId O identificador da agenda a ser carregada.
+   */
+  loadAgenda(agendaId: number) {
+    this.agendaService.getAll().subscribe({
+      next: agendas => {
+        this.agenda = agendas.find(agenda => agenda.id === agendaId);
+        this.loaded = true;
+      },
+      error: err => {
         this.agenda = undefined;
+        this.loaded = false;
+        alert('Erro ao carregar a agenda.');
+        console.error('Erro ao carregar a agenda:', err);
       }
-      this.loaded = true;
     });
 
-    this.route.queryParamMap.subscribe(params => {
-      const agendaId = params.get('agendaId');
-      this.agendaItemService.getAll().subscribe(items => {
-        if (agendaId) {
-            this.agendaItems = items.filter(item => String(item.agendaId) === agendaId);
-        } else {
-          this.agendaItems = [];
-          console.log("Nenhuma reunião carregada.")
-        }
-      });
-    });
+    this.loadAgendaItems(agendaId);
   }
 
+  /**
+   * Carrega os itens da agenda associados ao ID fornecido.
+   *
+   * Utiliza o serviço `agendaService` para buscar os itens da agenda a partir do ID informado.
+   * Ao obter sucesso, armazena os itens em `agendaItems` e define `loaded` como `true`.
+   * Em caso de erro, define `loaded` como `false`, exibe um alerta informando que a reunião não existe
+   * e registra o erro no console.
+   *
+   * @param agendaId O identificador da agenda cujos itens devem ser carregados.
+   */
+  private loadAgendaItems(agendaId: number) {
+    this.agendaService.getAgendaItems(Number(agendaId)).subscribe({
+      next: items => {
+        this.agendaItems = items;
+        this.loaded = true;
+        this.agendaItems.forEach(item => {
+          this.getVoteReport(item.id);
+        });
+      },
+      error: err => {
+        this.loaded = false;
+        alert('Esta reunião não existe.');
+        console.error('Erro ao carregar itens da agenda:', err);
+      }
+    });
+
+
+  }
+
+  /**
+   * Retorna a lista de votantes para uma determinada pauta.
+   * 
+   * Se a lista de votantes já estiver carregada em `this.voters`, ela é retornada imediatamente.
+   * Caso contrário, faz uma requisição assíncrona para buscar os votantes através do `voteService`.
+   * Enquanto a requisição está em andamento, retorna um array vazio.
+   * 
+   * @param agendaId Opcional. O ID da pauta para a qual os votantes devem ser buscados.
+   * @returns Um array de strings representando os votantes, ou um array vazio se os dados ainda não estiverem disponíveis.
+   */
+  getVoters(agendaId?: number): string[] {
+    if (this.voters.length > 0) {
+      return this.voters;
+    }
+
+    this.voteService.getVoters(agendaId).subscribe({
+      next: voters => {
+        this.voters = voters;
+      },
+      error: err => {
+        console.error("Erro ao carregar lista de votantes:", err);
+      }
+    });
+
+    return [];
+  }
+
+  /**
+   * Retorna o relatório de votos para um determinado item de pauta.
+   *
+   * Se o resultado já estiver em cache, retorna imediatamente os dados armazenados.
+   * Caso contrário, inicia uma busca assíncrona dos votos e retorna um objeto padrão
+   * enquanto os dados não são carregados.
+   *
+   * @param agendaItemId - O identificador do item de pauta.
+   * @returns Um objeto contendo o número de votos aprovados, reprovados, abstenções e a decisão.
+   */
+  getVoteReport(agendaItemId: number): { approved: number; reproved: number; abstentions: string[]; decision: string } {
+    // Se já temos o resultado em cache, retorna imediatamente
+    if (this.voteResults[agendaItemId]) {
+      return this.voteResults[agendaItemId];
+    }
+
+    // Busca assíncrona, mas retorna undefined por enquanto
+    this.voteService.getVotes(agendaItemId).subscribe({
+      next: votes => {
+        const result = { approved: votes.approved, reproved: votes.reproved, abstentions: votes.abstentions, decision: votes.decision };
+        this.voteResults[agendaItemId] = result;
+      },
+      error: err => {
+        console.error("Erro ao carregar relatório de votos:", err);
+      }
+    });
+
+    return { approved: 0, reproved: 0, abstentions: [], decision: ''  };
+  }
+  
+  /**
+   * Formata um objeto Date em uma string conforme o formato especificado.
+   *
+   * @param date - A data a ser formatada. Se não for fornecida, retorna uma string vazia.
+   * @param format - O formato desejado para a data (padrão: 'dd/MM/yyyy').
+   * @returns A data formatada como string ou uma string vazia se a data não for fornecida.
+   */
   formatDate(date?: Date | undefined, format = 'dd/MM/yyyy'): string {
     if (!date) return '';
     const pipe = new DatePipe('pt-BR');
     return pipe.transform(date, format) ?? '';
   }
-
 
   /**
    * Formata o período de uma agenda em uma string legível.
@@ -142,4 +258,6 @@ export class Meeting {
       });
     });
   }
+
+
 }

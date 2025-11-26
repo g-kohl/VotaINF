@@ -97,6 +97,21 @@ export class AgendaService {
     return this.agendaRepository.find({ where });
   }
 
+  /**
+   * Busca os itens de pauta associados a uma determinada reunião (agenda).
+   *
+   * @param agendaId - O identificador da reunião para a qual os itens de pauta devem ser buscados.
+   * @returns Uma promessa que resolve para um array de itens de pauta (`AgendaItem[]`) pertencentes à reunião especificada.
+   * @throws Error Se a reunião com o `agendaId` fornecido não for encontrada.
+   */
+  async findAgendaItems(agendaId: number): Promise<AgendaItem[]> {
+    const agenda = await this.agendaRepository.findOne({ where: { id: agendaId } });
+    if (!agenda) throw new Error('Reunião não encontrada.');
+
+    return this.agendaItemRepository.find({ where: { agenda: { id: agenda.id } } });
+  }
+
+
   @Cron(CronExpression.EVERY_MINUTE)
   async updateAgendaStatuses() {
     const now = new Date();
