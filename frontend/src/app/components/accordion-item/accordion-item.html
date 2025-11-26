@@ -14,6 +14,7 @@
       <b>Aprovação: </b>{{voteResults?.approved}} voto{{ voteResults?.approved === 1 ? '' : 's' }}
       <br><b>Reprovação: </b>{{voteResults?.reproved}} voto{{ voteResults?.reproved === 1 ? '' : 's' }}
       <br><b>Abstenções: </b>{{ ((voteResults?.abstentions ?? []).length === 0) ? '-' : (voteResults?.abstentions ?? []).join(', ') }}
+      <br><br><b>Resultado: </b>{{voteResults?.decision}}
     </p></div>
   } @else if (agendaStatus === 'em-andamento'){
     <app-radio-button

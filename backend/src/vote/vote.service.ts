@@ -33,8 +33,14 @@ export class VoteService {
     return this.voteRepository.findOne({ where: { userId, agendaItemId } })
   }
 
+  /**
+   * Retorna uma lista de nomes de usuário distintos que votaram em um determinado item de pauta.
+   *
+   * @param agendaId - O identificador do item de pauta para o qual os votantes serão recuperados.
+   * @returns Uma promessa que resolve para um array de strings contendo os nomes de usuário dos votantes.
+   */
   async getVoters(agendaId: number): Promise<string[]> {
-    const votes = await this.voteRepository
+    const voters = await this.voteRepository
       .createQueryBuilder('vote')
       .leftJoin('vote.agendaItem', 'agendaItem')
       .leftJoin('vote.user', 'user')
@@ -43,12 +49,21 @@ export class VoteService {
       .distinct(true)
       .getRawMany();
 
-    return votes.map(v => v.user_username);
+    return voters.map(v => v.user_username);
   }
 
+  /**
+   * Gera um relatório de votos para um determinado item de pauta.
+   *
+   * Consulta o banco de dados para contar os votos aprovados, reprovados e listar os usuários que se abstiveram.
+   * Também retorna o status atual do item de pauta.
+   *
+   * @param agendaItemId - O ID do item de pauta para o qual o relatório será gerado.
+   * @returns Um objeto contendo a quantidade de votos aprovados, reprovados, lista de abstenções (nomes de usuário) e a decisão/status do item de pauta.
+   */
   async getVoteReport(agendaItemId: number): Promise<any> {
-    const result = { approved: 0, reproved: 0, voters: [] as string[], abstentions: [] as string[] };
-    
+    const result = { approved: 0, reproved: 0, abstentions: [] as string[], decision: '' };
+
     const votes = await this.voteRepository
       .createQueryBuilder('vote')
       .leftJoin('vote.agendaItem', 'agendaItem')
@@ -64,17 +79,8 @@ export class VoteService {
     votes.forEach(v => {
       if (v.vote_decision === 'approve') result.approved = Number(v.count);
       if (v.vote_decision === 'reprove') result.reproved = Number(v.count);
+      result.decision = v.agenda_item_status;
     });
-
-    const users = await this.voteRepository
-      .createQueryBuilder('vote')
-      .leftJoin('vote.user', 'user')
-      .leftJoin('vote.agendaItem', 'agendaItem')
-      .where('agendaItem.id = :agendaItemId', { agendaItemId })
-      .select(['user.username'])
-      .getRawMany();
-
-    result.voters = users.map(u => u.user_username);
 
     const abstentions = await this.voteRepository
       .createQueryBuilder('vote')

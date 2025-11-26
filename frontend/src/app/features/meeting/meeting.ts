@@ -42,7 +42,7 @@ export class Meeting {
   usersVoted: string[] = [];
   votes: Record<number, string> = {};
   userId!: number;
-  voteResults: Record<number, { approved: number; reproved: number; voters: string[]; abstentions: string[] }> = {};
+  voteResults: Record<number, { approved: number; reproved: number; abstentions: string[]; decision: string }> = {};
   voters: string[] = [];
 
   constructor(
@@ -143,7 +143,7 @@ export class Meeting {
     return [];
   }
 
-  getVoteReport(agendaItemId: number): { approved: number; reproved: number; voters: string[]; abstentions: string[] } {
+  getVoteReport(agendaItemId: number): { approved: number; reproved: number; abstentions: string[]; decision: string } {
     // Se já temos o resultado em cache, retorna imediatamente
     if (this.voteResults[agendaItemId]) {
       return this.voteResults[agendaItemId];
@@ -152,7 +152,7 @@ export class Meeting {
     // Busca assíncrona, mas retorna undefined por enquanto
     this.voteService.getVotes(agendaItemId).subscribe({
       next: votes => {
-        const result = { approved: votes.approved, reproved: votes.reproved, voters: votes.voters, abstentions: votes.abstentions };
+        const result = { approved: votes.approved, reproved: votes.reproved, abstentions: votes.abstentions, decision: votes.decision };
         this.voteResults[agendaItemId] = result;
       },
       error: err => {
@@ -160,10 +160,10 @@ export class Meeting {
       }
     });
 
-    return { approved: 0, reproved: 0, voters: [], abstentions: [] };
+    return { approved: 0, reproved: 0, abstentions: [], decision: ''  };
   }
 
-
+  
   formatDate(date?: Date | undefined, format = 'dd/MM/yyyy'): string {
     if (!date) return '';
     const pipe = new DatePipe('pt-BR');
