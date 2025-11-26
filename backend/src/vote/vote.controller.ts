@@ -12,6 +12,12 @@ export class VoteController {
   }
 
   @Get('agenda/:id')
+  /**
+   * Retorna a lista de eleitores associados a um determinado voto.
+   *
+   * @param id - O identificador do voto.
+   * @returns Uma lista de eleitores vinculados ao voto especificado.
+   */
   async getVoters(@Param('id') id: number) {
     return this.voteService.getVoters(Number(id));
   }
@@ -20,9 +26,6 @@ export class VoteController {
   getVoteReport(@Param('id') id: number) {
     return this.voteService.getVoteReport(Number(id));
   }
-  // findByAgendaItem(@Param('id') id: number) {
-  //   return this.voteService.findByAgendaItem(Number(id));
-  // }
 
   @Get(':userId/:agendaItemId')
   findUserVote(
