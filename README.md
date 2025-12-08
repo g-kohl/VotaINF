@@ -2,10 +2,36 @@
 
 Sistema de gerenciamento de votações do colegiado do Departamento de Informática Aplicada do INF-UFRGS
 
+
+![Captura de tela](./docs/screenshots/3.png)
+
 Stack:
 - Front-end: Angular (Typescript, modo standalone)
 - Back-end: NestJS
 - Banco de dados: SQLite + TypeORM
+
+# Casos de uso
+
+![Diagrama de casos de uso](./docs/diagrama-casos_de_uso.png)
+
+# Classes
+
+![Diagrama de classes](./docs/diagrama-classes.png)
+
+# Projeto de banco de dados (entidade-relacionamento)
+
+![Diagrama ER](./docs/diagrama-entidade_relacionamento.jpg)
+
+# Capturas de tela
+
+![Captura de tela](./docs/screenshots/1.png)
+
+![Captura de tela](./docs/screenshots/2.png)
+
+![Captura de tela](./docs/screenshots/3.png)
+
+![Captura de tela](./docs/screenshots/4.png)
+
 
 # Frameworks necessários
 
